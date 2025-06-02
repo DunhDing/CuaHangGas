@@ -4,9 +4,7 @@ import javax.swing.ImageIcon;
 
 public class frmMain extends javax.swing.JFrame {
     public frmMain() {
-        initComponents();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/resources/Logo.png"));
-        lblLogo.setIcon(icon);
+        initComponents();        
         setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
     }
