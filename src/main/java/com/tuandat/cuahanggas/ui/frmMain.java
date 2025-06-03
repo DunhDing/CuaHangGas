@@ -35,16 +35,12 @@ public class frmMain extends javax.swing.JFrame {
         pnlHeaderContentLayout.setHorizontalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(909, Short.MAX_VALUE))
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 903, Short.MAX_VALUE))
         );
         pnlHeaderContentLayout.setVerticalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                .addGap(14, 14, 14))
+            .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
         pnlHeader.add(pnlHeaderContent);
