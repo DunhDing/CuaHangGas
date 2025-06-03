@@ -121,9 +121,9 @@
                       <Component id="lblLogo" min="-2" pref="70" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblTenCuaHang" min="-2" pref="329" max="-2" attributes="0"/>
-                      <EmptySpace pref="951" max="32767" attributes="0"/>
-                      <Component id="btnTaiKhoan" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace pref="921" max="32767" attributes="0"/>
+                      <Component id="btnTaiKhoan" min="-2" pref="130" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -134,11 +134,13 @@
                       <Component id="lblLogo" min="-2" pref="70" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTenCuaHang" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
-                          <Component id="btnTaiKhoan" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lblTenCuaHang" min="-2" pref="70" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="btnTaiKhoan" min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -162,7 +164,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnTaiKhoan">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jButton1"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaiKhoanActionPerformed"/>
@@ -243,6 +245,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="T&#x1ed5;ng quan"/>
+                <Property name="alignmentY" type="float" value="0.0"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
             </Component>
