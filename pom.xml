@@ -12,11 +12,11 @@
     </properties>
     <dependencies>
         <!-- JDBC Driver cho SQL Server -->
-      <dependency>
-    <groupId>com.microsoft.sqlserver</groupId>
-    <artifactId>mssql-jdbc</artifactId>
-    <version>12.6.1.jre11</version>
-</dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.6.1.jre11</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -31,13 +31,12 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin để chạy ứng dụng từ dòng lệnh (tùy chọn) -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>${exec.mainClass}</mainClass>
+                    <mainClass>com.tuandat.cuahanggas.CuaHangGas</mainClass>
                 </configuration>
             </plugin>
         </plugins>

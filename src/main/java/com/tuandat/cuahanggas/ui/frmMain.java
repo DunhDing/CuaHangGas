@@ -1,31 +1,43 @@
 package com.tuandat.cuahanggas.ui;
 
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class frmMain extends javax.swing.JFrame {
 
     public frmMain() {
-        initComponents();
-//        setExtendedState(MAXIMIZED_BOTH);
-//        setLocationRelativeTo(null);
+         initComponents();
+        URL imageUrl = getClass().getResource("/Logo.png");
+if (imageUrl != null) {
+    ImageIcon originalIcon = new ImageIcon(imageUrl);
+    
+    // Lấy kích thước của lblLogo
+    int labelWidth = lblLogo.getWidth();
+    int labelHeight = lblLogo.getHeight();
 
-        setTitle("Main Form");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-
-        pnlMain.setLayout(new BorderLayout()); // Đảm bảo bố cục
-
-        // Gọi JPanel Form vào pnlMain
-        ucHangHoa childPanel = new ucHangHoa();
-        pnlMain.add(childPanel, BorderLayout.CENTER);
-
-        revalidate();
-        repaint(); // Cập nhật giao diện
-
-        setVisible(true);
+    // Nếu kích thước chưa có (label chưa hiển thị), dùng kích thước mặc định
+    if (labelWidth == 0 || labelHeight == 0) {
+        labelWidth = 52;  // kích thước theo GroupLayout bạn đã đặt
+        labelHeight = 50;
     }
 
+    // Scale ảnh
+    Image scaledImage = originalIcon.getImage().getScaledInstance(
+        labelWidth,
+        labelHeight,
+        Image.SCALE_SMOOTH
+    );
+
+    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+    lblLogo.setIcon(scaledIcon);
+    lblLogo.setText("");
+} else {
+    System.err.println("❌ Không tìm thấy ảnh logo!");
+    }
+        setExtendedState(MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -33,7 +45,8 @@ public class frmMain extends javax.swing.JFrame {
         pnlHeader = new javax.swing.JPanel();
         pnlHeaderContent = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTenCuaHang = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         pnlNavigation = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
 
@@ -48,9 +61,11 @@ public class frmMain extends javax.swing.JFrame {
 
         lblLogo.setText("logo");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(29, 43, 100));
-        jLabel1.setText("CỬA HÀNG GAS TUẤN ĐẠT");
+        lblTenCuaHang.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTenCuaHang.setForeground(new java.awt.Color(29, 43, 100));
+        lblTenCuaHang.setText("CỬA HÀNG GAS TUẤN ĐẠT");
+
+        jButton1.setText("jButton1");
 
         javax.swing.GroupLayout pnlHeaderContentLayout = new javax.swing.GroupLayout(pnlHeaderContent);
         pnlHeaderContent.setLayout(pnlHeaderContentLayout);
@@ -58,18 +73,19 @@ public class frmMain extends javax.swing.JFrame {
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderContentLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(596, Short.MAX_VALUE))
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 488, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(29, 29, 29))
         );
         pnlHeaderContentLayout.setVerticalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(jButton1))
+            .addComponent(lblTenCuaHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pnlHeader.add(pnlHeaderContent);
@@ -92,7 +108,7 @@ public class frmMain extends javax.swing.JFrame {
 
         getContentPane().add(pnlHeader, java.awt.BorderLayout.NORTH);
 
-        pnlMain.setBackground(new java.awt.Color(255, 51, 51));
+        pnlMain.setBackground(new java.awt.Color(204, 204, 204));
         pnlMain.setName("pnlMain"); // NOI18N
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
@@ -111,39 +127,10 @@ public class frmMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmChiTietHangHoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmChiTietHangHoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmChiTietHangHoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmChiTietHangHoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new frmMain().setVisible(true);
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblTenCuaHang;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlHeaderContent;
     private javax.swing.JPanel pnlMain;
