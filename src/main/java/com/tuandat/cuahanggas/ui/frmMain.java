@@ -33,6 +33,7 @@ public class frmMain extends javax.swing.JFrame {
         pnlHeader = new javax.swing.JPanel();
         pnlHeaderContent = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pnlNavigation = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
 
@@ -47,39 +48,47 @@ public class frmMain extends javax.swing.JFrame {
 
         lblLogo.setText("logo");
 
-        pnlNavigation.setBackground(new java.awt.Color(51, 51, 255));
-
-        javax.swing.GroupLayout pnlNavigationLayout = new javax.swing.GroupLayout(pnlNavigation);
-        pnlNavigation.setLayout(pnlNavigationLayout);
-        pnlNavigationLayout.setHorizontalGroup(
-            pnlNavigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlNavigationLayout.setVerticalGroup(
-            pnlNavigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 58, Short.MAX_VALUE)
-        );
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(29, 43, 100));
+        jLabel1.setText("CỬA HÀNG GAS TUẤN ĐẠT");
 
         javax.swing.GroupLayout pnlHeaderContentLayout = new javax.swing.GroupLayout(pnlHeaderContent);
         pnlHeaderContent.setLayout(pnlHeaderContentLayout);
         pnlHeaderContentLayout.setHorizontalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(952, Short.MAX_VALUE))
-            .addComponent(pnlNavigation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(596, Short.MAX_VALUE))
         );
         pnlHeaderContentLayout.setVerticalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlNavigation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        pnlNavigation.getAccessibleContext().setAccessibleParent(pnlHeader);
-
         pnlHeader.add(pnlHeaderContent);
+
+        pnlNavigation.setBackground(new java.awt.Color(51, 51, 255));
+
+        javax.swing.GroupLayout pnlNavigationLayout = new javax.swing.GroupLayout(pnlNavigation);
+        pnlNavigation.setLayout(pnlNavigationLayout);
+        pnlNavigationLayout.setHorizontalGroup(
+            pnlNavigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1032, Short.MAX_VALUE)
+        );
+        pnlNavigationLayout.setVerticalGroup(
+            pnlNavigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        pnlHeader.add(pnlNavigation);
+        pnlNavigation.getAccessibleContext().setAccessibleParent(pnlHeader);
 
         getContentPane().add(pnlHeader, java.awt.BorderLayout.NORTH);
 
@@ -133,6 +142,7 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlHeaderContent;
