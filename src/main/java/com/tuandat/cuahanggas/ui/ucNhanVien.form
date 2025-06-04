@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
-  <Properties>
-    <Property name="requestFocusEnabled" type="boolean" value="false"/>
-  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -20,14 +17,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="pnlHangHoa" min="-2" max="-2" attributes="0"/>
-                  <Component id="pnlLoaiBinh" alignment="0" max="32767" attributes="0"/>
-                  <Component id="pnlLoaiVan" alignment="0" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace pref="87" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlKhachHang" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlGioiTinh" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="txtTimKiem" min="-2" pref="222" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -38,29 +34,24 @@
                       <Component id="btnXuatFile" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="scpHangHoa" min="-2" pref="694" max="-2" attributes="0"/>
-                      <EmptySpace pref="92" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="scpKhachHang" min="-2" pref="694" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace pref="91" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="pnlHangHoa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="pnlLoaiBinh" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                      <Component id="pnlLoaiVan" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="pnlKhachHang" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="pnlGioiTinh" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtTimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnThem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -68,17 +59,17 @@
                           <Component id="btnXuatFile" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnChiTiet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="scpHangHoa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="scpKhachHang" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="pnlHangHoa">
+    <Container class="javax.swing.JPanel" name="pnlKhachHang">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
@@ -93,7 +84,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblHangHoa" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblKhachHang" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="72" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -102,21 +93,21 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="lblHangHoa" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblKhachHang" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblHangHoa">
+        <Component class="javax.swing.JLabel" name="lblKhachHang">
           <Properties>
-            <Property name="text" type="java.lang.String" value="H&#xe0;ng H&#xf3;a"/>
+            <Property name="text" type="java.lang.String" value="Nh&#xe2;n Vi&#xea;n"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlLoaiBinh">
+    <Container class="javax.swing.JPanel" name="pnlGioiTinh">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -126,7 +117,7 @@
             <TitledBorder/>
           </Border>
         </Property>
-        <Property name="name" type="java.lang.String" value="pnlLoaiBinh" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="pnlGioiTinh" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -135,10 +126,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cboLoaiBinh" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblLoaiBinh" min="-2" max="-2" attributes="0"/>
+                      <Component id="cboGioiTinh" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblGioiTinh" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="65" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -146,21 +137,21 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblLoaiBinh" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="cboLoaiBinh" min="-2" max="-2" attributes="0"/>
+                  <Component id="cboGioiTinh" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblLoaiBinh">
+        <Component class="javax.swing.JLabel" name="lblGioiTinh">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i B&#xec;nh"/>
+            <Property name="text" type="java.lang.String" value="Gi&#x1edb;i T&#xed;nh"/>
             <Property name="name" type="java.lang.String" value="txtLoaiBinh" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cboLoaiBinh">
+        <Component class="javax.swing.JComboBox" name="cboGioiTinh">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -170,69 +161,7 @@
                 <StringItem index="3" value="Item 4"/>
               </StringArray>
             </Property>
-            <Property name="name" type="java.lang.String" value="cboLoaiBinh" noResource="true"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="pnlLoaiVan">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
-        <Property name="name" type="java.lang.String" value="pnlLoaiVan" noResource="true"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cboLoaiVan" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbLoaiVan" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="57" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lbLoaiVan" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="cboLoaiVan" min="-2" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="lbLoaiVan">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i Van"/>
-            <Property name="name" type="java.lang.String" value="txtLoaiVan" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cboLoaiVan">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-            <Property name="name" type="java.lang.String" value="cboLoaiVan" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="cboGioiTinh" noResource="true"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -269,14 +198,14 @@
         <Property name="name" type="java.lang.String" value="btnXoa" noResource="true"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="scpHangHoa">
+    <Container class="javax.swing.JScrollPane" name="scpKhachHang">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tbleHangHoa">
+        <Component class="javax.swing.JTable" name="tbleKhachHang">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">

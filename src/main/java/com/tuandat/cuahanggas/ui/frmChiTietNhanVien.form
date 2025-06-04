@@ -23,73 +23,60 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="pnlLoaiVan" max="32767" attributes="0"/>
-                  <Component id="pnlLoaiBinh" alignment="0" max="32767" attributes="0"/>
-                  <Component id="pnlTenBinhGas" alignment="0" max="32767" attributes="0"/>
-                  <Component id="pnlMaBinhGa" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="pnlNgaySinh" max="32767" attributes="0"/>
+                  <Component id="pnlTenKhachHang" max="32767" attributes="0"/>
+                  <Component id="pnlMaKhachHang" max="32767" attributes="0"/>
+                  <Component id="pnlGioiTinh" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace pref="113" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="pnlSoVonTB" alignment="0" max="32767" attributes="0"/>
-                          <Component id="pnlGhiChu" alignment="0" max="32767" attributes="0"/>
-                          <Component id="pnlSoLuong" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="44" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnLuu" min="-2" pref="92" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                  <Component id="btnLuu" min="-2" pref="92" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="pnlGhiChu" max="32767" attributes="0"/>
+                      <Component id="pnlEmail" max="32767" attributes="0"/>
+                      <Component id="pnlSoDienThoai" alignment="1" max="32767" attributes="0"/>
+                      <Component id="pnlDiaChi" alignment="1" max="32767" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pnlMaBinhGa" min="-2" max="-2" attributes="0"/>
-                                  <Component id="pnlSoLuong" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="pnlTenBinhGas" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="pnlSoVonTB" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="pnlLoaiBinh" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="pnlGhiChu" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace pref="111" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="pnlLoaiVan" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="10" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnLuu" min="-2" pref="31" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="pnlMaKhachHang" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlSoDienThoai" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlTenKhachHang" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlEmail" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlGioiTinh" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlDiaChi" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlNgaySinh" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlGhiChu" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="btnLuu" min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="pnlMaBinhGa">
+    <Container class="javax.swing.JPanel" name="pnlMaKhachHang">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -104,9 +91,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblMaBinhGa" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMaKhachHang" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="txtMaBinhGa" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Component id="txtMaKhachHang" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -116,8 +103,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtMaBinhGa" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblMaBinhGa" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMaKhachHang" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblMaKhachHang" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -125,80 +112,26 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="java.awt.Label" name="lblMaBinhGa">
+        <Component class="java.awt.Label" name="lblMaKhachHang">
           <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe3; B&#xec;nh Gas"/>
+            <Property name="text" type="java.lang.String" value="M&#xe3; Nh&#xe2;n Vi&#xea;n"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblMaBinhGas"/>
-          </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMaBinhGa">
+        <Component class="javax.swing.JTextField" name="txtMaKhachHang">
           <Properties>
             <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlTenBinhGas">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
-        <Property name="name" type="java.lang.String" value="pnlTenBinhGas" noResource="true"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblTenBinhGas" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="51" max="32767" attributes="0"/>
-                  <Component id="txtTenBinhGas" min="-2" pref="159" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtTenBinhGas" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblTenBinhGas" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="java.awt.Label" name="lblTenBinhGas">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xea;n B&#xec;nh Gas"/>
-          </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblTenBinhGas"/>
-          </AccessibilityProperties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtTenBinhGas">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="txtTenBinhGas" noResource="true"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="pnlLoaiBinh">
+    <Container class="javax.swing.JPanel" name="pnlTenKhachHang">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder/>
           </Border>
         </Property>
-        <Property name="name" type="java.lang.String" value="pnlLoaiBinh" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -206,9 +139,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblLoaiBinh" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="txtLoaiBinh" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Component id="lblTenKhachHang" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <Component id="txtTenKhachHang" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -216,10 +149,10 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtLoaiBinh" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblLoaiBinh" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTenKhachHang" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblTenKhachHang" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -227,131 +160,26 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="java.awt.Label" name="lblLoaiBinh">
+        <Component class="java.awt.Label" name="lblTenKhachHang">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i B&#xec;nh"/>
+            <Property name="text" type="java.lang.String" value="T&#xea;n Nh&#xe2;n Vi&#xea;n"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblLoaiBinh"/>
-          </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtLoaiBinh">
+        <Component class="javax.swing.JTextField" name="txtTenKhachHang">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtLoaiBinh" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlLoaiVan">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
-        <Property name="name" type="java.lang.String" value="pnlLoaiVan" noResource="true"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblLoaiVan" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="txtLoaiVan" min="-2" pref="160" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtLoaiVan" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblLoaiVan" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="java.awt.Label" name="lblLoaiVan">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i Van"/>
-          </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblLoaiVan"/>
-          </AccessibilityProperties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtLoaiVan">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="txtLoaiVan" noResource="true"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="pnlSoLuong">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
-        <Property name="name" type="java.lang.String" value="pnlSoluong" noResource="true"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblSoLuong" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="txtSoLuong" min="-2" pref="160" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtSoLuong" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblSoLuong" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="java.awt.Label" name="lblSoLuong">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
-          </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblSoLuong"/>
-          </AccessibilityProperties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtSoLuong">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="txtSoLuong" noResource="true"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="pnlSoVonTB">
+    <Container class="javax.swing.JPanel" name="pnlGioiTinh">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder/>
           </Border>
         </Property>
-        <Property name="name" type="java.lang.String" value="pnlSoVonTB" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -359,9 +187,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lblSoVonTB" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="69" max="32767" attributes="0"/>
-                  <Component id="txtSoVonTB" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="cboGioiTinh" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -369,28 +197,176 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="txtSoVonTB" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="lblSoVonTB" min="-2" max="-2" attributes="0"/>
+                      <Component id="cboGioiTinh" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="lblGioiTinh" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="java.awt.Label" name="lblSoVonTB">
+        <Component class="java.awt.Label" name="lblGioiTinh">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1ed1; V&#x1ed1;n TB"/>
+            <Property name="text" type="java.lang.String" value="Gi&#x1edb;i T&#xed;nh"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblSoVonTB"/>
-          </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtSoVonTB">
+        <Component class="javax.swing.JComboBox" name="cboGioiTinh">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtSoVonTB" noResource="true"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pnlNgaySinh">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="dtpNgaySinh" min="-2" pref="148" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="dtpNgaySinh" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNgaySinh" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="java.awt.Label" name="lblNgaySinh">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ng&#xe0;y Sinh"/>
+          </Properties>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="dtpNgaySinh">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pnlEmail">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="txtEmail" min="-2" pref="160" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtEmail" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblEmail" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="java.awt.Label" name="lblEmail">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Email"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtEmail">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pnlSoDienThoai">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblSoDienThoai" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <Component id="txtSoDienThoai" min="-2" pref="160" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtSoDienThoai" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblSoDienThoai" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="java.awt.Label" name="lblSoDienThoai">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x110;i&#x1ec7;n Tho&#x1ea1;i"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtSoDienThoai">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -398,11 +374,11 @@
     <Container class="javax.swing.JPanel" name="pnlGhiChu">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
           </Border>
         </Property>
-        <Property name="name" type="java.lang.String" value="pnlGhiChu" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -435,13 +411,58 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ghi Ch&#xfa;"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lblGhiChu"/>
-          </AccessibilityProperties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtGhiChu">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtGhiChu" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pnlDiaChi">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="pnlMaBinhGas" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblDiaChi" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="txtDiaChi" min="-2" pref="160" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtDiaChi" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="lblDiaChi" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="java.awt.Label" name="lblDiaChi">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a Ch&#x1ec9;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtDiaChi">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="txtMaBinhGas" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
