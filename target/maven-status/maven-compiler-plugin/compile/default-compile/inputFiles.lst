@@ -1,14 +1,15 @@
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\AbstractDAO.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\BinhGas.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\KhachHang.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhanVienDAO.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\KhachHangDAO.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\CuaHangGas.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmMain.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\IGenericDAO.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\DBConnection.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\BinhGasDAO.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhanVien.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmChiTietHangHoa.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhapHang.java
-C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucHangHoa.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\KhachHang.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\DBConnection.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\AbstractDAO.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\BinhGas.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\KhachHangDAO.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\CuaHangGas.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhanVienDAO.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\IGenericDAO.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmMain.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmChiTietHangHoa.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhapHang.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucHangHoa.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\BinhGasDAO.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmLogin.java
+C:\K26CNTTB\2024 - 2025\LTHDT\BTLFull\CuaHangGas2\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhanVien.java
