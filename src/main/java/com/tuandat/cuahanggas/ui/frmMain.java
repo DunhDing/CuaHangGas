@@ -3,8 +3,11 @@ package com.tuandat.cuahanggas.ui;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class frmMain extends javax.swing.JFrame {
+
+    private boolean logout = false;
 
     public frmMain() {
         initComponents();
@@ -79,12 +82,22 @@ public class frmMain extends javax.swing.JFrame {
         pnlMain = new javax.swing.JPanel();
 
         menuQuanLyTaiKhoan.setText("Quản lý tài khoản ");
+        menuQuanLyTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuQuanLyTaiKhoanActionPerformed(evt);
+            }
+        });
         popMenuTaiKhoan.add(menuQuanLyTaiKhoan);
 
         menuTaiKhoan.setText("Tài khoản");
         popMenuTaiKhoan.add(menuTaiKhoan);
 
         menuDangXuat.setText("Đăng xuất");
+        menuDangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDangXuatActionPerformed(evt);
+            }
+        });
         popMenuTaiKhoan.add(menuDangXuat);
 
         menuXuatHang.setText("Xuất hàng");
@@ -100,6 +113,11 @@ public class frmMain extends javax.swing.JFrame {
         popMenuDoiTac.add(menuNhaCungCap);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlHeader.setPreferredSize(new java.awt.Dimension(983, 120));
         pnlHeader.setLayout(new javax.swing.BoxLayout(pnlHeader, javax.swing.BoxLayout.Y_AXIS));
@@ -236,18 +254,7 @@ public class frmMain extends javax.swing.JFrame {
 
         pnlMain.setBackground(java.awt.SystemColor.control);
         pnlMain.setName("pnlMain"); // NOI18N
-
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1513, Short.MAX_VALUE)
-        );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
-        );
-
+        pnlMain.setLayout(new java.awt.BorderLayout());
         getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -264,6 +271,38 @@ public class frmMain extends javax.swing.JFrame {
     private void btnTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiKhoanActionPerformed
         popMenuTaiKhoan.show(btnTaiKhoan, 0, btnTaiKhoan.getHeight());
     }//GEN-LAST:event_btnTaiKhoanActionPerformed
+    public boolean isLogout() {
+        return logout;
+    }
+    private void menuDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDangXuatActionPerformed
+        logout = true;
+        this.dispose();
+
+    }//GEN-LAST:event_menuDangXuatActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn thoát không?",
+                "Xác nhận thoát",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void menuQuanLyTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuQuanLyTaiKhoanActionPerformed
+        ucQuanLyTaiKhoan panelTaiKhoan = new ucQuanLyTaiKhoan();
+        pnlMain.removeAll();
+        pnlMain.setLayout(new java.awt.BorderLayout());
+        pnlMain.add(panelTaiKhoan, java.awt.BorderLayout.CENTER);
+        pnlMain.revalidate();
+        pnlMain.repaint();
+        panelTaiKhoan.setVisible(true);
+    }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;

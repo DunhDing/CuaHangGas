@@ -17,14 +17,24 @@ public class frmLogin extends javax.swing.JDialog {
 
     public frmLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setModalityType(ModalityType.APPLICATION_MODAL);
         initComponents();
-
+        setLocationRelativeTo(parent);
+        
         getContentPane().setBackground(Color.WHITE);
-
+                
         ImageIcon iconLogo = new ImageIcon(getClass().getResource("/logo.png"));
         Image imgLogo = iconLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
         lblLogo.setIcon(new ImageIcon(imgLogo));
+        
+        ImageIcon iconTenDangNhap = new ImageIcon(getClass().getResource("/tendangnhap.png"));
+        Image imgTenDangNhap = iconTenDangNhap.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        lblTenDangNhap.setIcon(new ImageIcon(imgTenDangNhap));
 
+        ImageIcon iconMatKhau = new ImageIcon(getClass().getResource("/matkhau.png"));
+        Image imgMatKhau = iconMatKhau.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        lblMatKhau.setIcon(new ImageIcon(imgMatKhau));
+        
         setLocationRelativeTo(parent);
     }
 
@@ -42,10 +52,12 @@ public class frmLogin extends javax.swing.JDialog {
         btnThoat = new javax.swing.JButton();
         btnDangNhap = new javax.swing.JButton();
         txtMatKhau = new javax.swing.JPasswordField();
+        lblTenDangNhap = new javax.swing.JLabel();
+        lblMatKhau = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(700, 400));
-        setSize(new java.awt.Dimension(700, 400));
+        setPreferredSize(new java.awt.Dimension(650, 400));
+        setSize(new java.awt.Dimension(650, 400));
 
         lblLogo.setText("logo");
 
@@ -53,6 +65,7 @@ public class frmLogin extends javax.swing.JDialog {
         lblTenCuaHang.setForeground(new java.awt.Color(29, 43, 100));
         lblTenCuaHang.setText("CỬA HÀNG GAS TUẤN ĐẠT");
 
+        txtTenDangNhap.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTenDangNhap.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTenDangNhapKeyPressed(evt);
@@ -60,7 +73,7 @@ public class frmLogin extends javax.swing.JDialog {
         });
 
         btnThoat.setBackground(new java.awt.Color(237, 28, 36));
-        btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThoat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThoat.setForeground(new java.awt.Color(255, 255, 255));
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
@@ -70,7 +83,7 @@ public class frmLogin extends javax.swing.JDialog {
         });
 
         btnDangNhap.setBackground(new java.awt.Color(0, 102, 204));
-        btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
         btnDangNhap.setText("Đăng nhập");
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
@@ -79,35 +92,45 @@ public class frmLogin extends javax.swing.JDialog {
             }
         });
 
+        txtMatKhau.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMatKhauKeyPressed(evt);
             }
         });
 
+        lblTenDangNhap.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblMatKhau.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(189, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(161, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(308, 308, 308))
+                        .addGap(144, 144, 144))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80)
-                                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtTenDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(txtMatKhau))
+                                .addGap(63, 63, 63))
                             .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(172, 172, 172))
+                        .addGap(8, 8, 8))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(256, 256, 256))))
+                        .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(138, 138, 138))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,15 +139,20 @@ public class frmLogin extends javax.swing.JDialog {
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
@@ -213,7 +241,9 @@ public class frmLogin extends javax.swing.JDialog {
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnThoat;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblMatKhau;
     private javax.swing.JLabel lblTenCuaHang;
+    private javax.swing.JLabel lblTenDangNhap;
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
