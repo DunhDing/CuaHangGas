@@ -8,7 +8,7 @@ public class frmMain extends javax.swing.JFrame {
 
     public frmMain() {
         initComponents();
-        URL imageUrl = getClass().getResource("/Logo.png");
+        URL imageUrl = getClass().getResource("/logo.png");
         if (imageUrl != null) {
             ImageIcon originalIcon = new ImageIcon(imageUrl);
 
@@ -32,19 +32,39 @@ public class frmMain extends javax.swing.JFrame {
         } else {
             System.err.println("❌ Không tìm thấy ảnh logo!");
         }
-        ImageIcon iconTongQuan = new ImageIcon(getClass().getResource("/tongquan.png"));
-        Image imgTongQuan = iconTongQuan.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnTongQuan.setIcon(new ImageIcon(imgTongQuan));
-        
-        ImageIcon iconHangHoa = new ImageIcon(getClass().getResource("/hanghoa.png"));
-        Image imgHangHoa = iconHangHoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnHangHoa.setIcon(new ImageIcon(imgHangHoa));
+            ImageIcon iconTongQuan = new ImageIcon(getClass().getResource("/tongquan.png"));
+            Image imgTongQuan = iconTongQuan.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnTongQuan.setIcon(new ImageIcon(imgTongQuan));
 
-        setExtendedState(MAXIMIZED_BOTH);
-        setLocationRelativeTo(null);
-    }
+            ImageIcon iconHangHoa = new ImageIcon(getClass().getResource("/hanghoa.png"));
+            Image imgHangHoa = iconHangHoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnHangHoa.setIcon(new ImageIcon(imgHangHoa));
+            
+            ImageIcon iconGiaoDich = new ImageIcon(getClass().getResource("/giaodich.png"));
+            Image imgGiaoDich = iconGiaoDich.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnGiaoDich.setIcon(new ImageIcon(imgGiaoDich));
+            
+            ImageIcon iconDoiTac = new ImageIcon(getClass().getResource("/doitac.png"));
+            Image imgDoiTac = iconDoiTac.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnDoiTac.setIcon(new ImageIcon(imgDoiTac));
+            
+            ImageIcon iconNhanVien = new ImageIcon(getClass().getResource("/nhanvien.png"));
+            Image imgNhanVien = iconNhanVien.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnNhanVien.setIcon(new ImageIcon(imgNhanVien));
+            
+            ImageIcon iconBaoCao = new ImageIcon(getClass().getResource("/baocao.png"));
+            Image imgBaoCao = iconBaoCao.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnBaoCao.setIcon(new ImageIcon(imgBaoCao));
 
-    @SuppressWarnings("unchecked")
+            ImageIcon iconTaiKhoan = new ImageIcon(getClass().getResource("/taikhoan.png"));
+            Image imgTaiKhoan = iconTaiKhoan.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnTaiKhoan.setIcon(new ImageIcon(imgTaiKhoan));
+            
+            setExtendedState(MAXIMIZED_BOTH);
+            setLocationRelativeTo(null);
+        }
+
+        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -108,7 +128,7 @@ public class frmMain extends javax.swing.JFrame {
         lblTenCuaHang.setForeground(new java.awt.Color(29, 43, 100));
         lblTenCuaHang.setText("CỬA HÀNG GAS TUẤN ĐẠT");
 
-        btnTaiKhoan.setText("jButton1");
+        btnTaiKhoan.setBorderPainted(false);
         btnTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaiKhoanActionPerformed(evt);
@@ -124,9 +144,9 @@ public class frmMain extends javax.swing.JFrame {
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 951, Short.MAX_VALUE)
-                .addComponent(btnTaiKhoan)
-                .addGap(41, 41, 41))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 921, Short.MAX_VALUE)
+                .addComponent(btnTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         pnlHeaderContentLayout.setVerticalGroup(
             pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,10 +154,12 @@ public class frmMain extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnlHeaderContentLayout.createSequentialGroup()
-                .addGroup(pnlHeaderContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTaiKhoan))
+                .addComponent(lblTenCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnlHeaderContentLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(btnTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlHeader.add(pnlHeaderContent);
@@ -154,6 +176,7 @@ public class frmMain extends javax.swing.JFrame {
         btnTongQuan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnTongQuan.setForeground(new java.awt.Color(255, 255, 255));
         btnTongQuan.setText("Tổng quan");
+        btnTongQuan.setAlignmentY(0.0F);
         btnTongQuan.setBorderPainted(false);
 
         btnGiaoDich.setBackground(new java.awt.Color(0, 102, 204));
@@ -244,11 +267,6 @@ public class frmMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiKhoanActionPerformed
-        popMenuTaiKhoan.show(btnTaiKhoan, 0, btnTaiKhoan.getHeight());
-
-    }//GEN-LAST:event_btnTaiKhoanActionPerformed
-
     private void btnGiaoDichActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaoDichActionPerformed
         popMenuGiaoDich.show(btnGiaoDich, 0, btnGiaoDich.getHeight());
     }//GEN-LAST:event_btnGiaoDichActionPerformed
@@ -256,6 +274,10 @@ public class frmMain extends javax.swing.JFrame {
     private void btnDoiTacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiTacActionPerformed
         popMenuDoiTac.show(btnDoiTac, 0, btnDoiTac.getHeight());
     }//GEN-LAST:event_btnDoiTacActionPerformed
+
+    private void btnTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiKhoanActionPerformed
+        popMenuTaiKhoan.show(btnTaiKhoan, 0, btnTaiKhoan.getHeight());
+    }//GEN-LAST:event_btnTaiKhoanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;
@@ -282,4 +304,5 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JPopupMenu popMenuGiaoDich;
     private javax.swing.JPopupMenu popMenuTaiKhoan;
     // End of variables declaration//GEN-END:variables
+
 }
