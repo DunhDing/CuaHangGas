@@ -247,27 +247,48 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnThem">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="50" green="b0" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
         <Property name="name" type="java.lang.String" value="btnThem" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnThemMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnChiTiet">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="66" red="66" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Chi Ti&#x1ebf;t"/>
         <Property name="name" type="java.lang.String" value="btnChiTiet" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnChiTietMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnXuatFile">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="50" green="b0" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t File"/>
         <Property name="name" type="java.lang.String" value="btnXuatFile" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnXoa">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="24" green="1c" red="ed" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
         <Property name="name" type="java.lang.String" value="btnXoa" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="scpHangHoa">
       <AuxValues>

@@ -1,32 +1,111 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.tuandat.cuahanggas.ui;
 
+import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.model.BinhGas;
+import com.tuandat.cuahanggas.utils.MyToys;
 import java.awt.Image;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author PC
  */
-public class frmChiTietHangHoa extends javax.swing.JFrame {
+public class dlgChiTietHangHoa extends javax.swing.JDialog {
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgChiTietHangHoa.class.getName());
+    public BinhGas selectedABinhGas = null;
+    private final BinhGasDAO binhGasDAO;
 
     /**
-     * Creates new form frmChiTietHangHoa
+     * Creates new form dlgChiTietHangHoa
+     *
+     * @param parent
+     * @param binhGas
+     * @param modal
+     * @param binhGasDAO
      */
-    public frmChiTietHangHoa() {
+    public dlgChiTietHangHoa(java.awt.Frame parent, BinhGas binhGas, boolean modal, BinhGasDAO binhGasDAO) {
+        super(parent, "Chi Tiết Hàng Hóa", true);
+        this.selectedABinhGas = binhGas;
+        this.binhGasDAO = binhGasDAO;
         initComponents();
-//        setExtendedState(MAXIMIZED_BOTH);
-//        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
+        txtMaBinhGa.setEnabled(false);
 
-        //thêm hình cho button Lưu
         ImageIcon iconLuu = new ImageIcon(getClass().getResource("/floppy-disk-solid.png"));
         Image imgLuu = iconLuu.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         btnLuu.setIcon(new ImageIcon(imgLuu));
     }
-    
+
+    public void loadData() {
+        List<BinhGas> danhSachBinhGas = null;
+        try {
+            danhSachBinhGas = binhGasDAO.getAll(); // Lấy tất cả bình gas từ DB
+            System.out.println("Da lay duoc du lieu Binh Gas tu CSDL.");
+        } catch (Exception e) {
+            System.err.println("Loi khi lay du lieu Binh Gas tu CSDL: " + e.getMessage());
+            e.printStackTrace();
+            return; // Dừng nếu không thể lấy dữ liệu
+        }
+
+        // --- Đổ dữ liệu vào cboLoaiBinh và cboLoaiVan bằng Lambda ---
+        // Sử dụng Set để đảm bảo các giá trị là duy nhất
+        Set<String> distinctLoaiBinhs = danhSachBinhGas.stream()
+                .map(BinhGas::getLoaiBinh)
+                .filter(loai -> loai != null && !loai.trim().isEmpty()) // Lọc bỏ null hoặc rỗng
+                .collect(Collectors.toSet());
+
+        Set<String> distinctLoaiVans = danhSachBinhGas.stream()
+                .map(BinhGas::getLoaiVan)
+                .filter(van -> van != null && !van.trim().isEmpty()) // Lọc bỏ null hoặc rỗng
+                .collect(Collectors.toSet());
+        // Fill cboLoaiBinh
+        DefaultComboBoxModel<String> loaiBinhModel = new DefaultComboBoxModel<>();
+        // Thêm các giá trị duy nhất từ Set vào model
+        distinctLoaiBinhs.forEach(loaiBinhModel::addElement);
+        cboLoaiBinh.setModel(loaiBinhModel);
+        System.out.println("Du lieu Loai Binh da duoc tai vao ComboBox.");
+
+        // Fill cboLoaiVan
+        DefaultComboBoxModel<String> loaiVanModel = new DefaultComboBoxModel<>();
+        // Thêm các giá trị duy nhất từ Set vào model
+        distinctLoaiVans.forEach(loaiVanModel::addElement);
+        cboLoaiVan.setModel(loaiVanModel);
+        System.out.println("Du lieu Loai Van da duoc tai vao ComboBox.");
+
+        //PHẦN KHÁC BIỆT
+        if (selectedABinhGas != null) {
+            //update
+            txtMaBinhGa.setText(selectedABinhGas.getMaBinhGas());
+            txtTenBinhGas.setText(selectedABinhGas.getTenBinhGas());
+            txtSoLuong.setText(Integer.toString(selectedABinhGas.getSoLuong()));
+            txtSoVonTB.setText(Integer.toString(selectedABinhGas.getGiaVonTrungBinh()));
+            txtGhiChu.setText(selectedABinhGas.getGhiChu());
+            cboLoaiBinh.setSelectedItem(selectedABinhGas.getLoaiBinh());
+            cboLoaiVan.setSelectedItem(selectedABinhGas.getLoaiVan());
+            
+        } else {
+            //add
+            List<String> distinctMaBinhGas = danhSachBinhGas.stream()
+                    .map(BinhGas::getMaBinhGas) // Chọn thuộc tính ID
+                    .collect(Collectors.toList()); // Chuyển thành List
+
+            //lấy mã tự động
+            txtMaBinhGa.setText(MyToys.generateNextIdFromStrings(distinctMaBinhGas, "BG"));
+        }
+        
+        selectedABinhGas = null;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,10 +123,10 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
         txtTenBinhGas = new javax.swing.JTextField();
         pnlLoaiBinh = new javax.swing.JPanel();
         lblLoaiBinh = new java.awt.Label();
-        txtLoaiBinh = new javax.swing.JTextField();
+        cboLoaiBinh = new javax.swing.JComboBox<>();
         pnlLoaiVan = new javax.swing.JPanel();
         lblLoaiVan = new java.awt.Label();
-        txtLoaiVan = new javax.swing.JTextField();
+        cboLoaiVan = new javax.swing.JComboBox<>();
         pnlSoLuong = new javax.swing.JPanel();
         lblSoLuong = new java.awt.Label();
         txtSoLuong = new javax.swing.JTextField();
@@ -59,7 +138,7 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
         txtGhiChu = new javax.swing.JTextField();
         btnLuu = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlMaBinhGa.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlMaBinhGa.setName("pnlMaBinhGas"); // NOI18N
@@ -89,8 +168,6 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        lblMaBinhGa.getAccessibleContext().setAccessibleName("lblMaBinhGas");
-
         pnlTenBinhGas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlTenBinhGas.setName("pnlTenBinhGas"); // NOI18N
 
@@ -119,14 +196,12 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        lblTenBinhGas.getAccessibleContext().setAccessibleName("lblTenBinhGas");
-
         pnlLoaiBinh.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlLoaiBinh.setName("pnlLoaiBinh"); // NOI18N
 
         lblLoaiBinh.setText("Loại Bình");
 
-        txtLoaiBinh.setName("txtLoaiBinh"); // NOI18N
+        cboLoaiBinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnlLoaiBinhLayout = new javax.swing.GroupLayout(pnlLoaiBinh);
         pnlLoaiBinh.setLayout(pnlLoaiBinhLayout);
@@ -136,27 +211,25 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlLoaiBinhLayout.setVerticalGroup(
             pnlLoaiBinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoaiBinhLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(pnlLoaiBinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
-
-        lblLoaiBinh.getAccessibleContext().setAccessibleName("lblLoaiBinh");
 
         pnlLoaiVan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlLoaiVan.setName("pnlLoaiVan"); // NOI18N
 
         lblLoaiVan.setText("Loại Van");
 
-        txtLoaiVan.setName("txtLoaiVan"); // NOI18N
+        cboLoaiVan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnlLoaiVanLayout = new javax.swing.GroupLayout(pnlLoaiVan);
         pnlLoaiVan.setLayout(pnlLoaiVanLayout);
@@ -166,20 +239,18 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlLoaiVanLayout.setVerticalGroup(
             pnlLoaiVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoaiVanLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(pnlLoaiVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
-
-        lblLoaiVan.getAccessibleContext().setAccessibleName("lblLoaiVan");
 
         pnlSoLuong.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlSoLuong.setName("pnlSoluong"); // NOI18N
@@ -209,8 +280,6 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addGap(31, 31, 31))
         );
 
-        lblSoLuong.getAccessibleContext().setAccessibleName("lblSoLuong");
-
         pnlSoVonTB.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlSoVonTB.setName("pnlSoVonTB"); // NOI18N
 
@@ -238,8 +307,6 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                     .addComponent(lblSoVonTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
-
-        lblSoVonTB.getAccessibleContext().setAccessibleName("lblSoVonTB");
 
         pnlGhiChu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlGhiChu.setName("pnlGhiChu"); // NOI18N
@@ -269,11 +336,14 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        lblGhiChu.getAccessibleContext().setAccessibleName("lblGhiChu");
-
         btnLuu.setBackground(new java.awt.Color(0, 176, 80));
         btnLuu.setText("Lưu");
         btnLuu.setName("btnLuu"); // NOI18N
+        btnLuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLuuMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -320,7 +390,7 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(pnlLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(10, Short.MAX_VALUE))
+                        .addContainerGap(91, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -330,9 +400,39 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLuuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLuuMouseClicked
+
+        if (!MyToys.isValidInput(txtTenBinhGas, txtSoLuong, txtSoVonTB, txtGhiChu)) {
+            return;
+        }
+        try {
+            // Lấy dữ liệu từ form
+            String maBinhGas = txtMaBinhGa.getText();
+            String tenBinhGas = txtTenBinhGas.getText();
+            String loaiBinh = cboLoaiBinh.getSelectedItem().toString();
+            String loaiVan = cboLoaiVan.getSelectedItem().toString();
+            int soLuong = Integer.parseInt(txtSoLuong.getText());
+            int giaVonTrungBinh = Integer.parseInt(txtSoVonTB.getText());
+            String ghiChu = txtGhiChu.getText();
+
+            // Tạo đối tượng BinhGas
+            BinhGas binhGas = new BinhGas(maBinhGas, tenBinhGas, loaiBinh, loaiVan, soLuong, giaVonTrungBinh, ghiChu);
+            
+            if (selectedABinhGas != null)
+                binhGasDAO.update(binhGas);
+            else
+                binhGasDAO.insert(binhGas);
+            JOptionPane.showMessageDialog(null, "Thêm mới bình gas thành công!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi lưu bình gas: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        this.dispose();
+    }//GEN-LAST:event_btnLuuMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
+    private javax.swing.JComboBox<String> cboLoaiBinh;
+    private javax.swing.JComboBox<String> cboLoaiVan;
     private java.awt.Label lblGhiChu;
     private java.awt.Label lblLoaiBinh;
     private java.awt.Label lblLoaiVan;
@@ -348,8 +448,6 @@ public class frmChiTietHangHoa extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSoVonTB;
     private javax.swing.JPanel pnlTenBinhGas;
     private javax.swing.JTextField txtGhiChu;
-    private javax.swing.JTextField txtLoaiBinh;
-    private javax.swing.JTextField txtLoaiVan;
     private javax.swing.JTextField txtMaBinhGa;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtSoVonTB;

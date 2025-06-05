@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.tuandat.cuahanggas.ui;
 
@@ -11,12 +11,15 @@ import javax.swing.ImageIcon;
  *
  * @author PC
  */
-public class frmChiTietKhachHang extends javax.swing.JFrame {
+public class dlgChiTietKhachHang extends javax.swing.JDialog {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgChiTietKhachHang.class.getName());
 
     /**
-     * Creates new form frmChiTietKhachHang
+     * Creates new form dlgChiTietKhachHang
      */
-    public frmChiTietKhachHang() {
+    public dlgChiTietKhachHang(java.awt.Frame parent, boolean modal) {
+        super(parent, "Chi Tiết Khách Hàng", true);
         initComponents();
         
         ImageIcon iconLuu = new ImageIcon(getClass().getResource("/floppy-disk-solid.png"));
@@ -33,6 +36,9 @@ public class frmChiTietKhachHang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlNgaySinh = new javax.swing.JPanel();
+        lblNgaySinh = new java.awt.Label();
+        dtpNgaySinh = new com.toedter.calendar.JDateChooser();
         pnlMaKhachHang = new javax.swing.JPanel();
         lblMaKhachHang = new java.awt.Label();
         txtMaKhachHang = new javax.swing.JTextField();
@@ -42,9 +48,6 @@ public class frmChiTietKhachHang extends javax.swing.JFrame {
         pnlGioiTinh = new javax.swing.JPanel();
         lblGioiTinh = new java.awt.Label();
         cboGioiTinh = new javax.swing.JComboBox<>();
-        pnlNgaySinh = new javax.swing.JPanel();
-        lblNgaySinh = new java.awt.Label();
-        dtpNgaySinh = new com.toedter.calendar.JDateChooser();
         pnlEmail = new javax.swing.JPanel();
         lblEmail = new java.awt.Label();
         txtEmail = new javax.swing.JTextField();
@@ -59,8 +62,33 @@ public class frmChiTietKhachHang extends javax.swing.JFrame {
         txtDiaChi = new javax.swing.JTextField();
         btnLuu = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(761, 511));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        pnlNgaySinh.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        pnlNgaySinh.setName("pnlMaBinhGas"); // NOI18N
+
+        lblNgaySinh.setText("Ngày Sinh");
+
+        javax.swing.GroupLayout pnlNgaySinhLayout = new javax.swing.GroupLayout(pnlNgaySinh);
+        pnlNgaySinh.setLayout(pnlNgaySinhLayout);
+        pnlNgaySinhLayout.setHorizontalGroup(
+            pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlNgaySinhLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dtpNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnlNgaySinhLayout.setVerticalGroup(
+            pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNgaySinhLayout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dtpNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
 
         pnlMaKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlMaKhachHang.setName("pnlMaBinhGas"); // NOI18N
@@ -144,32 +172,6 @@ public class frmChiTietKhachHang extends javax.swing.JFrame {
                     .addComponent(cboGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
-        );
-
-        pnlNgaySinh.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        pnlNgaySinh.setName("pnlMaBinhGas"); // NOI18N
-
-        lblNgaySinh.setText("Ngày Sinh");
-
-        javax.swing.GroupLayout pnlNgaySinhLayout = new javax.swing.GroupLayout(pnlNgaySinh);
-        pnlNgaySinh.setLayout(pnlNgaySinhLayout);
-        pnlNgaySinhLayout.setHorizontalGroup(
-            pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNgaySinhLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dtpNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        pnlNgaySinhLayout.setVerticalGroup(
-            pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNgaySinhLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addGroup(pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dtpNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
         );
 
         pnlEmail.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -336,7 +338,6 @@ public class frmChiTietKhachHang extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;

@@ -4,8 +4,15 @@
  */
 package com.tuandat.cuahanggas.ui;
 
+import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.model.BinhGas;
+import com.tuandat.cuahanggas.utils.MyToys;
 import java.awt.Image;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,10 +20,18 @@ import javax.swing.ImageIcon;
  */
 public class ucHangHoa extends javax.swing.JPanel {
 
+    private final BinhGasDAO binhGasDAO;
+    private BinhGas selectedBinhGas = null;
+    List<BinhGas> danhSachBinhGas = null;
+
     /**
      * Creates new form ucHangHoa
+     *
+     * @param binhGasDAO
      */
-    public ucHangHoa() {
+    public ucHangHoa(BinhGasDAO binhGasDAO) {
+        this.binhGasDAO = binhGasDAO;
+
         initComponents();
 //        ImageIcon icon = new ImageIcon("Logo.png"); // Đường dẫn đến ảnh
 //        JLabel label = new JLabel("Text", icon, JLabel.LEFT);
@@ -36,6 +51,75 @@ public class ucHangHoa extends javax.swing.JPanel {
         ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
         Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         btnXoa.setIcon(new ImageIcon(imgXoa));
+        
+        setupSelectionListener();
+    }
+
+    public void loadData() {
+
+        
+        try {
+            danhSachBinhGas = binhGasDAO.getAll(); // Lấy tất cả bình gas từ DB
+            System.out.println("Da lay duoc du lieu Binh Gas tu CSDL.");
+        } catch (Exception e) {
+            System.err.println("Loi khi lay du lieu Binh Gas tu CSDL: " + e.getMessage());
+            e.printStackTrace();
+            return; // Dừng nếu không thể lấy dữ liệu
+        }
+
+        tbleHangHoa.setModel(MyToys.listToTableModel(danhSachBinhGas));
+
+        // --- Đổ dữ liệu vào tbleHangHoa ---
+//        String[] columnNames = {"Mã Bình Gas", "Tên Bình Gas", "Loại Bình", "Loại Van", "Số Lượng", "Giá Vốn TB", "Ghi Chú"};
+//        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false; // Không cho phép sửa trực tiếp trên bảng
+//            }
+//        };
+//
+//        for (BinhGas bg : danhSachBinhGas) {
+//            Vector<Object> row = new Vector<>();
+//            row.add(bg.getMaBinhGas());
+//            row.add(bg.getTenBinhGas());
+//            row.add(bg.getLoaiBinh());
+//            row.add(bg.getLoaiVan());
+//            row.add(bg.getSoLuong());
+//            row.add(bg.getGiaVonTrungBinh());
+//            row.add(bg.getGhiChu());
+//            tableModel.addRow(row);
+//        }
+//        tbleHangHoa.setModel(tableModel);
+//        System.out.println("Du lieu Binh Gas đã được tai vao bang.");
+        // --- Đổ dữ liệu vào cboLoaiBinh và cboLoaiVan bằng Lambda ---
+        // Sử dụng Set để đảm bảo các giá trị là duy nhất
+        Set<String> distinctLoaiBinhs = danhSachBinhGas.stream()
+                .map(BinhGas::getLoaiBinh)
+                .filter(loai -> loai != null && !loai.trim().isEmpty()) // Lọc bỏ null hoặc rỗng
+                .collect(Collectors.toSet());
+
+        Set<String> distinctLoaiVans = danhSachBinhGas.stream()
+                .map(BinhGas::getLoaiVan)
+                .filter(van -> van != null && !van.trim().isEmpty()) // Lọc bỏ null hoặc rỗng
+                .collect(Collectors.toSet());
+
+        // Fill cboLoaiBinh
+        DefaultComboBoxModel<String> loaiBinhModel = new DefaultComboBoxModel<>();
+        loaiBinhModel.addElement("Tất cả"); // Thêm tùy chọn "Tất cả"
+        // Thêm các giá trị duy nhất từ Set vào model
+        distinctLoaiBinhs.forEach(loaiBinhModel::addElement);
+        cboLoaiBinh.setModel(loaiBinhModel);
+        System.out.println("Du lieu Loai Binh da duoc tai vao ComboBox.");
+
+        // Fill cboLoaiVan
+        DefaultComboBoxModel<String> loaiVanModel = new DefaultComboBoxModel<>();
+        loaiVanModel.addElement("Tất cả"); // Thêm tùy chọn "Tất cả"
+        // Thêm các giá trị duy nhất từ Set vào model
+        distinctLoaiVans.forEach(loaiVanModel::addElement);
+        cboLoaiVan.setModel(loaiVanModel);
+        System.out.println("Du lieu Loai Van da duoc tai vao ComboBox.");
+        
+        selectedBinhGas = null;
     }
 
     /**
@@ -149,17 +233,36 @@ public class ucHangHoa extends javax.swing.JPanel {
 
         txtTimKiem.setText("tìm kiếm");
 
+        btnThem.setBackground(new java.awt.Color(0, 176, 80));
         btnThem.setText("Thêm");
         btnThem.setName("btnThem"); // NOI18N
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemMouseClicked(evt);
+            }
+        });
 
+        btnChiTiet.setBackground(new java.awt.Color(102, 102, 102));
         btnChiTiet.setText("Chi Tiết");
         btnChiTiet.setName("btnChiTiet"); // NOI18N
+        btnChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnChiTietMouseClicked(evt);
+            }
+        });
 
+        btnXuatFile.setBackground(new java.awt.Color(0, 176, 80));
         btnXuatFile.setText("Xuất File");
         btnXuatFile.setName("btnXuatFile"); // NOI18N
 
+        btnXoa.setBackground(new java.awt.Color(237, 28, 36));
         btnXoa.setText("Xóa");
         btnXoa.setName("btnXoa"); // NOI18N
+        btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaMouseClicked(evt);
+            }
+        });
 
         tbleHangHoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -224,6 +327,71 @@ public class ucHangHoa extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
+        frmTest f = new frmTest();
+        dlgChiTietHangHoa d = new dlgChiTietHangHoa(f, null, true, binhGasDAO);
+        d.loadData();
+        d.setVisible(true);
+
+        loadData();
+    }//GEN-LAST:event_btnThemMouseClicked
+
+    private void btnChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChiTietMouseClicked
+        if (selectedBinhGas == null) {
+            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng" , "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        frmTest f = new frmTest();
+        dlgChiTietHangHoa d = new dlgChiTietHangHoa(f, this.selectedBinhGas, true, binhGasDAO);
+        d.loadData();
+        d.setVisible(true);
+
+        loadData();
+    }//GEN-LAST:event_btnChiTietMouseClicked
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        if (selectedBinhGas == null) {
+            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng" , "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //HỎI TRƯỚC KHI XÓA
+        binhGasDAO.delete(selectedBinhGas);
+        
+        loadData();
+    }//GEN-LAST:event_btnXoaMouseClicked
+
+    //VIẾT SỰ KIỆN SELECTION_CHANGED TRONG JTABLE
+//    private void setupSelectionListener() {
+//        ListSelectionModel selectionModel = tbleHangHoa.getSelectionModel();
+//        selectionModel.addListSelectionListener(e -> {
+//            if (!e.getValueIsAdjusting()) {
+//                int selectedRow = tbleHangHoa.getSelectedRow();
+//                selectedBinhGas = null;
+//
+//                if (selectedRow >= 0) {
+//                    // Nếu bạn dùng danh sách bookList để đổ dữ liệu:
+//                    selectedBinhGas = binhGasDAO.getAll().get(tbleHangHoa.convertRowIndexToModel(selectedRow));
+//                    System.out.println("Da Chon sach: " + selectedBinhGas.getTenBinhGas());
+//                }
+//            }
+//        });
+//    }
+    private void setupSelectionListener() {
+        tbleHangHoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int selectedRow = tbleHangHoa.getSelectedRow();
+                selectedBinhGas = null;
+
+                if (selectedRow >= 0) {
+                    int modelRow = tbleHangHoa.convertRowIndexToModel(selectedRow);
+                    selectedBinhGas = danhSachBinhGas.get(modelRow);
+                    System.out.println("Đã chọn bình gas: " + selectedBinhGas.getTenBinhGas());
+                }
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
