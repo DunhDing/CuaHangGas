@@ -355,10 +355,16 @@ public class ucHangHoa extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng" , "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        //HỎI TRƯỚC KHI XÓA
-        binhGasDAO.delete(selectedBinhGas);
-        
-        loadData();
+        if (JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn thoát không?",
+                "Xác nhận thoát",
+                JOptionPane.YES_NO_OPTION
+        ) == JOptionPane.YES_OPTION) {
+            binhGasDAO.delete(selectedBinhGas.getMaBinhGas());
+            JOptionPane.showMessageDialog(null, "Xoa binh gas thành công!");
+            loadData();
+        }
     }//GEN-LAST:event_btnXoaMouseClicked
 
     //VIẾT SỰ KIỆN SELECTION_CHANGED TRONG JTABLE

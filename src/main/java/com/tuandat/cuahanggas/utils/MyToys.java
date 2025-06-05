@@ -6,6 +6,7 @@ package com.tuandat.cuahanggas.utils;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.function.Predicate;
 import javax.swing.table.DefaultTableModel;
 
 public class MyToys {
@@ -81,5 +82,23 @@ public class MyToys {
 
         return model;
     }
+
+    public static <T> boolean isForeignKeyInUse(List<T> childList, Predicate<T> predicate) {
+        return childList.stream().anyMatch(predicate);
+    }
+
+//    List<ChiTietNhapHang> list = chiTietNhapHangService.getAll();
+//
+//    boolean isUsed = CabinetUtil.isForeignKeyInUse(
+//            list,
+//            ct -> ct.getMaBinhGas().equals("BG01")
+//    );
+//
+//
+//if (isUsed) {
+//    System.out.println("MaBinhGas đang được sử dụng.");
+//} else {
+//    System.out.println("Có thể xóa MaBinhGas này.");
+//}
 
 }

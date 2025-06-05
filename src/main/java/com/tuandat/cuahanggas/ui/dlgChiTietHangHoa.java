@@ -103,7 +103,6 @@ public class dlgChiTietHangHoa extends javax.swing.JDialog {
             txtMaBinhGa.setText(MyToys.generateNextIdFromStrings(distinctMaBinhGas, "BG"));
         }
         
-        selectedABinhGas = null;
     }
 
     /**
