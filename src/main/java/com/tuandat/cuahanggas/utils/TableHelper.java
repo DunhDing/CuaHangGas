@@ -1,6 +1,11 @@
 package com.tuandat.cuahanggas.utils;
 
+import com.tuandat.cuahanggas.model.NhanVien;
+import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import java.sql.*;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 
 public class TableHelper {
@@ -25,5 +30,20 @@ public class TableHelper {
         }
 
         return model;
+    }
+    
+    public static List<NhanVien> getNhanViensChuaCoTaiKhoan(
+            List<NhanVien> danhSachNhanVien,
+            List<TaiKhoanNguoiDung> danhSachTaiKhoan) {
+
+        // Lấy danh sách mã nhân viên đã có trong bảng tài khoản
+        Set<String> maNhanViensDaCoTK = danhSachTaiKhoan.stream()
+                .map(TaiKhoanNguoiDung::getMaNhanVien)
+                .collect(Collectors.toSet());
+
+        // Lọc ra những nhân viên chưa có tài khoản
+        return danhSachNhanVien.stream()
+                .filter(nv -> !maNhanViensDaCoTK.contains(nv.getMaNhanVien()))
+                .collect(Collectors.toList());
     }
 }

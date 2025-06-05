@@ -3,9 +3,12 @@ package com.tuandat.cuahanggas.dao.impl;
 import com.tuandat.cuahanggas.dao.AbstractDAO;
 import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TaiKhoanNguoiDungDAO extends AbstractDAO<TaiKhoanNguoiDung> {
@@ -39,6 +42,7 @@ public class TaiKhoanNguoiDungDAO extends AbstractDAO<TaiKhoanNguoiDung> {
     @Override
     protected String getIdColumnName() {
         return "MaTaiKhoan"; // Tên cột khóa chính trong DB
+
     }
 
     @Override
@@ -64,3 +68,62 @@ public class TaiKhoanNguoiDungDAO extends AbstractDAO<TaiKhoanNguoiDung> {
         return values;
     }
 }
+
+//    public List<Map<String, String>> getTaiKhoanVoiTenLienKet() {
+//        List<Map<String, String>> list = new ArrayList<>();
+//        String sql = """
+//    SELECT tk.MaTaiKhoan, tk.TenDangNhap, tk.MatKhau,
+//           vt.TenVaiTro, nv.HoTen AS TenNhanVien, tk.GhiChu
+//    FROM TaiKhoanNguoiDung tk
+//    JOIN VaiTroTaiKhoan vt ON tk.MaVaiTro = vt.MaVaiTro
+//    LEFT JOIN NhanVien nv ON tk.MaNhanVien = nv.MaNhanVien
+//""";
+//
+//        try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+//
+//            while (rs.next()) {
+//                Map<String, String> row = new HashMap<>();
+//                row.put("MaTaiKhoan", rs.getString("MaTaiKhoan"));
+//                row.put("TenDangNhap", rs.getString("TenDangNhap"));
+//                row.put("MatKhau", rs.getString("MatKhau"));
+//                row.put("TenVaiTro", rs.getString("TenVaiTro"));
+//                row.put("TenNhanVien", rs.getString("TenNhanVien"));
+//                row.put("GhiChu", rs.getString("GhiChu"));
+//                list.add(row);
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return list;
+//    }
+//
+//    public List<String> getDanhSachTenVaiTro() {
+//        List<String> ds = new ArrayList<>();
+//        String sql = "SELECT TenVaiTro FROM VaiTroTaiKhoan";
+//        try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+//            while (rs.next()) {
+//                ds.add(rs.getString("TenVaiTro"));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return ds;
+//    }
+//
+//    public Map<String, String> getDanhSachVaiTro() {
+//        Map<String, String> vaiTros = new HashMap<>();
+//        String sql = "SELECT MaVaiTro, TenVaiTro FROM VaiTroTaiKhoan";
+//        try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+//            while (rs.next()) {
+//                String maVaiTro = rs.getString("MaVaiTro");
+//                String tenVaiTro = rs.getString("TenVaiTro");
+//                vaiTros.put(tenVaiTro, maVaiTro);  
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return vaiTros;
+//    }
+//}

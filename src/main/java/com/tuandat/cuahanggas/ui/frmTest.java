@@ -2,6 +2,7 @@ package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
+import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -338,19 +339,19 @@ public class frmTest extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void menuQuanLyTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuQuanLyTaiKhoanActionPerformed
-        ucQuanLyTaiKhoan panelTaiKhoan = new ucQuanLyTaiKhoan();
-        pnlMain.removeAll();
-        pnlMain.setLayout(new java.awt.BorderLayout());
-        pnlMain.add(panelTaiKhoan, java.awt.BorderLayout.CENTER);
-        pnlMain.revalidate();
-        pnlMain.repaint();
-        panelTaiKhoan.setVisible(true);
+//        ucQuanLyTaiKhoan panelTaiKhoan = new ucQuanLyTaiKhoan(TaiKhoanNguoiDung);
+//        pnlMain.removeAll();
+//        pnlMain.setLayout(new java.awt.BorderLayout());
+//        pnlMain.add(panelTaiKhoan, java.awt.BorderLayout.CENTER);
+//        pnlMain.revalidate();
+//        pnlMain.repaint();
+//        panelTaiKhoan.setVisible(true);
     }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ucHangHoa hh = new ucHangHoa(binhGasDAO);
-        hh.loadData();
-        showPanel(hh);
+        ucHangHoa f = new ucHangHoa(binhGasDAO);
+        f.loadData();
+        showPanel(f);
     }//GEN-LAST:event_formWindowOpened
 
     private void showPanel(JPanel panel) {

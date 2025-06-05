@@ -1,16 +1,31 @@
 package com.tuandat.cuahanggas.ui;
 
+import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
+import com.tuandat.cuahanggas.dao.impl.NhanVienDAO;
+import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
+import com.tuandat.cuahanggas.utils.DBConnection;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class frmMain extends javax.swing.JFrame {
 
     private boolean logout = false;
+    private BinhGasDAO binhGasDAO;
+    private KhachHangDAO khachHangDAO;
+    private TaiKhoanNguoiDungDAO taiKhoanDAO;
+    private NhanVienDAO nhanVienDAO;
 
-    public frmMain() {
+    public frmMain(BinhGasDAO binhGasDAO, TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv, KhachHangDAO kh) {
         initComponents();
+        this.taiKhoanDAO = taiKhoanDAO;
+        this.binhGasDAO = binhGasDAO;
+        this.nhanVienDAO = nv;
+        this.khachHangDAO = kh;
 
         ImageIcon iconLogo = new ImageIcon(getClass().getResource("/logo.png"));
         Image imgLogo = iconLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
@@ -294,16 +309,19 @@ public class frmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void menuQuanLyTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuQuanLyTaiKhoanActionPerformed
-        ucQuanLyTaiKhoan panelTaiKhoan = new ucQuanLyTaiKhoan();
-        pnlMain.removeAll();
-        pnlMain.setLayout(new java.awt.BorderLayout());
-        pnlMain.add(panelTaiKhoan, java.awt.BorderLayout.CENTER);
-        pnlMain.revalidate();
-        pnlMain.repaint();
+        ucQuanLyTaiKhoan panelTaiKhoan = new ucQuanLyTaiKhoan(taiKhoanDAO, nhanVienDAO);
+        showPanel(panelTaiKhoan);
+        panelTaiKhoan.loadData();
         panelTaiKhoan.setVisible(true);
     }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
 
-
+private void showPanel(JPanel panel) {
+        pnlMain.removeAll();                 // Xóa hết panel cũ
+        pnlMain.setLayout(new BorderLayout()); // Đảm bảo panel mới fill full
+        pnlMain.add(panel, BorderLayout.CENTER);
+        pnlMain.revalidate();                // Cập nhật lại bố cục
+        pnlMain.repaint();                  // Vẽ lại
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;
     private javax.swing.JButton btnDoiTac;
