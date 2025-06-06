@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 
 public class frmMain extends javax.swing.JFrame {
 
-    private boolean logout = false;
     private BinhGasDAO binhGasDAO;
     private KhachHangDAO khachHangDAO;
     private TaiKhoanNguoiDungDAO taiKhoanDAO;
     private NhanVienDAO nhanVienDAO;
+    private boolean isLogout = false;
 
     public frmMain(BinhGasDAO binhGasDAO, TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv, KhachHangDAO kh) {
         initComponents();
@@ -68,6 +68,10 @@ public class frmMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    public boolean isLogout() {
+        return isLogout;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -105,6 +109,11 @@ public class frmMain extends javax.swing.JFrame {
         popMenuTaiKhoan.add(menuQuanLyTaiKhoan);
 
         menuTaiKhoan.setText("Tài khoản");
+        menuTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTaiKhoanActionPerformed(evt);
+            }
+        });
         popMenuTaiKhoan.add(menuTaiKhoan);
 
         menuDangXuat.setText("Đăng xuất");
@@ -127,7 +136,7 @@ public class frmMain extends javax.swing.JFrame {
         menuNhaCungCap.setText("Nhà cung cấp");
         popMenuDoiTac.add(menuNhaCungCap);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -286,11 +295,9 @@ public class frmMain extends javax.swing.JFrame {
     private void btnTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiKhoanActionPerformed
         popMenuTaiKhoan.show(btnTaiKhoan, 0, btnTaiKhoan.getHeight());
     }//GEN-LAST:event_btnTaiKhoanActionPerformed
-    public boolean isLogout() {
-        return logout;
-    }
+
     private void menuDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDangXuatActionPerformed
-        logout = true;
+        isLogout = true;
         this.dispose();
 
     }//GEN-LAST:event_menuDangXuatActionPerformed
@@ -315,12 +322,16 @@ public class frmMain extends javax.swing.JFrame {
         panelTaiKhoan.setVisible(true);
     }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
 
-private void showPanel(JPanel panel) {
-        pnlMain.removeAll();                 // Xóa hết panel cũ
-        pnlMain.setLayout(new BorderLayout()); // Đảm bảo panel mới fill full
+    private void menuTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTaiKhoanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuTaiKhoanActionPerformed
+
+    private void showPanel(JPanel panel) {
+        pnlMain.removeAll();                
+        pnlMain.setLayout(new BorderLayout()); 
         pnlMain.add(panel, BorderLayout.CENTER);
-        pnlMain.revalidate();                // Cập nhật lại bố cục
-        pnlMain.repaint();                  // Vẽ lại
+        pnlMain.revalidate();                
+        pnlMain.repaint();                 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;

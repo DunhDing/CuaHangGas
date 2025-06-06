@@ -7,6 +7,7 @@ import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.MyToys;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,8 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
     private NhanVienDAO nhanVienDAO;
     List<TaiKhoanNguoiDung> list = null;
     public TaiKhoanNguoiDung selectedTaiKhoan = null;
+    private Map<String, String> vaiTroMap = new HashMap<>();
+    private List<Map<String, String>> dsTaiKhoan = new ArrayList<>();
 
     public ucQuanLyTaiKhoan(TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv) {
         initComponents();
@@ -43,36 +46,30 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
         btnXoa.setIcon(new ImageIcon(imgXoa));
 
         //hienThiDuLieuTaiKhoan();
-        //loadVaiTroToComboBox();
+        loadVaiTroToComboBox();
+        loadData();
         setupSelectionListener();
     }
 
     public void loadData() {
 
-        try {
-            list = taiKhoanDAO.getAll(); // Lấy tất cả bình gas từ DB
-            System.out.println("Da lay duoc du lieu Binh Gas tu CSDL.");
-        } catch (Exception e) {
-            System.err.println("Loi khi lay du lieu Binh Gas tu CSDL: " + e.getMessage());
-            e.printStackTrace();
-            return; // Dừng nếu không thể lấy dữ liệu
+        dsTaiKhoan = taiKhoanDAO.getTaiKhoanVoiTenLienKet();
+
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Mã Tài Khoản", "Tên Đăng Nhập", "Mật Khẩu", "Vai Trò", "Nhân Viên", "Ghi Chú"}, 0);
+
+        for (Map<String, String> row : dsTaiKhoan) {
+            model.addRow(new Object[]{
+                row.get("MaTaiKhoan"),
+                row.get("TenDangNhap"),
+                row.get("MatKhau"),
+                row.get("TenVaiTro"),
+                row.get("TenNhanVien"),
+                row.get("GhiChu")
+            });
         }
 
-        tblQuanLyTaiKhoan.setModel(MyToys.listToTableModel(list));
-
-        // --- Đổ dữ liệu vào cboLoaiBinh và cboLoaiVan bằng Lambda ---
-        // Sử dụng Set để đảm bảo các giá trị là duy nhất
-        String[] vaiTroList = {"VT00", "VT01", "VT02", "VT03"};
-
-// Xóa dữ liệu cũ (nếu có)
-        cboVaiTro.removeAllItems();
-
-// Thêm từng vai trò vào combo box
-        for (String vaiTro : vaiTroList) {
-            cboVaiTro.addItem(vaiTro);
-        }
-
-        selectedTaiKhoan = null;
+        tblQuanLyTaiKhoan.setModel(model);
     }
 
     //sự kiện chọn trong Jtable
@@ -85,50 +82,62 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
 
                 if (selectedRow >= 0) {
                     int modelRow = tblQuanLyTaiKhoan.convertRowIndexToModel(selectedRow);
-                    selectedTaiKhoan = list.get(modelRow);
-                    System.out.println("Đã chọn bình gas: " + selectedTaiKhoan.getTenDangNhap());
+
+                    Map<String, String> mapSelected = dsTaiKhoan.get(modelRow);
+
+                    TaiKhoanNguoiDung tk = new TaiKhoanNguoiDung();
+                    tk.setMaTaiKhoan(mapSelected.get("MaTaiKhoan"));
+                    tk.setTenDangNhap(mapSelected.get("TenDangNhap"));
+                    tk.setMatKhau(mapSelected.get("MatKhau"));
+                    // Nếu class TaiKhoanNguoiDung có thuộc tính vai trò hoặc nhân viên,
+                    // bạn có thể set thêm thông tin ở đây nếu muốn.
+                    // Ví dụ:
+                    // tk.setVaiTro(mapSelected.get("TenVaiTro"));
+                    // tk.setNhanVien(mapSelected.get("TenNhanVien"));
+
+                    selectedTaiKhoan = tk;
+
+                    System.out.println("Đã chọn tài khoản: " + selectedTaiKhoan.getTenDangNhap());
                 }
             }
         });
     }
 
-//    private DefaultTableModel taoBang(List<Map<String, String>> danhSach) {
-//        String[] columnNames = {"Tên đăng nhập", "Tên vai trò", "Tên nhân viên", "Ghi chú"};
-//        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-//
-//        for (Map<String, String> row : danhSach) {
-//            model.addRow(new Object[]{
-//                row.get("TenDangNhap"),
-//                row.get("TenVaiTro"),
-//                row.get("TenNhanVien"),
-//                row.get("GhiChu")
-//            });
-//        }
-//        return model;
-//    }
-//    private void hienThiDuLieuTaiKhoan() {
-//        try {
-//            List<Map<String, String>> danhSach = taiKhoanDAO.getTaiKhoanVoiTenLienKet();
-//            tblQuanLyTaiKhoan.setModel(taoBang(danhSach));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi tải dữ liệu tài khoản", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-//    private void loadVaiTroToComboBox() {
-//        try {
-//            List<String> vaiTros = taiKhoanDAO.getDanhSachTenVaiTro();
-//            cboVaiTro.removeAllItems();
-//            cboVaiTro.addItem("Tất cả");
-//
-//            for (String vt : vaiTros) {
-//                cboVaiTro.addItem(vt);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi tải vai trò", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
+    private void loadVaiTroToComboBox() {
+        vaiTroMap = taiKhoanDAO.getDanhSachVaiTro();
+        cboVaiTro.removeAllItems();
+        cboVaiTro.addItem("Tất cả");
+        for (String tenVaiTro : vaiTroMap.keySet()) {
+            cboVaiTro.addItem(tenVaiTro);
+        }
+    }
+
+    private void timKiemTaiKhoan() {
+        String keyword = txtTimKiem.getText().trim();
+        String tenVaiTro = (String) cboVaiTro.getSelectedItem();
+
+        List<Map<String, String>> ketQua = taiKhoanDAO.timKiemTaiKhoan(keyword, tenVaiTro);
+        hienThiKetQuaTimKiem(ketQua);
+    }
+
+    private void hienThiKetQuaTimKiem(List<Map<String, String>> ketQua) {
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Mã Tài Khoản", "Tên Đăng Nhập", "Mật Khẩu", "Vai Trò", "Nhân Viên", "Ghi Chú"}, 0);
+
+        for (Map<String, String> row : ketQua) {
+            model.addRow(new Object[]{
+                row.get("MaTaiKhoan"),
+                row.get("TenDangNhap"),
+                row.get("MatKhau"),
+                row.get("TenVaiTro"),
+                row.get("TenNhanVien"),
+                row.get("GhiChu")
+            });
+        }
+
+        tblQuanLyTaiKhoan.setModel(model);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -299,68 +308,50 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void timKiemTaiKhoan() {
-//        String tuKhoa = txtTimKiem.getText().trim().toLowerCase();
-//        if (tuKhoa.isEmpty()) {
-//            hienThiDuLieuTaiKhoan();
-//            return;
-//        }
-//
-//        List<Map<String, String>> danhSach = taiKhoanDAO.getTaiKhoanVoiTenLienKet();
-//        List<Map<String, String>> ketQua = new ArrayList<>();
-//
-//        for (Map<String, String> row : danhSach) {
-//            String tenDangNhap = row.get("TenDangNhap") != null ? row.get("TenDangNhap").toLowerCase() : "";
-//            String tenNhanVien = row.get("TenNhanVien") != null ? row.get("TenNhanVien").toLowerCase() : "";
-//
-//            if (tenDangNhap.contains(tuKhoa) || tenNhanVien.contains(tuKhoa)) {
-//                ketQua.add(row);
-//            }
-//        }
-//        tblQuanLyTaiKhoan.setModel(taoBang(ketQua));
-//    }
-
     private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            //timKiemTaiKhoan();
+            timKiemTaiKhoan();
         }
     }//GEN-LAST:event_txtTimKiemKeyPressed
-//    private void locTheoVaiTro() {
-//        String vaiTroChon = (String) cboVaiTro.getSelectedItem();
-//        List<Map<String, String>> danhSach = taiKhoanDAO.getTaiKhoanVoiTenLienKet();
-//        List<Map<String, String>> ketQua = new ArrayList<>();
-//
-//        for (Map<String, String> row : danhSach) {
-//            String tenVaiTro = row.get("TenVaiTro");
-//            if (vaiTroChon.equals("Tất cả") || tenVaiTro.equalsIgnoreCase(vaiTroChon)) {
-//                ketQua.add(row);
-//            }
-//        }
-//        tblQuanLyTaiKhoan.setModel(taoBang(ketQua));
-//    }
+
     private void cboVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboVaiTroActionPerformed
-        //locTheoVaiTro();
+        timKiemTaiKhoan();
     }//GEN-LAST:event_cboVaiTroActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         frmMain a = new frmMain(null, null, null, null);
         dlgChiTietTaiKhoan cttk = new dlgChiTietTaiKhoan(a, null, true, taiKhoanDAO, nhanVienDAO);
         cttk.loadData();
+        cttk.setLocationRelativeTo(null);
         cttk.setVisible(true);
 
         loadData();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
-        if (selectedTaiKhoan == null) {
-            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        int selectedRow = tblQuanLyTaiKhoan.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một tài khoản để xem chi tiết.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        frmMain a = new frmMain(null, null, null, null);
-        dlgChiTietTaiKhoan cttk = new dlgChiTietTaiKhoan(a, this.selectedTaiKhoan, true, taiKhoanDAO, nhanVienDAO);
+
+        // Lấy mã tài khoản từ dòng được chọn
+        String maTaiKhoan = tblQuanLyTaiKhoan.getValueAt(selectedRow, 0).toString();
+
+        // Lấy đối tượng tài khoản từ DAO
+        TaiKhoanNguoiDung tk = taiKhoanDAO.findById(maTaiKhoan);
+        if (tk == null) {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy dữ liệu tài khoản.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Mở dialog chi tiết tài khoản
+        dlgChiTietTaiKhoan cttk = new dlgChiTietTaiKhoan(null, tk, true, taiKhoanDAO, nhanVienDAO);
         cttk.loadData();
+        cttk.setLocationRelativeTo(null);
         cttk.setVisible(true);
 
+        // Sau khi đóng dialog, cập nhật lại dữ liệu bảng
         loadData();
     }//GEN-LAST:event_btnChiTietActionPerformed
 

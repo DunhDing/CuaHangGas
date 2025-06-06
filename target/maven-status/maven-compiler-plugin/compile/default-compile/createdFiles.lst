@@ -1,4 +1,5 @@
 com\tuandat\cuahanggas\ui\frmChiTietNhapHang.class
+com\tuandat\cuahanggas\ui\frmMain$7.class
 com\tuandat\cuahanggas\ui\frmLogin$2.class
 com\tuandat\cuahanggas\ui\pnlNhapHang$4.class
 com\tuandat\cuahanggas\ui\frmTest$3.class
@@ -25,14 +26,12 @@ com\tuandat\cuahanggas\model\NhanVien.class
 com\tuandat\cuahanggas\ui\ucKhachHang.class
 com\tuandat\cuahanggas\dao\impl\NhanVienDAO.class
 com\tuandat\cuahanggas\ui\frmLogin$4.class
-com\tuandat\cuahanggas\ui\dlgThemTaiKhoan.class
 com\tuandat\cuahanggas\ui\frmMain$5.class
 com\tuandat\cuahanggas\CuaHangGas.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$6.class
 com\tuandat\cuahanggas\dao\impl\BinhGasDAO.class
 com\tuandat\cuahanggas\ui\dlgChiTietNhanVien.class
 com\tuandat\cuahanggas\ui\frmTest$5.class
-com\tuandat\cuahanggas\ui\dlgChiTietTaiKhoan$2.class
 com\tuandat\cuahanggas\ui\frmMain$2.class
 com\tuandat\cuahanggas\ui\pnlNhapHang$2.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$4.class
@@ -57,7 +56,6 @@ com\tuandat\cuahanggas\ui\pnlNhapHang$3.class
 com\tuandat\cuahanggas\ui\pnlNhapHang.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$5.class
 com\tuandat\cuahanggas\ui\frmTest.class
-com\tuandat\cuahanggas\ui\dlgThemTaiKhoan$1.class
 com\tuandat\cuahanggas\ui\frmMain$3.class
 com\tuandat\cuahanggas\ui\frmChiTietNhapHang$1.class
 com\tuandat\cuahanggas\ui\frmTest$2.class
