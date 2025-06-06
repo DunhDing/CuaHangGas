@@ -122,7 +122,7 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
 
     private void hienThiKetQuaTimKiem(List<Map<String, String>> ketQua) {
         DefaultTableModel model = new DefaultTableModel(
-                new String[]{"Mã Tài Khoản", "Tên Đăng Nhập", "Mật Khẩu", "Vai Trò", "Nhân Viên", "Ghi Chú"}, 0);
+                new String[]{"Mã tài khoản", "Tên đăng nhập", "Mật khẩu", "Vai trò", "Nhân viên", "Ghi chú"}, 0);
 
         for (Map<String, String> row : ketQua) {
             model.addRow(new Object[]{

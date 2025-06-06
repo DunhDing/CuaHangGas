@@ -64,6 +64,15 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
         initComponents();
         initChiTietNhapHangTable();
         frmHoaDonNhap_Load();
+        if (Session.IsLoggedIn()) { // Kiểm tra xem người dùng đã đăng nhập chưa
+            txtMaNhanVien.setText(Session.MaNhanVien);
+            txtMaNhanVien.setEditable(false); // Có thể đặt không cho chỉnh sửa để tránh nhầm lẫn
+        } else {
+            // Xử lý trường hợp người dùng chưa đăng nhập, ví dụ:
+            JOptionPane.showMessageDialog(this, "Bạn cần đăng nhập để tạo hóa đơn nhập.", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+            this.dispose(); // Đóng form nếu chưa đăng nhập
+        }
+
     }
 
     private void initChiTietNhapHangTable() {
@@ -818,106 +827,106 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         String maNhapHang = txtMaHoaDon.getText().trim(); // Thêm .trim() để loại bỏ khoảng trắng
-    String maNhaCungCap = txtMaNCC.getText().trim(); // Thêm .trim()
-    String maNhanVien = txtMaNhanVien.getText().trim(); // Thêm .trim()
+        String maNhaCungCap = txtMaNCC.getText().trim(); // Thêm .trim()
+        String maNhanVien = txtMaNhanVien.getText().trim(); // Thêm .trim()
 
-    // Kiểm tra các trường văn bản và số lượng dòng trong bảng chi tiết
-    if (maNhapHang.isEmpty() || maNhaCungCap.isEmpty() || maNhanVien.isEmpty() || modelChiTietNhapHang.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin hóa đơn và thêm chi tiết nhập hàng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    java.sql.Date ngayNhap = null;
-    try {
-        ngayNhap = new java.sql.Date(dtpNgayXuat.getDate().getTime());
-    } catch (NullPointerException e) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày nhập.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    Connection conn = null;
-    try {
-        conn = DBConnection.openConnection();
-        conn.setAutoCommit(false); // Bắt đầu transaction
-
-        // 1. Thêm mới bản ghi vào bảng NhapHang
-        String sqlInsertNhapHang = "INSERT INTO NhapHang (MaNhapHang, MaNhaCungCap, MaNhanVien, NgayNhap) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sqlInsertNhapHang)) {
-            ps.setString(1, maNhapHang);
-            ps.setString(2, maNhaCungCap);
-            ps.setString(3, maNhanVien);
-            ps.setDate(4, ngayNhap);
-            ps.executeUpdate();
+        // Kiểm tra các trường văn bản và số lượng dòng trong bảng chi tiết
+        if (maNhapHang.isEmpty() || maNhaCungCap.isEmpty() || maNhanVien.isEmpty() || modelChiTietNhapHang.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin hóa đơn và thêm chi tiết nhập hàng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        // 2. Thêm mới các bản ghi vào bảng ChiTietNhapHang và cập nhật bảng BinhGas
-        String sqlInsertChiTiet = "INSERT INTO ChiTietNhapHang (MaNhapHang, MaBinhGas, SoLuongNhap, DonGiaNhap) VALUES (?, ?, ?, ?)";
-        String sqlUpdateBinhGas = "UPDATE BinhGas SET SoLuong = SoLuong + ?, GiaVonTrungBinh = ? WHERE MaBinhGas = ?";
-        String sqlGetOldBinhGasInfo = "SELECT SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas = ?";
+        java.sql.Date ngayNhap = null;
+        try {
+            ngayNhap = new java.sql.Date(dtpNgayXuat.getDate().getTime());
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày nhập.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        for (ChiTietNhapHang item : modelChiTietNhapHang.getData()) {
-            // Lấy thông tin bình gas cũ
-            int oldSoLuong = 0;
-            double oldGiaVonTrungBinh = 0;
-            try (PreparedStatement psGet = conn.prepareStatement(sqlGetOldBinhGasInfo)) {
-                psGet.setString(1, item.getMaBinhGas());
-                try (ResultSet rs = psGet.executeQuery()) {
-                    if (rs.next()) {
-                        oldSoLuong = rs.getInt("SoLuong");
-                        oldGiaVonTrungBinh = rs.getDouble("GiaVonTrungBinh");
-                    }
-                }
-            }
+        Connection conn = null;
+        try {
+            conn = DBConnection.openConnection();
+            conn.setAutoCommit(false); // Bắt đầu transaction
 
-            // Chèn chi tiết nhập hàng
-            try (PreparedStatement ps = conn.prepareStatement(sqlInsertChiTiet)) {
-                ps.setString(1, item.getMaNhapHang());
-                ps.setString(2, item.getMaBinhGas());
-                ps.setInt(3, item.getSoLuongNhap());
-                ps.setDouble(4, item.getDonGiaNhap());
+            // 1. Thêm mới bản ghi vào bảng NhapHang
+            String sqlInsertNhapHang = "INSERT INTO NhapHang (MaNhapHang, MaNhaCungCap, MaNhanVien, NgayNhap) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sqlInsertNhapHang)) {
+                ps.setString(1, maNhapHang);
+                ps.setString(2, maNhaCungCap);
+                ps.setString(3, maNhanVien);
+                ps.setDate(4, ngayNhap);
                 ps.executeUpdate();
             }
 
-            // Cập nhật số lượng và tính lại giá vốn trung bình
-            int newSoLuong = oldSoLuong + item.getSoLuongNhap();
-            double newGiaVonTrungBinh = ((oldSoLuong * oldGiaVonTrungBinh) + (item.getSoLuongNhap() * item.getDonGiaNhap())) / newSoLuong;
+            // 2. Thêm mới các bản ghi vào bảng ChiTietNhapHang và cập nhật bảng BinhGas
+            String sqlInsertChiTiet = "INSERT INTO ChiTietNhapHang (MaNhapHang, MaBinhGas, SoLuongNhap, DonGiaNhap) VALUES (?, ?, ?, ?)";
+            String sqlUpdateBinhGas = "UPDATE BinhGas SET SoLuong = SoLuong + ?, GiaVonTrungBinh = ? WHERE MaBinhGas = ?";
+            String sqlGetOldBinhGasInfo = "SELECT SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas = ?";
 
-            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdateBinhGas)) {
-                psUpdate.setInt(1, item.getSoLuongNhap()); // SoLuong in update is the quantity to add
-                psUpdate.setDouble(2, newGiaVonTrungBinh);
-                psUpdate.setString(3, item.getMaBinhGas());
-                psUpdate.executeUpdate();
+            for (ChiTietNhapHang item : modelChiTietNhapHang.getData()) {
+                // Lấy thông tin bình gas cũ
+                int oldSoLuong = 0;
+                double oldGiaVonTrungBinh = 0;
+                try (PreparedStatement psGet = conn.prepareStatement(sqlGetOldBinhGasInfo)) {
+                    psGet.setString(1, item.getMaBinhGas());
+                    try (ResultSet rs = psGet.executeQuery()) {
+                        if (rs.next()) {
+                            oldSoLuong = rs.getInt("SoLuong");
+                            oldGiaVonTrungBinh = rs.getDouble("GiaVonTrungBinh");
+                        }
+                    }
+                }
+
+                // Chèn chi tiết nhập hàng
+                try (PreparedStatement ps = conn.prepareStatement(sqlInsertChiTiet)) {
+                    ps.setString(1, item.getMaNhapHang());
+                    ps.setString(2, item.getMaBinhGas());
+                    ps.setInt(3, item.getSoLuongNhap());
+                    ps.setDouble(4, item.getDonGiaNhap());
+                    ps.executeUpdate();
+                }
+
+                // Cập nhật số lượng và tính lại giá vốn trung bình
+                int newSoLuong = oldSoLuong + item.getSoLuongNhap();
+                double newGiaVonTrungBinh = ((oldSoLuong * oldGiaVonTrungBinh) + (item.getSoLuongNhap() * item.getDonGiaNhap())) / newSoLuong;
+
+                try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdateBinhGas)) {
+                    psUpdate.setInt(1, item.getSoLuongNhap()); // SoLuong in update is the quantity to add
+                    psUpdate.setDouble(2, newGiaVonTrungBinh);
+                    psUpdate.setString(3, item.getMaBinhGas());
+                    psUpdate.executeUpdate();
+                }
             }
-        }
 
-        conn.commit(); // Hoàn tất transaction
-        JOptionPane.showMessageDialog(this, "Lưu hóa đơn nhập thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-        this.setSavedSuccessfully(true); // Set the flag to true
-        this.dispose(); // Close the form
+            conn.commit(); // Hoàn tất transaction
+            JOptionPane.showMessageDialog(this, "Lưu hóa đơn nhập thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            this.setSavedSuccessfully(true); // Set the flag to true
+            this.dispose(); // Close the form
 
-    } catch (SQLException ex) {
-        try {
-            if (conn != null) {
-                conn.rollback(); // Rollback transaction nếu có lỗi
-            }
-        } catch (SQLException rollbackEx) {
-            // logger.log(Level.SEVERE, "Lỗi khi rollback transaction", rollbackEx); // Uncomment nếu có logger
-            System.err.println("Lỗi khi rollback transaction: " + rollbackEx.getMessage());
-        }
-        // logger.log(Level.SEVERE, "Lỗi khi lưu hóa đơn nhập", ex); // Uncomment nếu có logger
-        System.err.println("Lỗi khi lưu hóa đơn nhập: " + ex.getMessage());
-        JOptionPane.showMessageDialog(this, "Lỗi khi lưu hóa đơn nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        if (conn != null) {
+        } catch (SQLException ex) {
             try {
-                conn.setAutoCommit(true); // Đặt lại auto-commit
-                conn.close();
-            } catch (SQLException closeEx) {
-                // logger.log(Level.SEVERE, "Lỗi khi đóng kết nối", closeEx); // Uncomment nếu có logger
-                System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
+                if (conn != null) {
+                    conn.rollback(); // Rollback transaction nếu có lỗi
+                }
+            } catch (SQLException rollbackEx) {
+                // logger.log(Level.SEVERE, "Lỗi khi rollback transaction", rollbackEx); // Uncomment nếu có logger
+                System.err.println("Lỗi khi rollback transaction: " + rollbackEx.getMessage());
+            }
+            // logger.log(Level.SEVERE, "Lỗi khi lưu hóa đơn nhập", ex); // Uncomment nếu có logger
+            System.err.println("Lỗi khi lưu hóa đơn nhập: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Lỗi khi lưu hóa đơn nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // Đặt lại auto-commit
+                    conn.close();
+                } catch (SQLException closeEx) {
+                    // logger.log(Level.SEVERE, "Lỗi khi đóng kết nối", closeEx); // Uncomment nếu có logger
+                    System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
+                }
             }
         }
-    }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
 //    /**

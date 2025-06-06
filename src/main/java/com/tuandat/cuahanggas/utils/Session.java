@@ -1,18 +1,23 @@
 package com.tuandat.cuahanggas.utils;
 
-/**
- * Lớp Session tĩnh để lưu trữ thông tin người dùng đang đăng nhập.
- */
+import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
+
 public class Session {
 
+    private static TaiKhoanNguoiDung currentUser;
+
+    public static void setCurrentUser(TaiKhoanNguoiDung user) {
+        currentUser = user;
+    }
+
+    public static TaiKhoanNguoiDung getCurrentUser() {
+        return currentUser;
+    }
     public static String MaNhanVien;
     public static String TenNhanVien; // Có thể thêm các thông tin khác nếu cần
     private static boolean isLoggedIn = false;
 
-    /**
-     * Kiểm tra xem người dùng đã đăng nhập hay chưa.
-     * @return true nếu đã đăng nhập và MaNhanVien không rỗng, false nếu ngược lại.
-     */
+ 
     public static boolean IsLoggedIn() {
         return isLoggedIn && MaNhanVien != null && !MaNhanVien.trim().isEmpty();
     }
@@ -25,11 +30,6 @@ public class Session {
         isLoggedIn = status;
     }
 
-    /**
-     * Phương thức để thiết lập thông tin người dùng sau khi đăng nhập thành công.
-     * @param maNhanVien Mã nhân viên.
-     * @param tenNhanVien Tên nhân viên.
-     */
     public static void login(String maNhanVien, String tenNhanVien) {
         Session.MaNhanVien = maNhanVien;
         Session.TenNhanVien = tenNhanVien;

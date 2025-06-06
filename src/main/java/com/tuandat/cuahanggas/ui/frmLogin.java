@@ -26,13 +26,13 @@ public class frmLogin extends javax.swing.JDialog {
         setModalityType(ModalityType.APPLICATION_MODAL);
         initComponents();
         setLocationRelativeTo(parent);
-        
+
         getContentPane().setBackground(Color.WHITE);
-                
+
         ImageIcon iconLogo = new ImageIcon(getClass().getResource("/logo.png"));
         Image imgLogo = iconLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
         lblLogo.setIcon(new ImageIcon(imgLogo));
-        
+
         ImageIcon iconTenDangNhap = new ImageIcon(getClass().getResource("/tendangnhap.png"));
         Image imgTenDangNhap = iconTenDangNhap.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         lblTenDangNhap.setIcon(new ImageIcon(imgTenDangNhap));
@@ -40,7 +40,7 @@ public class frmLogin extends javax.swing.JDialog {
         ImageIcon iconMatKhau = new ImageIcon(getClass().getResource("/matkhau.png"));
         Image imgMatKhau = iconMatKhau.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         lblMatKhau.setIcon(new ImageIcon(imgMatKhau));
-        
+
         setLocationRelativeTo(parent);
     }
 
@@ -198,35 +198,30 @@ public class frmLogin extends javax.swing.JDialog {
 //        return false;
 //    }
 //
-    
-    
+
     private boolean checkLogin(String username, String password, List<TaiKhoanNguoiDung> allAccounts) {
-    return allAccounts.stream()
-            .anyMatch(acc -> acc.getTenDangNhap().equals(username) && acc.getMatKhau().equals(password));
-}
+        return allAccounts.stream()
+                .anyMatch(acc -> acc.getTenDangNhap().equals(username) && acc.getMatKhau().equals(password));
+    }
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String username = txtTenDangNhap.getText().trim();
-    String password = new String(txtMatKhau.getPassword()).trim();
+        String password = new String(txtMatKhau.getPassword()).trim();
 
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
-        return;
-    }
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
+            return;
+        }
 
-    List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
-   if (checkLogin(username, password, allAccounts)) {
-    TaiKhoanNguoiDung account = allAccounts.stream()
-        .filter(acc -> acc.getTenDangNhap().equals(username) && acc.getMatKhau().equals(password))
-        .findFirst()
-        .orElse(null);
-
-    if (account != null) {
-        Session.login(account.getMaNhanVien(), account.getTenNhanVien());  // Lưu session
-        loginSuccess = true;
-        dispose();
-    }
-    }
+        List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
+        if (checkLogin(username, password, allAccounts)) {
+            loginSuccess = true;
+            TaiKhoanNguoiDung user = taiKhoanDAO.getUserByUsername(username);  // Giả sử bạn có phương thức này để lấy tài khoản từ cơ sở dữ liệu
+           Session.login(user.getMaNhanVien(), user.getTenNhanVien());
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
+        }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed

@@ -5,6 +5,7 @@ import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
 import com.tuandat.cuahanggas.model.NhanVien;
 import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.MyToys;
+import com.tuandat.cuahanggas.utils.Session;
 import com.tuandat.cuahanggas.utils.TableHelper;
 import java.awt.Image;
 import javax.swing.*;
@@ -107,6 +108,30 @@ public class dlgChiTietTaiKhoan extends javax.swing.JDialog {
                     .collect(Collectors.toList());
 
             txtMaDangNhap.setText(MyToys.generateNextIdFromStrings(distinctMataiKhoan, "TK"));
+        }
+        TaiKhoanNguoiDung currentUser = Session.getCurrentUser();
+        if (currentUser != null && selectedAtaiKhoan == null) {
+            // Nếu không có tài khoản đang được sửa, nhưng có người dùng hiện tại, hiển thị thông tin của người dùng này
+            selectedAtaiKhoan = currentUser;
+
+            // Cập nhật form với thông tin người dùng hiện tại
+            txtMaDangNhap.setText(selectedAtaiKhoan.getMaTaiKhoan());
+            txtTenDangNhap1.setText(selectedAtaiKhoan.getTenDangNhap());
+            txtMatKhau.setText(selectedAtaiKhoan.getMatKhau());
+            txtGhiChu.setText(selectedAtaiKhoan.getGhiChu());
+
+            // Cập nhật mã nhân viên và vai trò cho người dùng hiện tại
+            cboMaNhaVien.setModel(maNhanVienModel);
+            cboMaNhaVien.setSelectedItem(selectedAtaiKhoan.getMaNhanVien());
+            cboMaNhaVien.setEnabled(false);  // Không cho phép thay đổi mã nhân viên
+
+            String maVaiTro = selectedAtaiKhoan.getMaVaiTro();
+            String tenVaiTro = vaiTroTenToMaMap.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(maVaiTro))
+                    .map(Map.Entry::getKey)
+                    .findFirst()
+                    .orElse(null);
+            cboVaiTro.setSelectedItem(tenVaiTro);
         }
     }
 
@@ -374,7 +399,7 @@ public class dlgChiTietTaiKhoan extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        if (!MyToys.isValidInput(txtTenDangNhap1, txtMatKhau, txtNLMK, txtGhiChu)) {
+        if (!MyToys.isValidInput(txtTenDangNhap1, txtMatKhau, txtNLMK)) {
             return;
         }
 
@@ -409,7 +434,6 @@ public class dlgChiTietTaiKhoan extends javax.swing.JDialog {
             String maVaiTro = vaiTroTenToMaMap.get(tenVaiTro);
             String ghiChu = txtGhiChu.getText();
 
-            // Tạo đối tượng TaiKhoanNguoiDung
             TaiKhoanNguoiDung taiKhoan = new TaiKhoanNguoiDung(ma, tenDangNhapMoi, matKhau, maVaiTro, maNV, ghiChu);
 
             if (selectedAtaiKhoan != null) {

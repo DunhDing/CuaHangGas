@@ -170,4 +170,27 @@ public class TaiKhoanNguoiDungDAO extends AbstractDAO<TaiKhoanNguoiDung> {
 
         return list;
     }
+
+    public TaiKhoanNguoiDung getUserByUsername(String username) {
+        String query = "SELECT * FROM TaiKhoanNguoiDung WHERE TenDangNhap = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Tạo đối tượng TaiKhoanNguoiDung từ kết quả truy vấn
+                TaiKhoanNguoiDung user = new TaiKhoanNguoiDung();
+                user.setMaTaiKhoan(rs.getString("MaTaiKhoan"));
+                user.setTenDangNhap(rs.getString("TenDangNhap"));
+                user.setMatKhau(rs.getString("MatKhau"));
+                user.setGhiChu(rs.getString("GhiChu"));
+                user.setMaVaiTro(rs.getString("MaVaiTro"));
+                user.setMaNhanVien(rs.getString("MaNhanVien"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
 }
