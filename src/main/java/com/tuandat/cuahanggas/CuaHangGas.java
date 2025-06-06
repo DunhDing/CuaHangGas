@@ -1,9 +1,15 @@
 package com.tuandat.cuahanggas;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietNhapHangDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAOV2;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
+import com.tuandat.cuahanggas.dao.impl.NhaCungCapDAO;
 import com.tuandat.cuahanggas.dao.impl.NhanVienDAO;
+import com.tuandat.cuahanggas.dao.impl.NhapHangDAO;
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
+import com.tuandat.cuahanggas.dao.impl.XuatHangDAO;
 import com.tuandat.cuahanggas.ui.frmLogin;
 import com.tuandat.cuahanggas.ui.frmMain;
 import com.tuandat.cuahanggas.utils.DBConnection;
@@ -15,8 +21,13 @@ public class CuaHangGas {
     private static Connection appConnection;
     private static BinhGasDAO binhGasDAO;
     private static KhachHangDAO khachHangDAO;
-    private static TaiKhoanNguoiDungDAO taiKhoanDAO;
     private static NhanVienDAO nhanVienDAO;
+    private static XuatHangDAO xuatHangDAO;
+    private static ChiTietNhapHangDAO chiTietNhapHangDAO;
+    private static ChiTietXuatHangDAOV2 chiTietXuatHangDAO;
+    private static NhapHangDAO nhapHangDAO;
+    private static TaiKhoanNguoiDungDAO  taiKhoanDAO;
+    private static NhaCungCapDAO  nhaCungCapDAO;
 
     public static void main(String[] args) {
         // Mở kết nối với cơ sở dữ liệu
@@ -34,6 +45,11 @@ public class CuaHangGas {
         khachHangDAO = new KhachHangDAO(appConnection);
         taiKhoanDAO = new TaiKhoanNguoiDungDAO(appConnection);
         nhanVienDAO = new NhanVienDAO(appConnection);
+        nhapHangDAO = new NhapHangDAO(appConnection);
+        chiTietNhapHangDAO = new ChiTietNhapHangDAO(appConnection);
+        chiTietXuatHangDAO = new ChiTietXuatHangDAOV2(appConnection);
+        xuatHangDAO = new XuatHangDAO(appConnection);
+        nhaCungCapDAO = new NhaCungCapDAO(appConnection);
 
         // Thêm Shutdown Hook để đóng kết nối khi JVM thoát
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -49,7 +65,8 @@ public class CuaHangGas {
             login.setVisible(true);
 
             if (login.isLoginSuccess()) {
-                frmMain main = new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO);
+                frmMain main = new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO,
+                        xuatHangDAO, nhapHangDAO, chiTietNhapHangDAO, chiTietXuatHangDAO, nhaCungCapDAO);
                 main.setLocationRelativeTo(null);
                 main.setVisible(true);
 

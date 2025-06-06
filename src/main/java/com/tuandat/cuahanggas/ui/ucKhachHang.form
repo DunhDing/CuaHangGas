@@ -52,12 +52,14 @@
                       <Component id="pnlGioiTinh" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtTimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnThem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnXoa" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnXuatFile" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnChiTiet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="btnThem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btnXoa" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btnXuatFile" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btnChiTiet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtTimKiem" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="scpKhachHang" min="-2" max="-2" attributes="0"/>
@@ -170,33 +172,6 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="txtTimKiem">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="t&#xec;m ki&#x1ebf;m"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnThem">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
-        <Property name="name" type="java.lang.String" value="btnThem" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnChiTiet">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Chi Ti&#x1ebf;t"/>
-        <Property name="name" type="java.lang.String" value="btnChiTiet" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnXuatFile">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t File"/>
-        <Property name="name" type="java.lang.String" value="btnXuatFile" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnXoa">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
-        <Property name="name" type="java.lang.String" value="btnXoa" noResource="true"/>
-      </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="scpKhachHang">
       <AuxValues>
@@ -219,5 +194,53 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnThem">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="50" green="b0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+        <Property name="name" type="java.lang.String" value="btnThem" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnThemMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnChiTiet">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="66" red="66" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Chi Ti&#x1ebf;t"/>
+        <Property name="name" type="java.lang.String" value="btnChiTiet" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnChiTietMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnXuatFile">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="50" green="b0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t File"/>
+        <Property name="name" type="java.lang.String" value="btnXuatFile" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatFileMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnXoa">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="24" green="1c" red="ed" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+        <Property name="name" type="java.lang.String" value="btnXoa" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaMouseClicked"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

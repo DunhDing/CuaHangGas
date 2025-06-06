@@ -33,8 +33,8 @@
               </Group>
               <EmptySpace pref="113" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnLuu" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnLuu" min="-2" pref="92" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="pnlGhiChu" alignment="0" max="32767" attributes="0"/>
                       <Component id="pnlEmail" alignment="0" max="32767" attributes="0"/>
                       <Component id="pnlSoDienThoai" alignment="1" max="32767" attributes="0"/>
@@ -68,9 +68,9 @@
                   <Component id="pnlNgaySinh" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="pnlGhiChu" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
               <Component id="btnLuu" min="-2" pref="31" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -475,6 +475,9 @@
         <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
         <Property name="name" type="java.lang.String" value="btnLuu" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLuuMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

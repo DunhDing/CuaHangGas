@@ -7,7 +7,13 @@ package com.tuandat.cuahanggas.utils;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Predicate;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 public class MyToys {
 
@@ -100,5 +106,58 @@ public class MyToys {
 //} else {
 //    System.out.println("Có thể xóa MaBinhGas này.");
 //}
+    public static boolean validatePhone(JTextField txtPhone) {
+        String rawPhone = txtPhone.getText();
+
+        if (rawPhone.length() != 10) {
+            JOptionPane.showMessageDialog(null,
+                    "Số điện thoại phải đủ 10 chữ số!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
+            txtPhone.requestFocus();
+            return false;
+        }
+
+        String prefix = rawPhone.substring(0, 2);
+        if (!prefix.equals("03") && !prefix.equals("08") && !prefix.equals("09")) {
+            JOptionPane.showMessageDialog(null,
+                    "Số điện thoại phải bắt đầu bằng 03, 08 hoặc 09!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
+            txtPhone.requestFocus();
+            return false;
+        }
+
+        // Kiểm tra toàn bộ là số
+        if (!rawPhone.matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(null,
+                    "Số điện thoại chỉ được chứa chữ số!",
+                    "Lỗi",
+                    JOptionPane.WARNING_MESSAGE);
+            txtPhone.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+    
+    public static void setNumericFilter(JTextField textField) {
+        PlainDocument doc = (PlainDocument) textField.getDocument();
+        doc.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string.matches("\\d+")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("\\d+")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+    }
 
 }

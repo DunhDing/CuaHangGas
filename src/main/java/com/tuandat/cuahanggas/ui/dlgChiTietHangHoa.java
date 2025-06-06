@@ -41,9 +41,11 @@ public class dlgChiTietHangHoa extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
         txtMaBinhGa.setEnabled(false);
 
-        ImageIcon iconLuu = new ImageIcon(getClass().getResource("/floppy-disk-solid.png"));
+        ImageIcon iconLuu = new ImageIcon(getClass().getResource("/luu.png"));
         Image imgLuu = iconLuu.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         btnLuu.setIcon(new ImageIcon(imgLuu));
+        MyToys.setNumericFilter(txtSoLuong);
+        MyToys.setNumericFilter(txtSoVonTB);
     }
 
     public void loadData() {
@@ -257,6 +259,11 @@ public class dlgChiTietHangHoa extends javax.swing.JDialog {
         lblSoLuong.setText("Số Lượng");
 
         txtSoLuong.setName("txtSoLuong"); // NOI18N
+        txtSoLuong.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSoLuongKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSoLuongLayout = new javax.swing.GroupLayout(pnlSoLuong);
         pnlSoLuong.setLayout(pnlSoLuongLayout);
@@ -416,7 +423,6 @@ public class dlgChiTietHangHoa extends javax.swing.JDialog {
 
             // Tạo đối tượng BinhGas
             BinhGas binhGas = new BinhGas(maBinhGas, tenBinhGas, loaiBinh, loaiVan, soLuong, giaVonTrungBinh, ghiChu);
-            
             if (selectedABinhGas != null)
                 binhGasDAO.update(binhGas);
             else
@@ -427,6 +433,13 @@ public class dlgChiTietHangHoa extends javax.swing.JDialog {
         }
         this.dispose();
     }//GEN-LAST:event_btnLuuMouseClicked
+
+    private void txtSoLuongKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyPressed
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume(); // chặn ký tự không hợp lệ hoặc vượt quá 10 số
+        }
+    }//GEN-LAST:event_txtSoLuongKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;

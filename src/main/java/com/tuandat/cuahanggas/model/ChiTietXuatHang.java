@@ -9,6 +9,8 @@ public class ChiTietXuatHang {
     private double donGiaXuat;
     private String ghiChu; // Có thể có hoặc không, tùy theo nghiệp vụ của bạn
 
+    public ChiTietXuatHang() {
+    }
     /**
      * Constructor để tạo một đối tượng ChiTietXuatHang mới.
      *

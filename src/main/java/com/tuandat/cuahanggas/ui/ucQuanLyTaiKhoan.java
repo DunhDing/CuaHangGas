@@ -319,7 +319,7 @@ public class ucQuanLyTaiKhoan extends javax.swing.JPanel {
     }//GEN-LAST:event_cboVaiTroActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        frmMain a = new frmMain(null, null, null, null);
+        frmMain a = new frmMain(null, null, null, null, null, null, null, null, null);
         dlgChiTietTaiKhoan cttk = new dlgChiTietTaiKhoan(a, null, true, taiKhoanDAO, nhanVienDAO);
         cttk.loadData();
         cttk.setLocationRelativeTo(null);

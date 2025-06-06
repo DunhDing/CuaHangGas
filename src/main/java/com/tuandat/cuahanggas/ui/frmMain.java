@@ -1,10 +1,18 @@
 package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietNhapHangDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAOV2;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
+import com.tuandat.cuahanggas.dao.impl.NhaCungCapDAO;
 import com.tuandat.cuahanggas.dao.impl.NhanVienDAO;
+import com.tuandat.cuahanggas.dao.impl.NhapHangDAO;
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
+import com.tuandat.cuahanggas.dao.impl.XuatHangDAO;
+import com.tuandat.cuahanggas.model.ChiTietNhapHang;
+import com.tuandat.cuahanggas.model.NhapHang;
 import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
+import com.tuandat.cuahanggas.model.XuatHang;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import com.tuandat.cuahanggas.utils.Session;
 import java.awt.BorderLayout;
@@ -20,14 +28,26 @@ public class frmMain extends javax.swing.JFrame {
     private KhachHangDAO khachHangDAO;
     private TaiKhoanNguoiDungDAO taiKhoanDAO;
     private NhanVienDAO nhanVienDAO;
+    private  ChiTietNhapHangDAO chiTietNhapHangDAO;
+    private ChiTietXuatHangDAOV2 chiTietXuatHangDAO;
+    private KhachHangDAO khachHangDAO1;
+    private XuatHangDAO xuatHangDAO;
+    private NhapHangDAO nhapHangDAO;
+    private NhaCungCapDAO nhaCungCapDAO;
     private boolean isLogout = false;
 
-    public frmMain(BinhGasDAO binhGasDAO, TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv, KhachHangDAO kh) {
+    public frmMain(BinhGasDAO binhGasDAO, TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv, KhachHangDAO kh,
+            XuatHangDAO xh, NhapHangDAO nh, ChiTietNhapHangDAO cn, ChiTietXuatHangDAOV2 cx, NhaCungCapDAO nhaCungCapDAO) {
         initComponents();
         this.taiKhoanDAO = taiKhoanDAO;
         this.binhGasDAO = binhGasDAO;
         this.nhanVienDAO = nv;
         this.khachHangDAO = kh;
+        this.xuatHangDAO = xh;
+        this.nhapHangDAO = nh;
+        this.chiTietNhapHangDAO = cn;
+        this.chiTietXuatHangDAO = cx;
+        this.nhaCungCapDAO = nhaCungCapDAO;
 
         ImageIcon iconLogo = new ImageIcon(getClass().getResource("/logo.png"));
         Image imgLogo = iconLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
@@ -73,7 +93,7 @@ public class frmMain extends javax.swing.JFrame {
     public boolean isLogout() {
         return isLogout;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -143,9 +163,19 @@ public class frmMain extends javax.swing.JFrame {
         popMenuGiaoDich.add(menuNhapHang);
 
         menuKhachHang.setText("Khách hàng");
+        menuKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuKhachHangActionPerformed(evt);
+            }
+        });
         popMenuDoiTac.add(menuKhachHang);
 
         menuNhaCungCap.setText("Nhà cung cấp");
+        menuNhaCungCap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNhaCungCapActionPerformed(evt);
+            }
+        });
         popMenuDoiTac.add(menuNhaCungCap);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -211,6 +241,11 @@ public class frmMain extends javax.swing.JFrame {
         btnHangHoa.setForeground(new java.awt.Color(255, 255, 255));
         btnHangHoa.setText("Hàng hóa");
         btnHangHoa.setBorderPainted(false);
+        btnHangHoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHangHoaActionPerformed(evt);
+            }
+        });
 
         btnTongQuan.setBackground(new java.awt.Color(0, 102, 204));
         btnTongQuan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -246,6 +281,11 @@ public class frmMain extends javax.swing.JFrame {
         btnNhanVien.setForeground(new java.awt.Color(255, 255, 255));
         btnNhanVien.setText("Nhân viên");
         btnNhanVien.setBorderPainted(false);
+        btnNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNhanVienActionPerformed(evt);
+            }
+        });
 
         btnBaoCao.setBackground(new java.awt.Color(0, 102, 204));
         btnBaoCao.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -367,6 +407,30 @@ public class frmMain extends javax.swing.JFrame {
         pnlMain.revalidate();
         pnlMain.repaint();        // TODO add your handling code here:
     }//GEN-LAST:event_menuNhapHangActionPerformed
+
+    private void btnHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangHoaActionPerformed
+        ucHangHoa f = new ucHangHoa(binhGasDAO, chiTietNhapHangDAO, chiTietXuatHangDAO);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_btnHangHoaActionPerformed
+
+    private void menuKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKhachHangActionPerformed
+        ucKhachHang f = new ucKhachHang(khachHangDAO, xuatHangDAO);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_menuKhachHangActionPerformed
+
+    private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
+        ucNhanVien f = new ucNhanVien(nhanVienDAO, nhapHangDAO, xuatHangDAO);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_btnNhanVienActionPerformed
+
+    private void menuNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNhaCungCapActionPerformed
+        ucNhaCungCap f = new ucNhaCungCap(nhaCungCapDAO, nhapHangDAO);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_menuNhaCungCapActionPerformed
 
     private void showPanel(JPanel panel) {
         pnlMain.removeAll();

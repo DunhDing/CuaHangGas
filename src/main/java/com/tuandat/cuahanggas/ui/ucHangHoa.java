@@ -5,14 +5,26 @@
 package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietNhapHangDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAO;
+import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAOV2;
 import com.tuandat.cuahanggas.model.BinhGas;
+import com.tuandat.cuahanggas.model.ExcelExporter;
 import com.tuandat.cuahanggas.utils.MyToys;
 import java.awt.Image;
+import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,44 +32,74 @@ import javax.swing.JOptionPane;
  */
 public class ucHangHoa extends javax.swing.JPanel {
 
-    private final BinhGasDAO binhGasDAO;
+    private BinhGasDAO binhGasDAO;
     private BinhGas selectedBinhGas = null;
+    private static ChiTietNhapHangDAO chiTietNhapHangDAO;
+    private static ChiTietXuatHangDAOV2 chiTietXuatHangDAO;
     List<BinhGas> danhSachBinhGas = null;
+    private static final Logger logger = Logger.getLogger(ucHangHoa.class.getName());
 
     /**
      * Creates new form ucHangHoa
      *
      * @param binhGasDAO
      */
-    public ucHangHoa(BinhGasDAO binhGasDAO) {
+    public ucHangHoa(BinhGasDAO binhGasDAO, ChiTietNhapHangDAO chiTietNhapHangDAO, ChiTietXuatHangDAOV2 chiTietXuatHangDAO) {
         this.binhGasDAO = binhGasDAO;
-
-        initComponents();
+        this.chiTietNhapHangDAO = chiTietNhapHangDAO;
+        this.chiTietXuatHangDAO = chiTietXuatHangDAO;
+        try {
+            initComponents();
 //        ImageIcon icon = new ImageIcon("Logo.png"); // Đường dẫn đến ảnh
 //        JLabel label = new JLabel("Text", icon, JLabel.LEFT);
 
-        ImageIcon iconThem = new ImageIcon(getClass().getResource("/plus-solid.png"));
-        Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnThem.setIcon(new ImageIcon(imgThem));
+            ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
+            Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnThem.setIcon(new ImageIcon(imgThem));
 
-        ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
-        Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
+            ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
+            Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
 
-        ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
-        Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnXuatFile.setIcon(new ImageIcon(imgXuatFile));
+            ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
+            Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnXuatFile.setIcon(new ImageIcon(imgXuatFile));
 
-        ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
-        Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-        btnXoa.setIcon(new ImageIcon(imgXoa));
-        
-        setupSelectionListener();
+            ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
+            Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnXoa.setIcon(new ImageIcon(imgXoa));
+
+            setupSelectionListener();
+            cboLoaiBinh.addActionListener(e -> filterTable());
+            cboLoaiVan.addActionListener(e -> filterTable());
+            txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    filterTable();
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    filterTable();
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    filterTable();
+                }
+            });
+
+        } catch (Exception e) {
+            System.err.println("ERROR: Lỗi nghiêm trọng trong constructor của ucHangHoa:");
+            e.printStackTrace(); // In toàn bộ stack trace của lỗi
+            // Tùy chọn: hiển thị JOptionPane cho người dùng
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra khi khởi tạo panel Hàng hóa: " + e.getMessage(),
+                    "Lỗi Khởi Tạo", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void loadData() {
 
-        
         try {
             danhSachBinhGas = binhGasDAO.getAll(); // Lấy tất cả bình gas từ DB
             System.out.println("Da lay duoc du lieu Binh Gas tu CSDL.");
@@ -118,15 +160,45 @@ public class ucHangHoa extends javax.swing.JPanel {
         distinctLoaiVans.forEach(loaiVanModel::addElement);
         cboLoaiVan.setModel(loaiVanModel);
         System.out.println("Du lieu Loai Van da duoc tai vao ComboBox.");
-        
+
         selectedBinhGas = null;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    private void filterTable() {
+        String selectedLoaiVan = (String) cboLoaiVan.getSelectedItem();
+        String selectedLoaiBinh = (String) cboLoaiBinh.getSelectedItem();
+        String keyword = txtTimKiem.getText().trim().toLowerCase();
+
+        List<BinhGas> allData = binhGasDAO.getAll();
+
+        List<BinhGas> filtered = allData.stream()
+                .filter(b -> "Tất cả".equals(selectedLoaiVan) || b.getLoaiVan().equals(selectedLoaiVan))
+                .filter(b -> "Tất cả".equals(selectedLoaiBinh) || b.getLoaiBinh().equals(selectedLoaiBinh))
+                .filter(b -> b.getMaBinhGas().toLowerCase().contains(keyword)
+                || b.getTenBinhGas().toLowerCase().contains(keyword))
+                .collect(Collectors.toList());
+
+        fillTable(filtered);
+    }
+
+
+    private void fillTable(List<BinhGas> list) {
+        DefaultTableModel model = (DefaultTableModel) tbleHangHoa.getModel();
+        model.setRowCount(0); // clear old data
+
+        for (BinhGas b : list) {
+            model.addRow(new Object[]{
+                b.getMaBinhGas(),
+                b.getTenBinhGas(),
+                b.getLoaiVan(),
+                b.getLoaiBinh(),
+                b.getSoLuong(),
+                b.getGiaVonTrungBinh(),
+                b.getGhiChu()
+            });
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,8 +303,6 @@ public class ucHangHoa extends javax.swing.JPanel {
                 .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        txtTimKiem.setText("tìm kiếm");
-
         btnThem.setBackground(new java.awt.Color(0, 176, 80));
         btnThem.setText("Thêm");
         btnThem.setName("btnThem"); // NOI18N
@@ -254,6 +324,11 @@ public class ucHangHoa extends javax.swing.JPanel {
         btnXuatFile.setBackground(new java.awt.Color(0, 176, 80));
         btnXuatFile.setText("Xuất File");
         btnXuatFile.setName("btnXuatFile"); // NOI18N
+        btnXuatFile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatFileMouseClicked(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(237, 28, 36));
         btnXoa.setText("Xóa");
@@ -339,7 +414,7 @@ public class ucHangHoa extends javax.swing.JPanel {
 
     private void btnChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChiTietMouseClicked
         if (selectedBinhGas == null) {
-            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng" , "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         frmTest f = new frmTest();
@@ -352,13 +427,25 @@ public class ucHangHoa extends javax.swing.JPanel {
 
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
         if (selectedBinhGas == null) {
-            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng" , "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Hãy chọn 1 đối tượng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean isUsed = MyToys.isForeignKeyInUse(
+                chiTietNhapHangDAO.getAll(),
+                ct -> ct.getMaBinhGas().equals(selectedBinhGas.getMaBinhGas())
+        );
+        boolean isUsed1 = MyToys.isForeignKeyInUse(
+                chiTietXuatHangDAO.getAll(),
+                ct -> ct.getMaBinhGas().equals(selectedBinhGas.getMaBinhGas())
+        );
+        if (isUsed == true || isUsed1 == true) {
+            JOptionPane.showMessageDialog(null, "Ma BinhGas đang được sử dụng là khóa ngoại.");
             return;
         }
         if (JOptionPane.showConfirmDialog(
                 this,
-                "Bạn có chắc chắn muốn thoát không?",
-                "Xác nhận thoát",
+                "Bạn có chắc chắn muốn xóa bình gas này không?",
+                "Xác nhận xóa",
                 JOptionPane.YES_NO_OPTION
         ) == JOptionPane.YES_OPTION) {
             binhGasDAO.delete(selectedBinhGas.getMaBinhGas());
@@ -366,6 +453,48 @@ public class ucHangHoa extends javax.swing.JPanel {
             loadData();
         }
     }//GEN-LAST:event_btnXoaMouseClicked
+
+    private void exportNhapToExcel() {
+        // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
+        DefaultTableModel model = (DefaultTableModel) tbleHangHoa.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu file Excel Hóa đơn Nhập"); // Đổi tiêu đề hộp thoại
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+        // Đổi tên file gợi ý ban đầu
+        fileChooser.setSelectedFile(new File("DanhSachHH_" + System.currentTimeMillis() + ".xlsx"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+            }
+
+            try {
+                // Gọi phương thức xuất nhập hàng từ class ExcelExporter
+                ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
+                        tbleHangHoa, // JTable chứa dữ liệu nhập hàng
+                        fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
+                        "Danh Sách Binh Gas", // Tên sheet trong Excel
+                        "DANH SÁCH BÌNH GAS" // Tiêu đề chính của báo cáo
+                );
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
+                logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
+            }
+        }
+    }
+    private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
+        exportNhapToExcel();
+    }//GEN-LAST:event_btnXuatFileMouseClicked
 
     //VIẾT SỰ KIỆN SELECTION_CHANGED TRONG JTABLE
 //    private void setupSelectionListener() {
