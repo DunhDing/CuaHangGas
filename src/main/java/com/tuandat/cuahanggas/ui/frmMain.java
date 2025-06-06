@@ -4,7 +4,9 @@ import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
 import com.tuandat.cuahanggas.dao.impl.NhanVienDAO;
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
+import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.DBConnection;
+import com.tuandat.cuahanggas.utils.Session;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
@@ -323,15 +325,27 @@ public class frmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
 
     private void menuTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTaiKhoanActionPerformed
-        // TODO add your handling code here:
+        TaiKhoanNguoiDung currentUser = Session.getCurrentUser();
+
+        // Kiểm tra nếu người dùng chưa đăng nhập
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng đăng nhập trước!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Mở dialog chi tiết tài khoản với thông tin người dùng hiện tại
+        dlgChiTietTaiKhoan dialog = new dlgChiTietTaiKhoan(this, currentUser, true, taiKhoanDAO, nhanVienDAO);
+        dialog.loadData();
+        dialog.setLocationRelativeTo(null);  // Đặt vị trí dialog ở trung tâm
+        dialog.setVisible(true);
     }//GEN-LAST:event_menuTaiKhoanActionPerformed
 
     private void showPanel(JPanel panel) {
-        pnlMain.removeAll();                
-        pnlMain.setLayout(new BorderLayout()); 
+        pnlMain.removeAll();
+        pnlMain.setLayout(new BorderLayout());
         pnlMain.add(panel, BorderLayout.CENTER);
-        pnlMain.revalidate();                
-        pnlMain.repaint();                 
+        pnlMain.revalidate();
+        pnlMain.repaint();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;

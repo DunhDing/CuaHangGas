@@ -51,6 +51,7 @@ com\tuandat\cuahanggas\ui\frmMain.class
 com\tuandat\cuahanggas\ui\frmTest$1.class
 com\tuandat\cuahanggas\ui\ucHangHoa.class
 com\tuandat\cuahanggas\ui\frmMain$6.class
+com\tuandat\cuahanggas\utils\Session.class
 com\tuandat\cuahanggas\ui\frmMain$1.class
 com\tuandat\cuahanggas\ui\pnlNhapHang$3.class
 com\tuandat\cuahanggas\ui\pnlNhapHang.class
