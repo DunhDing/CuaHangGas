@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 import com.tuandat.cuahanggas.utils.TableHelper;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileOutputStream; // Có thể giữ nếu bạn có chức năng xuất file
 import java.util.LinkedHashMap;
 import java.util.Vector; // Có thể giữ nếu bạn có chức năng xuất file
@@ -133,113 +135,124 @@ public class pnlXuatHang extends javax.swing.JPanel {
         }
     }
 
-    private void timKiemXuatHang() { // Đã đổi tên hàm
-        logger.log(Level.INFO, "timKiemXuatHang() - Bắt đầu.");
-        String tuKhoa = txtTimKiem.getText().trim();
-        String maKH = (String) cboMaKhachHang.getSelectedItem(); // Đã đổi từ maNCC
-        String maNV = (String) cboMaNhanVien.getSelectedItem();
-        String locTheo = (String) cboLoaiLocNgay.getSelectedItem();
-        Date ngayXuat = dtpNgayXuat.getDate(); // Đã đổi từ ngayNhap
+   private void timKiemXuatHang() { // Đã đổi tên hàm
+    logger.log(Level.INFO, "timKiemXuatHang() - Bắt đầu.");
+    String tuKhoa = txtTimKiem.getText().trim();
+    // Đảm bảo giá trị lấy từ combobox là "Tất cả" hoặc mã thực tế
+    String maKH = (cboMaKhachHang.getSelectedItem() != null && cboMaKhachHang.getSelectedItem() instanceof String) 
+                  ? (String) cboMaKhachHang.getSelectedItem() : "Tất cả";
+    String maNV = (cboMaNhanVien.getSelectedItem() != null && cboMaNhanVien.getSelectedItem() instanceof String)
+                  ? (String) cboMaNhanVien.getSelectedItem() : "Tất cả";
+    String locTheo = (String) cboLoaiLocNgay.getSelectedItem();
+    Date ngayXuat = dtpNgayXuat.getDate();
 
-        StringBuilder query = new StringBuilder(
-                "SELECT xh.MaXuatHang, xh.NgayXuat, xh.MaKhachHang, " // Đổi bảng và join
-                + "xh.MaNhanVien, nv.HoTen AS TenNhanVien, "
-                + "ISNULL(SUM(ctxh.SoLuongXuat * ctxh.DonGiaXuat), 0) AS TongTienHoaDonXuat, xh.GhiChu " // Đổi cột
-                + "FROM XuatHang xh " // Đổi bảng
-                + "LEFT JOIN ChiTietXuatHang ctxh ON xh.MaXuatHang = ctxh.MaXuatHang " // Đổi bảng
-                + "INNER JOIN NhanVien nv ON xh.MaNhanVien = nv.MaNhanVien "
-                + "LEFT JOIN KhachHang kh ON xh.MaKhachHang = kh.MaKhachHang " // Đổi bảng và join
-                + "WHERE 1=1 ");
+    // 1. Khởi tạo câu truy vấn cơ bản (SELECT, FROM, JOIN)
+    StringBuilder query = new StringBuilder(
+            "SELECT xh.MaXuatHang, xh.NgayXuat, xh.MaKhachHang, kh.HoTen AS TenKhachHang, " // THÊM kh.HoTen AS TenKhachHang
+            + "xh.MaNhanVien, nv.HoTen AS TenNhanVien, "
+            + "ISNULL(SUM(ctxh.SoLuongXuat * ctxh.DonGiaXuat), 0) AS TongTienHoaDonXuat, xh.GhiChu "
+            + "FROM XuatHang xh "
+            + "LEFT JOIN ChiTietXuatHang ctxh ON xh.MaXuatHang = ctxh.MaXuatHang "
+            + "INNER JOIN NhanVien nv ON xh.MaNhanVien = nv.MaNhanVien "
+            + "LEFT JOIN KhachHang kh ON xh.MaKhachHang = kh.MaKhachHang " // Đảm bảo JOIN với KhachHang
+            + "WHERE 1=1 "); // Luôn bắt đầu với WHERE 1=1 để dễ dàng thêm AND
 
-        List<Object> params = new ArrayList<>();
+    List<Object> params = new ArrayList<>();
 
-        if (!tuKhoa.isEmpty()) {
-            query.append("AND (xh.MaXuatHang LIKE ? OR xh.MaKhachHang LIKE ? OR xh.MaNhanVien LIKE ? OR nv.HoTen LIKE ? OR xh.GhiChu LIKE ?) "); // Đổi cột
-            for (int i = 0; i < 6; i++) {
-                params.add("%" + tuKhoa + "%");
-            }
+    // 2. Thêm điều kiện tìm kiếm theo từ khóa
+    if (!tuKhoa.isEmpty()) {
+        query.append("AND (xh.MaXuatHang LIKE ? OR xh.MaKhachHang LIKE ? OR xh.MaNhanVien LIKE ? OR nv.HoTen LIKE ? OR kh.HoTen LIKE ? OR xh.GhiChu LIKE ?) "); // THÊM kh.HoTen
+        for (int i = 0; i < 6; i++) { // Phải là 6 vì có 6 điều kiện LIKE
+            params.add("%" + tuKhoa + "%");
         }
-
-        if (!"Tất cả".equals(maKH)) { // Đã đổi từ maNCC
-            query.append("AND xh.MaKhachHang = ? "); // Đã đổi cột
-            params.add(maKH); // Đã đổi ma
-        }
-
-        if (!"Tất cả".equals(maNV)) {
-            query.append("AND xh.MaNhanVien = ? ");
-            params.add(maNV);
-        }
-
-        if (!"Không lọc".equals(locTheo) && ngayXuat != null) { // Đã đổi từ ngayNhap
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(ngayXuat); // Đã đổi từ ngayNhap
-
-            switch (locTheo) {
-                case "Theo ngày":
-                    query.append("AND CONVERT(DATE, xh.NgayXuat) = ? "); // Đổi cột
-                    params.add(new java.sql.Date(ngayXuat.getTime())); // Đã đổi từ ngayNhap
-                    break;
-                case "Theo tháng":
-                    query.append("AND MONTH(xh.NgayXuat) = ? AND YEAR(xh.NgayXuat) = ? "); // Đổi cột
-                    params.add(cal.get(Calendar.MONTH) + 1);
-                    params.add(cal.get(Calendar.YEAR));
-                    break;
-                case "Theo năm":
-                    query.append("AND YEAR(xh.NgayXuat) = ? "); // Đổi cột
-                    params.add(cal.get(Calendar.YEAR));
-                    break;
-            }
-        }
-
-        query.append("GROUP BY xh.MaXuatHang, xh.NgayXuat, xh.MaKhachHang, xh.MaNhanVien, nv.HoTen, xh.GhiChu " // Đổi cột
-                + "ORDER BY xh.NgayXuat DESC, xh.MaXuatHang ASC"); // Đổi cột
-        logger.log(Level.INFO, "DEBUG SQL Query Final (timKiemXuatHang): " + query.toString());
-        logger.log(Level.INFO, "DEBUG SQL Params Final (timKiemXuatHang): " + params.toString());
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            conn = DBConnection.openConnection();
-            if (conn == null) {
-                JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tìm kiếm. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
-                logger.log(Level.SEVERE, "timKiemXuatHang() - Kết nối CSDL null.");
-                return;
-            }
-            ps = conn.prepareStatement(query.toString());
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
-            rs = ps.executeQuery();
-            LinkedHashMap<String, String> columnMapping = new LinkedHashMap<>();
-            columnMapping.put("MaXuatHang", "Mã Xuất Hàng");
-            columnMapping.put("NgayXuat", "Ngày Xuất");
-            columnMapping.put("MaKhachHang", "Mã Khách Hàng");
-            columnMapping.put("TenKhachHang", "Tên Khách Hàng"); // Giả sử cột này tồn tại và được join đúng
-            columnMapping.put("MaNhanVien", "Mã Nhân Viên");
-            columnMapping.put("TenNhanVien", "Tên Nhân Viên"); // Vì bạn đã alias 'nv.HoTen AS TenNhanVien'
-            columnMapping.put("TongTienHoaDonXuat", "Tổng Tiền Hóa Đơn");
-            columnMapping.put("GhiChu", "Ghi Chú");
-           dgvXuatHang.setModel(TableHelper.resultSetToTableModel(rs, columnMapping)); // GỌI PHƯƠNG THỨC MỚI
-            logger.log(Level.INFO, "timKiemXuatHang() - Đã thực thi truy vấn. Số hàng trả về: " + dgvXuatHang.getRowCount());
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm phiếu xuất: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "timKiemXuatHang() - Lỗi SQLException: " + e.getMessage(), e);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                // KHÔNG ĐÓNG 'conn' Ở ĐÂY, vì nó là kết nối tĩnh của DBConnection
-            } catch (SQLException ex) {
-                logger.log(Level.SEVERE, "Lỗi đóng tài nguyên trong timKiemXuatHang(): " + ex.getMessage(), ex);
-            }
-        }
-        logger.log(Level.INFO, "timKiemXuatHang() - Kết thúc.");
     }
+
+    // 3. Thêm điều kiện lọc theo Mã Khách Hàng
+    if (!"Tất cả".equals(maKH)) {
+        query.append("AND xh.MaKhachHang = ? ");
+        params.add(maKH);
+    }
+
+    // 4. Thêm điều kiện lọc theo Mã Nhân Viên
+    if (!"Tất cả".equals(maNV)) {
+        query.append("AND xh.MaNhanVien = ? ");
+        params.add(maNV);
+    }
+
+    // 5. Thêm điều kiện lọc theo ngày xuất
+    if (!"Không lọc".equals(locTheo) && ngayXuat != null) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(ngayXuat);
+
+        switch (locTheo) {
+            case "Theo ngày":
+                query.append("AND CONVERT(DATE, xh.NgayXuat) = ? ");
+                params.add(new java.sql.Date(ngayXuat.getTime()));
+                break;
+            case "Theo tháng":
+                query.append("AND MONTH(xh.NgayXuat) = ? AND YEAR(xh.NgayXuat) = ? ");
+                params.add(cal.get(Calendar.MONTH) + 1);
+                params.add(cal.get(Calendar.YEAR));
+                break;
+            case "Theo năm":
+                query.append("AND YEAR(xh.NgayXuat) = ? ");
+                params.add(cal.get(Calendar.YEAR));
+                break;
+        }
+    }
+
+    // 6. Thêm GROUP BY và ORDER BY CỐ ĐỊNH ở cuối cùng (CHỈ MỘT LẦN)
+    query.append(" GROUP BY xh.MaXuatHang, xh.NgayXuat, xh.MaKhachHang, kh.HoTen, xh.MaNhanVien, nv.HoTen, xh.GhiChu "); // THÊM kh.HoTen vào GROUP BY
+    query.append(" ORDER BY xh.NgayXuat DESC, xh.MaXuatHang ASC");
+
+    logger.log(Level.INFO, "DEBUG SQL Query Final (timKiemXuatHang): " + query.toString());
+    logger.log(Level.INFO, "DEBUG SQL Params Final (timKiemXuatHang): " + params.toString());
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = DBConnection.openConnection();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tìm kiếm. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "timKiemXuatHang() - Kết nối CSDL null.");
+            return;
+        }
+        ps = conn.prepareStatement(query.toString());
+        for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+        }
+        rs = ps.executeQuery();
+        
+        LinkedHashMap<String, String> columnMapping = new LinkedHashMap<>();
+        columnMapping.put("MaXuatHang", "Mã Xuất Hàng");
+        columnMapping.put("NgayXuat", "Ngày Xuất");
+        columnMapping.put("MaKhachHang", "Mã Khách Hàng");
+        columnMapping.put("TenKhachHang", "Tên Khách Hàng"); // Giả sử cột này tồn tại và được join đúng
+        columnMapping.put("MaNhanVien", "Mã Nhân Viên");
+        columnMapping.put("TenNhanVien", "Tên Nhân Viên"); 
+        columnMapping.put("TongTienHoaDonXuat", "Tổng Tiền Hóa Đơn");
+        columnMapping.put("GhiChu", "Ghi Chú");
+        dgvXuatHang.setModel(TableHelper.resultSetToTableModel(rs, columnMapping)); 
+        logger.log(Level.INFO, "timKiemXuatHang() - Đã thực thi truy vấn. Số hàng trả về: " + dgvXuatHang.getRowCount());
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm phiếu xuất: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        logger.log(Level.SEVERE, "timKiemXuatHang() - Lỗi SQLException: " + e.getMessage(), e);
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            // KHÔNG ĐÓNG 'conn' Ở ĐÂY, vì nó là kết nối tĩnh của DBConnection
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Lỗi đóng tài nguyên trong timKiemXuatHang(): " + ex.getMessage(), ex);
+        }
+    }
+    logger.log(Level.INFO, "timKiemXuatHang() - Kết thúc.");
+}
 
     private void deleteSelectedXuatHang() { // Đã đổi tên hàm
         int selectedRow = dgvXuatHang.getSelectedRow(); // Đã đổi dgv
@@ -617,11 +630,20 @@ public class pnlXuatHang extends javax.swing.JPanel {
     }//GEN-LAST:event_cboLoaiLocNgayActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        frmHoaDonXuat themXuatHangDialog = new frmHoaDonXuat(); // Thay 'null' bằng JFrame cha thực tế
-        themXuatHangDialog.setVisible(true);
-        if (themXuatHangDialog.isAddedSuccessfully()) { // Giả sử frmHoaDonXuat có phương thức này
-            timKiemXuatHang(); // Tải lại dữ liệu sau khi thêm thành công
+      frmHoaDonXuat themXuatHangDialog = new frmHoaDonXuat(); 
+    
+    // Thêm WindowListener để lắng nghe sự kiện đóng cửa sổ
+    themXuatHangDialog.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosed(WindowEvent e) {
+            if (themXuatHangDialog.isSavedSuccessfully()) { 
+                timKiemXuatHang(); 
+                JOptionPane.showMessageDialog(null, "Danh sách hóa đơn đã được cập nhật.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
+    });
+
+    themXuatHangDialog.setVisible(true);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void cboMaKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaKhachHangActionPerformed

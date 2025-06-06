@@ -135,7 +135,7 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
         }
     }
 
-     private void luuThongTinXuatHang() {
+    private void luuThongTinXuatHang() {
         // 1. Lấy dữ liệu từ các trường nhập liệu
         String maXuatHang = txtMaXuatHang.getText().trim();
         String maKhachHang = txtMaKhachHang.getText().trim();
@@ -188,7 +188,6 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
             // 4. Cập nhật thông tin phiếu xuất chính (Bảng XuatHang)
             // Lấy thông tin về phiếu xuất từ các trường JTextField và cập nhật vào bảng XuatHang
             // Nếu bạn có một XuatHangDAO riêng, hãy sử dụng nó. Nếu không, viết SQL trực tiếp.
-
             String sqlUpdateXuatHang = "UPDATE XuatHang SET MaKhachHang = ?, MaNhanVien = ?, NgayXuat = ?, GhiChu = ? WHERE MaXuatHang = ?";
             try (PreparedStatement psXuatHang = conn.prepareStatement(sqlUpdateXuatHang)) {
                 psXuatHang.setString(1, maKhachHang);
@@ -206,14 +205,7 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
                 }
                 logger.log(Level.INFO, "Cập nhật XuatHang.RowsAffected: " + rowsAffectedXuatHang);
             }
-
-            // 5. Cập nhật hoặc thêm mới chi tiết xuất hàng (Bảng ChiTietXuatHang)
-            // Bạn cần xóa tất cả chi tiết cũ của phiếu xuất này và thêm lại toàn bộ từ JTable
-            // Hoặc, nếu chỉ cập nhật 'GhiChu' như code cũ của bạn, thì giữ nguyên cách đó.
-            // Phương án an toàn hơn: Xóa tất cả chi tiết cũ và insert lại các dòng mới từ JTable.
-
-            // Cách 1: Chỉ cập nhật GhiChu (giữ nguyên logic bạn đang có)
-            ChiTietXuatHangDAO chiTietXuatHangDAO = new ChiTietXuatHangDAO(conn); // Truyền connection vào DAO
+            ChiTietXuatHangDAO chiTietXuatHangDAO = new ChiTietXuatHangDAO();
 
             DefaultTableModel model = (DefaultTableModel) dgvXuatHang.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
@@ -239,7 +231,7 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
                     // Tùy thuộc vào yêu cầu: có thể rollback hoặc chỉ cảnh báo
                 }
             }
-            
+
             // 6. Hoàn tất giao dịch
             conn.commit(); // Commit tất cả các thay đổi vào database
             JOptionPane.showMessageDialog(this, "Lưu thông tin xuất hàng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -285,7 +277,7 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
             }
         }
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
