@@ -3,6 +3,7 @@ package com.tuandat.cuahanggas.ui;
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
 import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.DBConnection;
+import com.tuandat.cuahanggas.utils.Session;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -214,11 +215,17 @@ public class frmLogin extends javax.swing.JDialog {
     }
 
     List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
-    if (checkLogin(username, password, allAccounts)) {
+   if (checkLogin(username, password, allAccounts)) {
+    TaiKhoanNguoiDung account = allAccounts.stream()
+        .filter(acc -> acc.getTenDangNhap().equals(username) && acc.getMatKhau().equals(password))
+        .findFirst()
+        .orElse(null);
+
+    if (account != null) {
+        Session.login(account.getMaNhanVien(), account.getTenNhanVien());  // Lưu session
         loginSuccess = true;
         dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
+    }
     }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 

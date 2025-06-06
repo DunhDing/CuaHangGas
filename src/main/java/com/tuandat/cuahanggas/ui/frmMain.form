@@ -44,11 +44,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t h&#xe0;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuXuatHangActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="menuNhapHang">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nh&#x1ead;p h&#xe0;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuNhapHangActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

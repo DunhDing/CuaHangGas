@@ -125,9 +125,19 @@ public class frmMain extends javax.swing.JFrame {
         popMenuTaiKhoan.add(menuDangXuat);
 
         menuXuatHang.setText("Xuất hàng");
+        menuXuatHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuXuatHangActionPerformed(evt);
+            }
+        });
         popMenuGiaoDich.add(menuXuatHang);
 
         menuNhapHang.setText("Nhập hàng");
+        menuNhapHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNhapHangActionPerformed(evt);
+            }
+        });
         popMenuGiaoDich.add(menuNhapHang);
 
         menuKhachHang.setText("Khách hàng");
@@ -326,12 +336,30 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuTaiKhoanActionPerformed
 
+    private void menuXuatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuXuatHangActionPerformed
+        pnlMain.removeAll();
+        pnlXuatHang xuatHangPanel = new pnlXuatHang();
+        pnlMain.setLayout(new BorderLayout());
+        pnlMain.add(xuatHangPanel, BorderLayout.CENTER);
+        pnlMain.revalidate();
+        pnlMain.repaint();        // TODO add your handling code here:
+    }//GEN-LAST:event_menuXuatHangActionPerformed
+
+    private void menuNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNhapHangActionPerformed
+        pnlMain.removeAll();
+        pnlNhapHang nhapHangPanel = new pnlNhapHang();
+        pnlMain.setLayout(new BorderLayout());
+        pnlMain.add(nhapHangPanel, BorderLayout.CENTER);
+        pnlMain.revalidate();
+        pnlMain.repaint();        // TODO add your handling code here:
+    }//GEN-LAST:event_menuNhapHangActionPerformed
+
     private void showPanel(JPanel panel) {
-        pnlMain.removeAll();                
-        pnlMain.setLayout(new BorderLayout()); 
+        pnlMain.removeAll();
+        pnlMain.setLayout(new BorderLayout());
         pnlMain.add(panel, BorderLayout.CENTER);
-        pnlMain.revalidate();                
-        pnlMain.repaint();                 
+        pnlMain.revalidate();
+        pnlMain.repaint();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;

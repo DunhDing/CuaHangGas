@@ -1,11 +1,13 @@
 package com.tuandat.cuahanggas.model;
 
 public class TaiKhoanNguoiDung {
+
     private String maTaiKhoan;
     private String tenDangNhap;
     private String matKhau;
     private String maVaiTro;
     private String maNhanVien;
+    private String tenNhanVien;
     private String ghiChu;
 
     public TaiKhoanNguoiDung() {
@@ -17,11 +19,16 @@ public class TaiKhoanNguoiDung {
         this.matKhau = matKhau;
         this.maVaiTro = maVaiTro;
         this.maNhanVien = maNhanVien;
+
         this.ghiChu = ghiChu;
     }
 
     public String getMaTaiKhoan() {
         return maTaiKhoan;
+    }
+
+    public String getTenNhanVien() {
+        return tenNhanVien;
     }
 
     public void setMaTaiKhoan(String maTaiKhoan) {
@@ -68,4 +75,3 @@ public class TaiKhoanNguoiDung {
         this.ghiChu = ghiChu;
     }
 }
-
