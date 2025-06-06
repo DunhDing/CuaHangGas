@@ -1,6 +1,7 @@
 package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
+import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,15 +10,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class frmLogin extends javax.swing.JDialog {
 
     private boolean loginSuccess = false;
+    private TaiKhoanNguoiDungDAO taiKhoanDAO;
 
-    public frmLogin(java.awt.Frame parent, boolean modal) {
+    public frmLogin(java.awt.Frame parent, boolean modal, TaiKhoanNguoiDungDAO taiKhoanNguoiDungDAO) {
         super(parent, modal);
+        this.taiKhoanDAO = taiKhoanNguoiDungDAO;
         setModalityType(ModalityType.APPLICATION_MODAL);
         initComponents();
         setLocationRelativeTo(parent);
@@ -40,7 +44,7 @@ public class frmLogin extends javax.swing.JDialog {
     }
 
     public frmLogin() {
-        this(null, true);
+        this(null, true, null);
     }
 
     @SuppressWarnings("unchecked")
@@ -158,56 +162,64 @@ public class frmLogin extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private boolean checkLogin(String username, String password) {
-        Connection conn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-
-        try {
-            conn = DBConnection.openConnection();
-
-            String sql = "SELECT * FROM TaiKhoanNguoiDung WHERE TenDangNhap = ? AND MatKhau = ?";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, username);
-            pst.setString(2, password);
-
-            rs = pst.executeQuery();
-
-            return rs.next();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi kết nối: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-                DBConnection.closeConnection();
-            } catch (SQLException e) {
-                System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
-            }
-        }
-        return false;
-    }
+//    private boolean checkLogin(String username, String password) {
+//        Connection conn = null;
+//        PreparedStatement pst = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            conn = DBConnection.openConnection();
+//
+//            String sql = "SELECT * FROM TaiKhoanNguoiDung WHERE TenDangNhap = ? AND MatKhau = ?";
+//            pst = conn.prepareStatement(sql);
+//            pst.setString(1, username);
+//            pst.setString(2, password);
+//
+//            rs = pst.executeQuery();
+//
+//            return rs.next();
+//
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(this, "Lỗi khi kết nối: " + e.getMessage());
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (pst != null) {
+//                    pst.close();
+//                }
+//                DBConnection.closeConnection();
+//            } catch (SQLException e) {
+//                System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
+//            }
+//        }
+//        return false;
+//    }
+//
+    
+    
+    private boolean checkLogin(String username, String password, List<TaiKhoanNguoiDung> allAccounts) {
+    return allAccounts.stream()
+            .anyMatch(acc -> acc.getTenDangNhap().equals(username) && acc.getMatKhau().equals(password));
+}
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String username = txtTenDangNhap.getText().trim();
-        String password = new String(txtMatKhau.getPassword()).trim();
+    String password = new String(txtMatKhau.getPassword()).trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
-            return;
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
+        return;
+    }
 
-        if (checkLogin(username, password)) {
-            loginSuccess = true;
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
-        }
+    List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
+    if (checkLogin(username, password, allAccounts)) {
+        loginSuccess = true;
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
+    }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed

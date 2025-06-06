@@ -4,8 +4,6 @@ import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
 import com.tuandat.cuahanggas.dao.impl.NhanVienDAO;
 import com.tuandat.cuahanggas.dao.impl.TaiKhoanNguoiDungDAO;
-import com.tuandat.cuahanggas.model.NhanVien;
-import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 import com.tuandat.cuahanggas.ui.frmLogin;
 import com.tuandat.cuahanggas.ui.frmMain;
 import com.tuandat.cuahanggas.utils.DBConnection;
@@ -42,37 +40,38 @@ public class CuaHangGas {
             System.out.println("Dong ket noi CSDL khi ung dung thoat.");
             DBConnection.closeConnection();
         }));
-        java.awt.EventQueue.invokeLater(() -> {
-            new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO).setVisible(true);
-        });
-//        while (true) {
-//            frmLogin login = new frmLogin(null, true);
-//            login.setLocationRelativeTo(null);
-//            login.setVisible(true);
-//
-//            if (login.isLoginSuccess()) {
-//                frmMain main = new frmMain(binhGasDAO, taiKhoanDAO);
-//                main.setLocationRelativeTo(null);
-//                main.setVisible(true);
-//
-//                while (main.isDisplayable()) {
-//                    try {
-//                        Thread.sleep(100);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                if (main.isLogout()) {
-//                    continue;
-//                } else {
-//                    break;
-//                }
-//            } else {
-//                break;
-//            }
-//        }
-//
-//        System.exit(0);
+//        java.awt.EventQueue.invokeLater(() -> {
+//            new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO).setVisible(true);
+//        });
+        while (true) {
+            frmLogin login = new frmLogin(null, true, taiKhoanDAO);
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+
+            if (login.isLoginSuccess()) {
+                frmMain main = new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO);
+                main.setLocationRelativeTo(null);
+                main.setVisible(true);
+
+                while (main.isDisplayable()) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (main.isLogout()) {
+                    continue;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        System.exit(0);
     }
 }
+
