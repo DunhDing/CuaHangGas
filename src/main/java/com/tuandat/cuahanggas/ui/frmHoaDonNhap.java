@@ -64,6 +64,7 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
         initComponents();
         initChiTietNhapHangTable();
         frmHoaDonNhap_Load();
+        setExtendedState(MAXIMIZED_BOTH);
         if (Session.IsLoggedIn()) { // Kiểm tra xem người dùng đã đăng nhập chưa
             txtMaNhanVien.setText(Session.MaNhanVien);
             txtMaNhanVien.setEditable(false); // Có thể đặt không cho chỉnh sửa để tránh nhầm lẫn
@@ -444,8 +445,6 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtTongTien = new javax.swing.JTextField();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         dgvKetQuaTimKiemBinhGas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

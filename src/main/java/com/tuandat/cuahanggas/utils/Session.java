@@ -4,22 +4,28 @@ import com.tuandat.cuahanggas.model.TaiKhoanNguoiDung;
 
 public class Session {
 
-    private static TaiKhoanNguoiDung currentUser;
+    private static TaiKhoanNguoiDung currentUser; // Lưu trữ toàn bộ đối tượng người dùng
+    public static String MaNhanVien; // Mã nhân viên của người dùng đã đăng nhập
+    public static String TenNhanVien; // Tên nhân viên của người dùng đã đăng nhập
+    private static boolean isLoggedIn = false; // Trạng thái đăng nhập
 
+    // Phương thức để thiết lập đối tượng người dùng hiện tại
     public static void setCurrentUser(TaiKhoanNguoiDung user) {
         currentUser = user;
     }
 
+    // Phương thức để lấy đối tượng người dùng hiện tại
     public static TaiKhoanNguoiDung getCurrentUser() {
         return currentUser;
     }
-    public static String MaNhanVien;
-    public static String TenNhanVien; // Có thể thêm các thông tin khác nếu cần
-    private static boolean isLoggedIn = false;
 
- 
+    /**
+     * Phương thức kiểm tra trạng thái đăng nhập.
+     * Trả về true nếu người dùng đã đăng nhập và thông tin cần thiết không rỗng.
+     */
     public static boolean IsLoggedIn() {
-        return isLoggedIn && MaNhanVien != null && !MaNhanVien.trim().isEmpty();
+        // Đảm bảo cả cờ isLoggedIn và thông tin người dùng (MaNhanVien) đều hợp lệ
+        return isLoggedIn && currentUser != null && MaNhanVien != null && !MaNhanVien.trim().isEmpty();
     }
 
     /**
@@ -30,18 +36,31 @@ public class Session {
         isLoggedIn = status;
     }
 
-    public static void login(String maNhanVien, String tenNhanVien) {
-        Session.MaNhanVien = maNhanVien;
-        Session.TenNhanVien = tenNhanVien;
-        Session.setLoggedIn(true);
+    /**
+     * Phương thức để đăng nhập người dùng.
+     * Cập nhật thông tin phiên và đặt trạng thái đã đăng nhập.
+     * @param user Đối tượng TaiKhoanNguoiDung của người dùng đăng nhập.
+     */
+    public static void login(TaiKhoanNguoiDung user) {
+        if (user != null) {
+            Session.currentUser = user;
+            Session.MaNhanVien = user.getMaNhanVien(); // Giả định TaiKhoanNguoiDung có getMaNhanVien()
+            Session.TenNhanVien = user.getTenNhanVien(); // Giả định TaiKhoanNguoiDung có getTenNhanVien()
+            Session.setLoggedIn(true);
+        } else {
+            // Xử lý trường hợp đối tượng user là null (có thể reset phiên)
+            logout();
+        }
     }
 
     /**
      * Phương thức để xóa thông tin người dùng khi đăng xuất.
+     * Đặt tất cả các trường liên quan đến phiên về trạng thái ban đầu.
      */
     public static void logout() {
-        Session.MaNhanVien = null;
-        Session.TenNhanVien = null;
-        Session.setLoggedIn(false);
+        currentUser = null;
+        MaNhanVien = null;
+        TenNhanVien = null;
+        isLoggedIn = false;
     }
 }

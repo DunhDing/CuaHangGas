@@ -58,6 +58,8 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         initComponents();
         initChiTietXuatHangTable(); // Đổi tên phương thức
         frmHoaDonXuat_Load(); // Đổi tên phương thức
+        setExtendedState(MAXIMIZED_BOTH);
+        // Corrected: Call IsLoggedIn() as a method
         if (Session.IsLoggedIn()) { // Kiểm tra xem người dùng đã đăng nhập chưa
             txtMaNhanVien.setText(Session.MaNhanVien);
             txtMaNhanVien.setEditable(false); // Có thể đặt không cho chỉnh sửa để tránh nhầm lẫn
@@ -138,33 +140,33 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         }
     }
 
-   private void displayKhachHangInfo(String tenKhachHang) { // Đổi tên phương thức và logic
-    if (tenKhachHang == null || tenKhachHang.isEmpty() || tenKhachHang.equals("--- Chọn Khách Hàng ---")) {
-        txtMaKhachHang.setText(""); // Đổi tên txt
-        txtSdt.setText(""); // Giả sử bạn có txtSdtKhachHang để hiển thị SĐT Khách hàng
-        return;
-    }
-
-    // Đã sửa: Thay đổi 'TenKhachHang' thành 'HoTen' trong mệnh đề WHERE
-    String sql = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
-    try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-        pstmt.setString(1, tenKhachHang);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            txtMaKhachHang.setText(rs.getString("MaKhachHang"));
-            txtSdt.setText(rs.getString("SDT"));
-        } else {
-            txtMaKhachHang.setText("");
-            txtSdt.setText("");
-            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho khách hàng: " + tenKhachHang, "Lỗi", JOptionPane.WARNING_MESSAGE);
+    private void displayKhachHangInfo(String tenKhachHang) { // Đổi tên phương thức và logic
+        if (tenKhachHang == null || tenKhachHang.isEmpty() || tenKhachHang.equals("--- Chọn Khách Hàng ---")) {
+            txtMaKhachHang.setText(""); // Đổi tên txt
+            txtSdt.setText(""); // Giả sử bạn có txtSdtKhachHang để hiển thị SĐT Khách hàng
+            return;
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin khách hàng: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+
+        // Đã sửa: Thay đổi 'TenKhachHang' thành 'HoTen' trong mệnh đề WHERE
+        String sql = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
+        try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setString(1, tenKhachHang);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                txtMaKhachHang.setText(rs.getString("MaKhachHang"));
+                txtSdt.setText(rs.getString("SDT"));
+            } else {
+                txtMaKhachHang.setText("");
+                txtSdt.setText("");
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho khách hàng: " + tenKhachHang, "Lỗi", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin khách hàng: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
 
     private void generateNewMaXuatHang() { // Đổi tên phương thức và tiền tố mã
         try (Connection conn = DBConnection.openConnection()) {
@@ -241,36 +243,36 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         }
     }
 
-   private void txtTimKiemBinhGas_TextChanged() {
-    try (Connection conn = DBConnection.openConnection()) {
-        String keyword = txtTimKiemBinhGas.getText().trim();
-        String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
+    private void txtTimKiemBinhGas_TextChanged() {
+        try (Connection conn = DBConnection.openConnection()) {
+            String keyword = txtTimKiemBinhGas.getText().trim();
+            String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
 
-        // Để debug, bạn có thể in câu query và keyword ra console
-        logger.log(Level.INFO, "Executing query: " + query + " with keyword: " + keyword);
+            // Để debug, bạn có thể in câu query và keyword ra console
+            logger.log(Level.INFO, "Executing query: " + query + " with keyword: " + keyword);
 
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, "%" + keyword + "%");
-            pstmt.setString(2, "%" + keyword + "%");
-            try (ResultSet rs = pstmt.executeQuery()) {
-                modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
-                while (rs.next()) {
-                    Vector<Object> rowData = new Vector<>();
-                    rowData.add(rs.getString("MaBinhGas"));
-                    rowData.add(rs.getString("TenBinhGas"));
-                    rowData.add(rs.getString("LoaiBinh"));
-                    rowData.add(rs.getInt("SoLuong")); // Tồn kho
-                    rowData.add(rs.getObject("GiaVonTrungBinh")); // Thêm cột Giá Bán Lẻ
-                    modelKetQuaTimKiemBinhGas.addRow(rowData);
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
+                    while (rs.next()) {
+                        Vector<Object> rowData = new Vector<>();
+                        rowData.add(rs.getString("MaBinhGas"));
+                        rowData.add(rs.getString("TenBinhGas"));
+                        rowData.add(rs.getString("LoaiBinh"));
+                        rowData.add(rs.getInt("SoLuong")); // Tồn kho
+                        rowData.add(rs.getObject("GiaVonTrungBinh")); // Thêm cột Giá Bán Lẻ
+                        modelKetQuaTimKiemBinhGas.addRow(rowData);
+                    }
                 }
             }
+        } catch (SQLException ex) {
+            // Cập nhật dòng này để hiển thị thông báo lỗi chi tiết hơn
+            logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException ex) {
-        // Cập nhật dòng này để hiển thị thông báo lỗi chi tiết hơn
-        logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), ex);
-        JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
     }
-}
 
     private void dgvKetQuaTimKiemBinhGas_CellClick(MouseEvent evt) {
         int row = dgvKetQuaTimKiemBinhGas.rowAtPoint(evt.getPoint());
@@ -416,8 +418,6 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         txtSdt = new javax.swing.JTextField();
         cboTenKhachHang = new javax.swing.JComboBox<>();
         btmThemKhachHang = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setName("pnlHeader"); // NOI18N

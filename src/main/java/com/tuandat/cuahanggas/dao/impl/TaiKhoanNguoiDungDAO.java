@@ -1,3 +1,4 @@
+
 package com.tuandat.cuahanggas.dao.impl;
 
 import com.tuandat.cuahanggas.dao.AbstractDAO;
