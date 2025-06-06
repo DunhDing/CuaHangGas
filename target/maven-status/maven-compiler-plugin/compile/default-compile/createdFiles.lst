@@ -47,11 +47,13 @@ com\tuandat\cuahanggas\dao\impl\TaiKhoanNguoiDungDAO.class
 com\tuandat\cuahanggas\model\ChiTietNhapHangTableModel.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$7.class
 com\tuandat\cuahanggas\ui\frmMain.class
+com\tuandat\cuahanggas\ui\pnlXuatHang$11.class
 com\tuandat\cuahanggas\utils\Session.class
 com\tuandat\cuahanggas\ui\pnlNhapHang.class
 com\tuandat\cuahanggas\model\ChiTietXuatHangTableModel.class
 com\tuandat\cuahanggas\ui\frmHoaDonXuat$8.class
 com\tuandat\cuahanggas\ui\frmMain$3.class
+com\tuandat\cuahanggas\model\ExcelExporter.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap$9.class
 com\tuandat\cuahanggas\model\ChiTietXuatHang.class
 com\tuandat\cuahanggas\ui\pnlXuatHang$7.class
@@ -117,5 +119,6 @@ com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAO.class
 com\tuandat\cuahanggas\ui\ucHangHoa$2.class
 com\tuandat\cuahanggas\model\KhachHang.class
 com\tuandat\cuahanggas\ui\dlgChiTietHangHoa$1.class
+com\tuandat\cuahanggas\ui\pnlNhapHang$11.class
 com\tuandat\cuahanggas\dao\IGenericDAO.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap.class

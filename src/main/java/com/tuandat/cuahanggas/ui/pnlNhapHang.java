@@ -7,6 +7,7 @@ package com.tuandat.cuahanggas.ui;
 import com.toedter.calendar.JDateChooser;
 import com.tuandat.cuahanggas.dao.impl.ChiTietNhapHangDAO;
 import com.tuandat.cuahanggas.model.ChiTietNhapHang;
+import com.tuandat.cuahanggas.model.ExcelExporter;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,22 +24,24 @@ import javax.swing.table.DefaultTableModel;
 import com.tuandat.cuahanggas.utils.TableHelper;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.LinkedHashMap;
 import java.util.Vector;
+import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import java.util.logging.Logger; 
 /**
  *
  * @author duck
  */
 public class pnlNhapHang extends javax.swing.JPanel {
-
+ private static final Logger logger = Logger.getLogger(pnlXuatHang.class.getName());
     /**
      * Creates new form pnlNhapHang
      */
@@ -360,7 +363,44 @@ public class pnlNhapHang extends javax.swing.JPanel {
             }
         }
     }
+private void exportNhapToExcel() {
+    // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
+    DefaultTableModel model = (DefaultTableModel) dgvNhapHang.getModel();
+    if (model.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
 
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Lưu file Excel Hóa đơn Nhập"); // Đổi tiêu đề hộp thoại
+    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+    // Đổi tên file gợi ý ban đầu
+    fileChooser.setSelectedFile(new File("DanhSachHoaDonNhap_" + System.currentTimeMillis() + ".xlsx"));
+
+    int userSelection = fileChooser.showSaveDialog(this);
+
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+            fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+
+        try {
+            // Gọi phương thức xuất nhập hàng từ class ExcelExporter
+            ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
+                    dgvNhapHang, // JTable chứa dữ liệu nhập hàng
+                    fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
+                    "Danh Sách Hóa Đơn Nhập", // Tên sheet trong Excel
+                    "DANH SÁCH HÓA ĐƠN NHẬP HÀNG" // Tiêu đề chính của báo cáo
+            );
+            JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
+            logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
+        }
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -436,6 +476,11 @@ public class pnlNhapHang extends javax.swing.JPanel {
 
         btnXuat.setText("Xuất File");
         btnXuat.setName("btnXuatFile"); // NOI18N
+        btnXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatActionPerformed(evt);
+            }
+        });
 
         btnXoa.setText("Xóa");
         btnXoa.setName("btnXoa"); // NOI18N
@@ -677,6 +722,10 @@ public class pnlNhapHang extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         deleteSelectedNhapHang();        // TODO add your handling code here:
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatActionPerformed
+      exportNhapToExcel();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnXuatActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
