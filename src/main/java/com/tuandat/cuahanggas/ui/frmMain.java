@@ -18,6 +18,7 @@ import com.tuandat.cuahanggas.utils.Session;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -34,10 +35,11 @@ public class frmMain extends javax.swing.JFrame {
     private XuatHangDAO xuatHangDAO;
     private NhapHangDAO nhapHangDAO;
     private NhaCungCapDAO nhaCungCapDAO;
+    private Connection con;
     private boolean isLogout = false;
 
     public frmMain(BinhGasDAO binhGasDAO, TaiKhoanNguoiDungDAO taiKhoanDAO, NhanVienDAO nv, KhachHangDAO kh,
-            XuatHangDAO xh, NhapHangDAO nh, ChiTietNhapHangDAO cn, ChiTietXuatHangDAOV2 cx, NhaCungCapDAO nhaCungCapDAO) {
+            XuatHangDAO xh, NhapHangDAO nh, ChiTietNhapHangDAO cn, ChiTietXuatHangDAOV2 cx, NhaCungCapDAO nhaCungCapDAO, Connection con) {
         initComponents();
         this.taiKhoanDAO = taiKhoanDAO;
         this.binhGasDAO = binhGasDAO;
@@ -48,6 +50,7 @@ public class frmMain extends javax.swing.JFrame {
         this.chiTietNhapHangDAO = cn;
         this.chiTietXuatHangDAO = cx;
         this.nhaCungCapDAO = nhaCungCapDAO;
+        this.con = con;
 
         ImageIcon iconLogo = new ImageIcon(getClass().getResource("/logo.png"));
         Image imgLogo = iconLogo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
@@ -392,7 +395,7 @@ public class frmMain extends javax.swing.JFrame {
 
     private void menuXuatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuXuatHangActionPerformed
         pnlMain.removeAll();
-        pnlXuatHang xuatHangPanel = new pnlXuatHang();
+        pnlXuatHang xuatHangPanel = new pnlXuatHang(con);
         pnlMain.setLayout(new BorderLayout());
         pnlMain.add(xuatHangPanel, BorderLayout.CENTER);
         pnlMain.revalidate();
@@ -401,7 +404,7 @@ public class frmMain extends javax.swing.JFrame {
 
     private void menuNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNhapHangActionPerformed
         pnlMain.removeAll();
-        pnlNhapHang nhapHangPanel = new pnlNhapHang();
+        pnlNhapHang nhapHangPanel = new pnlNhapHang(con);
         pnlMain.setLayout(new BorderLayout());
         pnlMain.add(nhapHangPanel, BorderLayout.CENTER);
         pnlMain.revalidate();

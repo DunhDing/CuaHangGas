@@ -66,7 +66,7 @@ public class CuaHangGas {
 
             if (login.isLoginSuccess()) {
                 frmMain main = new frmMain(binhGasDAO, taiKhoanDAO, nhanVienDAO, khachHangDAO,
-                        xuatHangDAO, nhapHangDAO, chiTietNhapHangDAO, chiTietXuatHangDAO, nhaCungCapDAO);
+                        xuatHangDAO, nhapHangDAO, chiTietNhapHangDAO, chiTietXuatHangDAO, nhaCungCapDAO, appConnection);
                 main.setLocationRelativeTo(null);
                 main.setVisible(true);
 

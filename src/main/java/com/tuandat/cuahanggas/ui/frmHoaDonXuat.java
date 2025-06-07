@@ -42,6 +42,7 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     private LocalDate selectedNgayXuat; // Đổi tên biến
     private DefaultTableModel modelKetQuaTimKiemBinhGas;
     private boolean isSavedSuccessfully = false;
+    private Connection conn;
 
     public boolean isSavedSuccessfully() { // Getter
         return isSavedSuccessfully;
@@ -54,7 +55,8 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     /**
      * Creates new form frmHoaDonXuat
      */
-    public frmHoaDonXuat() {
+    public frmHoaDonXuat(Connection conn) {
+        this.conn = conn;
         initComponents();
         initChiTietXuatHangTable(); // Đổi tên phương thức
         frmHoaDonXuat_Load(); // Đổi tên phương thức
@@ -141,80 +143,245 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     }
 
     private void displayKhachHangInfo(String tenKhachHang) { // Đổi tên phương thức và logic
+//        if (tenKhachHang == null || tenKhachHang.isEmpty() || tenKhachHang.equals("--- Chọn Khách Hàng ---")) {
+//            txtMaKhachHang.setText(""); // Đổi tên txt
+//            txtSdt.setText(""); // Giả sử bạn có txtSdtKhachHang để hiển thị SĐT Khách hàng
+//            return;
+//        }
+//
+//        // Đã sửa: Thay đổi 'TenKhachHang' thành 'HoTen' trong mệnh đề WHERE
+//        String sql = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
+//        try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//
+//            pstmt.setString(1, tenKhachHang);
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            if (rs.next()) {
+//                txtMaKhachHang.setText(rs.getString("MaKhachHang"));
+//                txtSdt.setText(rs.getString("SDT"));
+//            } else {
+//                txtMaKhachHang.setText("");
+//                txtSdt.setText("");
+//                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho khách hàng: " + tenKhachHang, "Lỗi", JOptionPane.WARNING_MESSAGE);
+//            }
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin khách hàng: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+//        }
+        // 1. Xử lý trường hợp không có tên khách hàng được chọn
         if (tenKhachHang == null || tenKhachHang.isEmpty() || tenKhachHang.equals("--- Chọn Khách Hàng ---")) {
-            txtMaKhachHang.setText(""); // Đổi tên txt
-            txtSdt.setText(""); // Giả sử bạn có txtSdtKhachHang để hiển thị SĐT Khách hàng
+            txtMaKhachHang.setText("");
+            txtSdt.setText("");
             return;
         }
 
-        // Đã sửa: Thay đổi 'TenKhachHang' thành 'HoTen' trong mệnh đề WHERE
-        String sql = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
-        try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+        // 2. Kiểm tra kết nối trước khi sử dụng
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Không thể lấy thông tin khách hàng vì kết nối CSDL không hợp lệ.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "displayKhachHangInfo() - Kết nối CSDL null.");
+            txtMaKhachHang.setText("LỖI");
+            txtSdt.setText("LỖI");
+            return;
+        }
 
-            pstmt.setString(1, tenKhachHang);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                txtMaKhachHang.setText(rs.getString("MaKhachHang"));
-                txtSdt.setText(rs.getString("SDT"));
-            } else {
-                txtMaKhachHang.setText("");
-                txtSdt.setText("");
-                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho khách hàng: " + tenKhachHang, "Lỗi", JOptionPane.WARNING_MESSAGE);
+        try {
+            // Kiểm tra xem kết nối có bị đóng không
+            if (conn.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Không thể lấy thông tin khách hàng vì kết nối CSDL đã bị đóng.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+                logger.log(Level.SEVERE, "displayKhachHangInfo() - Kết nối CSDL đã bị đóng.");
+                txtMaKhachHang.setText("LỖI");
+                txtSdt.setText("LỖI");
+                return;
             }
+
+            // 3. Chuẩn bị câu truy vấn SQL
+            // Đã sửa: Thay đổi 'TenKhachHang' thành 'HoTen' trong mệnh đề WHERE
+            String sql = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
+
+            // 4. Sử dụng try-with-resources với PreparedStatement và ResultSet
+            // Sử dụng 'this.conn' thay vì mở kết nối mới
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, tenKhachHang);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        txtMaKhachHang.setText(rs.getString("MaKhachHang"));
+                        txtSdt.setText(rs.getString("SDT"));
+                        logger.log(Level.INFO, "Đã hiển thị thông tin khách hàng: {0}", tenKhachHang);
+                    } else {
+                        txtMaKhachHang.setText("");
+                        txtSdt.setText("");
+                        JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho khách hàng: " + tenKhachHang, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        logger.log(Level.WARNING, "Không tìm thấy thông tin khách hàng cho tên: {0}", tenKhachHang);
+                    }
+                } // ResultSet 'rs' tự động đóng
+            } // PreparedStatement 'pstmt' tự động đóng
+
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            // Log lỗi chi tiết hơn
+            logger.log(Level.SEVERE, "Lỗi khi lấy thông tin khách hàng từ CSDL: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin khách hàng: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+            txtMaKhachHang.setText("LỖI"); // Xóa hoặc đặt thành lỗi nếu có ngoại lệ
+            txtSdt.setText("LỖI");
         }
     }
 
     private void generateNewMaXuatHang() { // Đổi tên phương thức và tiền tố mã
-        try (Connection conn = DBConnection.openConnection()) {
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT TOP 1 MaXuatHang FROM XuatHang WHERE ISNUMERIC(SUBSTRING(MaXuatHang, 3, LEN(MaXuatHang))) = 1 ORDER BY CAST(SUBSTRING(MaXuatHang, 3, LEN(MaXuatHang)) AS INT) DESC";
+//            String lastMaXuatHang = null;
+//
+//            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+//                if (rs.next()) {
+//                    lastMaXuatHang = rs.getString("MaXuatHang");
+//                }
+//            }
+//
+//            String newMaXuatHang = "XH001"; // Đổi tiền tố
+//            if (lastMaXuatHang != null && lastMaXuatHang.startsWith("XH")) { // Đổi tiền tố
+//                try {
+//                    int lastNumber = Integer.parseInt(lastMaXuatHang.substring(2));
+//                    newMaXuatHang = String.format("XH%03d", ++lastNumber); // Đổi tiền tố
+//                } catch (NumberFormatException e) {
+//                    JOptionPane.showMessageDialog(this, "Định dạng mã hóa đơn xuất không đúng. Gán lại XH001.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//                }
+//            }
+//            txtMaHoaDon.setText(newMaXuatHang);
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi tạo mã hóa đơn xuất mới", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tạo mã hóa đơn xuất mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            txtMaHoaDon.setText("LỖI");
+//        }
+        String newMaXuatHang = "XH001"; // Mã mặc định nếu không tìm thấy hoặc có lỗi
+
+        // Kiểm tra kết nối trước khi sử dụng
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Không thể tạo mã hóa đơn xuất mới vì kết nối CSDL không hợp lệ.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "generateNewMaXuatHang() - Kết nối CSDL null.");
+            txtMaHoaDon.setText("LỖI");
+            return;
+        }
+
+        try {
+            // Kiểm tra xem kết nối có bị đóng không
+            if (conn.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Không thể tạo mã hóa đơn xuất mới vì kết nối CSDL đã bị đóng.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+                logger.log(Level.SEVERE, "generateNewMaXuatHang() - Kết nối CSDL đã bị đóng.");
+                txtMaHoaDon.setText("LỖI");
+                return;
+            }
+
             String query = "SELECT TOP 1 MaXuatHang FROM XuatHang WHERE ISNUMERIC(SUBSTRING(MaXuatHang, 3, LEN(MaXuatHang))) = 1 ORDER BY CAST(SUBSTRING(MaXuatHang, 3, LEN(MaXuatHang)) AS INT) DESC";
             String lastMaXuatHang = null;
 
+            // Sử dụng 'this.conn' đã có sẵn
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
                 if (rs.next()) {
                     lastMaXuatHang = rs.getString("MaXuatHang");
                 }
-            }
+            } // 'stmt' và 'rs' sẽ tự động đóng nhờ try-with-resources
 
-            String newMaXuatHang = "XH001"; // Đổi tiền tố
-            if (lastMaXuatHang != null && lastMaXuatHang.startsWith("XH")) { // Đổi tiền tố
+            if (lastMaXuatHang != null && lastMaXuatHang.startsWith("XH")) {
                 try {
                     int lastNumber = Integer.parseInt(lastMaXuatHang.substring(2));
-                    newMaXuatHang = String.format("XH%03d", ++lastNumber); // Đổi tiền tố
+                    newMaXuatHang = String.format("XH%03d", ++lastNumber);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Định dạng mã hóa đơn xuất không đúng. Gán lại XH001.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Định dạng mã hóa đơn xuất cuối cùng không đúng. Gán lại XH001.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    logger.log(Level.WARNING, "Lỗi định dạng mã hóa đơn xuất: " + lastMaXuatHang, e);
+                    // newMaXuatHang giữ giá trị XH001 mặc định
                 }
             }
             txtMaHoaDon.setText(newMaXuatHang);
+
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Lỗi khi tạo mã hóa đơn xuất mới", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi khi tạo mã hóa đơn xuất mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Lỗi khi tạo mã hóa đơn xuất mới: " + ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Lỗi khi tạo mã hóa đơn xuất mới: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             txtMaHoaDon.setText("LỖI");
         }
     }
 
     private void loadTenKhachHangComboBox() { // Đổi tên phương thức và chức năng
-        try (Connection conn = DBConnection.openConnection()) {
+        // 1. Kiểm tra kết nối trước khi sử dụng
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Không thể tải danh sách khách hàng vì kết nối CSDL không hợp lệ.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "loadTenKhachHangComboBox() - Kết nối CSDL null.");
+            return; // Dừng thực thi nếu kết nối không hợp lệ
+        }
+
+        try {
+            // 2. Kiểm tra xem kết nối có bị đóng không
+            if (conn.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Không thể tải danh sách khách hàng vì kết nối CSDL đã bị đóng.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
+                logger.log(Level.SEVERE, "loadTenKhachHangComboBox() - Kết nối CSDL đã bị đóng.");
+                return; // Dừng thực thi nếu kết nối bị đóng
+            }
+
             String query = "SELECT HoTen FROM KhachHang ORDER BY HoTen ASC";
+            Vector<String> items = new Vector<>();
+            items.add("--- Chọn Khách Hàng ---"); // Mục mặc định
+
+            // 3. Sử dụng 'this.conn' và try-with-resources để tự động đóng Statement và ResultSet
             try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                Vector<String> items = new Vector<>();
-                items.add("--- Chọn Khách Hàng ---");
+
                 while (rs.next()) {
                     items.add(rs.getString("HoTen"));
                 }
-                cboTenKhachHang.setModel(new DefaultComboBoxModel<>(items));
-                cboTenKhachHang.setSelectedIndex(0);
-            }
+            } // Statement 'stmt' và ResultSet 'rs' tự động đóng
+
+            // 4. Cập nhật ComboBox Model
+            cboTenKhachHang.setModel(new DefaultComboBoxModel<>(items));
+            cboTenKhachHang.setSelectedIndex(0); // Chọn mục mặc định
+            logger.log(Level.INFO, "Đã tải danh sách khách hàng vào ComboBox.");
+
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Lỗi khi tải danh sách khách hàng", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi khi tải danh sách khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            // 5. Xử lý và log lỗi
+            logger.log(Level.SEVERE, "Lỗi khi tải danh sách khách hàng vào ComboBox: " + ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải danh sách khách hàng: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT HoTen FROM KhachHang ORDER BY HoTen ASC";
+//            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+//                Vector<String> items = new Vector<>();
+//                items.add("--- Chọn Khách Hàng ---");
+//                while (rs.next()) {
+//                    items.add(rs.getString("HoTen"));
+//                }
+//                cboTenKhachHang.setModel(new DefaultComboBoxModel<>(items));
+//                cboTenKhachHang.setSelectedIndex(0);
+//            }
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi tải danh sách khách hàng", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tải danh sách khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     private void cboTenKhachHang_SelectedIndexChanged() { // Đổi tên phương thức
+//        Object selectedItem = cboTenKhachHang.getSelectedItem();
+//        if (selectedItem == null || selectedItem.equals("--- Chọn Khách Hàng ---")) {
+//            txtMaKhachHang.setText("");
+//            txtSdt.setText("");
+//            return;
+//        }
+//
+//        String tenKH = selectedItem.toString();
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
+//            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+//                pstmt.setString(1, tenKH);
+//                try (ResultSet rs = pstmt.executeQuery()) {
+//                    if (rs.next()) {
+//                        txtMaKhachHang.setText(rs.getString("MaKhachHang"));
+//                        txtSdt.setText(rs.getString("SDT"));
+//                    } else {
+//                        txtMaKhachHang.setText("");
+//                        txtSdt.setText("");
+//                    }
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi lấy thông tin khách hàng", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin khách hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//        }
         Object selectedItem = cboTenKhachHang.getSelectedItem();
         if (selectedItem == null || selectedItem.equals("--- Chọn Khách Hàng ---")) {
             txtMaKhachHang.setText("");
@@ -223,18 +390,17 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         }
 
         String tenKH = selectedItem.toString();
-        try (Connection conn = DBConnection.openConnection()) {
-            String query = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, tenKH);
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    if (rs.next()) {
-                        txtMaKhachHang.setText(rs.getString("MaKhachHang"));
-                        txtSdt.setText(rs.getString("SDT"));
-                    } else {
-                        txtMaKhachHang.setText("");
-                        txtSdt.setText("");
-                    }
+        String query = "SELECT MaKhachHang, SDT FROM KhachHang WHERE HoTen = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, tenKH);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    txtMaKhachHang.setText(rs.getString("MaKhachHang"));
+                    txtSdt.setText(rs.getString("SDT"));
+                } else {
+                    txtMaKhachHang.setText("");
+                    txtSdt.setText("");
                 }
             }
         } catch (SQLException ex) {
@@ -244,31 +410,57 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     }
 
     private void txtTimKiemBinhGas_TextChanged() {
-        try (Connection conn = DBConnection.openConnection()) {
-            String keyword = txtTimKiemBinhGas.getText().trim();
-            String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String keyword = txtTimKiemBinhGas.getText().trim();
+//            String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
+//
+//            // Để debug, bạn có thể in câu query và keyword ra console
+//            logger.log(Level.INFO, "Executing query: " + query + " with keyword: " + keyword);
+//
+//            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+//                pstmt.setString(1, "%" + keyword + "%");
+//                pstmt.setString(2, "%" + keyword + "%");
+//                try (ResultSet rs = pstmt.executeQuery()) {
+//                    modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
+//                    while (rs.next()) {
+//                        Vector<Object> rowData = new Vector<>();
+//                        rowData.add(rs.getString("MaBinhGas"));
+//                        rowData.add(rs.getString("TenBinhGas"));
+//                        rowData.add(rs.getString("LoaiBinh"));
+//                        rowData.add(rs.getInt("SoLuong")); // Tồn kho
+//                        rowData.add(rs.getObject("GiaVonTrungBinh")); // Thêm cột Giá Bán Lẻ
+//                        modelKetQuaTimKiemBinhGas.addRow(rowData);
+//                    }
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            // Cập nhật dòng này để hiển thị thông báo lỗi chi tiết hơn
+//            logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+//        }
+        String keyword = txtTimKiemBinhGas.getText().trim();
+        String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
 
-            // Để debug, bạn có thể in câu query và keyword ra console
-            logger.log(Level.INFO, "Executing query: " + query + " with keyword: " + keyword);
+        logger.log(Level.INFO, "Executing query: " + query + " with keyword: " + keyword);
 
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, "%" + keyword + "%");
-                pstmt.setString(2, "%" + keyword + "%");
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
-                    while (rs.next()) {
-                        Vector<Object> rowData = new Vector<>();
-                        rowData.add(rs.getString("MaBinhGas"));
-                        rowData.add(rs.getString("TenBinhGas"));
-                        rowData.add(rs.getString("LoaiBinh"));
-                        rowData.add(rs.getInt("SoLuong")); // Tồn kho
-                        rowData.add(rs.getObject("GiaVonTrungBinh")); // Thêm cột Giá Bán Lẻ
-                        modelKetQuaTimKiemBinhGas.addRow(rowData);
-                    }
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, "%" + keyword + "%");
+            pstmt.setString(2, "%" + keyword + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                modelKetQuaTimKiemBinhGas.setRowCount(0); // Clear cũ
+
+                while (rs.next()) {
+                    Vector<Object> rowData = new Vector<>();
+                    rowData.add(rs.getString("MaBinhGas"));
+                    rowData.add(rs.getString("TenBinhGas"));
+                    rowData.add(rs.getString("LoaiBinh"));
+                    rowData.add(rs.getInt("SoLuong"));
+                    rowData.add(rs.getObject("GiaVonTrungBinh"));
+                    modelKetQuaTimKiemBinhGas.addRow(rowData);
                 }
             }
         } catch (SQLException ex) {
-            // Cập nhật dòng này để hiển thị thông báo lỗi chi tiết hơn
             logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
         }
@@ -742,9 +934,9 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
             return;
         }
 
-        Connection conn = null;
+        //Connection conn = null;
         try {
-            conn = DBConnection.openConnection();
+            //conn = DBConnection.openConnection();
             conn.setAutoCommit(false); // Bắt đầu transaction
 
             // 1. Thêm mới bản ghi vào bảng XuatHang
@@ -812,16 +1004,17 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
             }
             System.err.println("Lỗi khi lưu hóa đơn xuất: " + ex.getMessage());
             JOptionPane.showMessageDialog(this, "Lỗi khi lưu hóa đơn xuất: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true); // Đặt lại auto-commit
-                    conn.close();
-                } catch (SQLException closeEx) {
-                    System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
-                }
-            }
-        }    // TODO add your handling code here:
+        }
+//        } finally {
+//            if (conn != null) {
+//                try {
+//                    conn.setAutoCommit(true); // Đặt lại auto-commit
+//                    //conn.close();
+//                } catch (SQLException closeEx) {
+//                    System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
+//                }
+//            }
+//        }    // TODO add your handling code here:
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnXoaChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaChiTietActionPerformed

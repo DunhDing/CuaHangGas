@@ -1,3 +1,4 @@
+com\tuandat\cuahanggas\ui\ucBaoCao.class
 com\tuandat\cuahanggas\ui\dlgChiTietKhachHang$1.class
 com\tuandat\cuahanggas\ui\dlgChiTietNhapHang$1.class
 com\tuandat\cuahanggas\ui\frmMain$7.class
@@ -27,6 +28,7 @@ com\tuandat\cuahanggas\ui\frmHoaDonXuat$1.class
 com\tuandat\cuahanggas\ui\pnlNhapHang$1.class
 com\tuandat\cuahanggas\ui\ucNhanVien$2.class
 com\tuandat\cuahanggas\ui\ucNhanVien.class
+com\tuandat\cuahanggas\ui\ucBaoCao$1.class
 com\tuandat\cuahanggas\ui\ucKhachHang$5.class
 com\tuandat\cuahanggas\ui\ucHangHoa$1.class
 com\tuandat\cuahanggas\ui\frmTest$4.class
@@ -59,6 +61,7 @@ com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$7.class
 com\tuandat\cuahanggas\ui\frmMain.class
 com\tuandat\cuahanggas\ui\ucNhaCungCap$6.class
 com\tuandat\cuahanggas\ui\pnlXuatHang$11.class
+com\tuandat\cuahanggas\ui\pnlXuatHang$12.class
 com\tuandat\cuahanggas\utils\Session.class
 com\tuandat\cuahanggas\ui\pnlNhapHang.class
 com\tuandat\cuahanggas\model\ChiTietXuatHangTableModel.class
@@ -79,6 +82,7 @@ com\tuandat\cuahanggas\ui\frmHoaDonNhap$3.class
 com\tuandat\cuahanggas\ui\frmHoaDonXuat$2.class
 com\tuandat\cuahanggas\dao\impl\NhaCungCapDAO.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$1.class
+com\tuandat\cuahanggas\ui\ucBaoCao$2.class
 com\tuandat\cuahanggas\ui\dlgChiTietNhaCungCap.class
 com\tuandat\cuahanggas\ui\ucNhanVien$3.class
 com\tuandat\cuahanggas\ui\ucNhaCungCap$5.class

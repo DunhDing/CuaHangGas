@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.tuandat.cuahanggas.utils.TableHelper;
+import java.awt.ComponentOrientation;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -44,8 +45,10 @@ import java.util.logging.Logger; // Thêm import cho Logger
 public class pnlXuatHang extends javax.swing.JPanel {
 
     private static final Logger logger = Logger.getLogger(pnlXuatHang.class.getName());
+    private Connection conn;
 
-    public pnlXuatHang() {
+    public pnlXuatHang(Connection c) {
+        this.conn = c;
         initComponents();
         setupComponents();
         loadComboBoxData();
@@ -88,13 +91,13 @@ public class pnlXuatHang extends javax.swing.JPanel {
     }
 
     private void loadComboBoxData() {
-        Connection conn = null;
+        //Connection conn = null;
         Statement stmt = null;
         ResultSet rsKH = null; // Đã đổi từ rsNCC
         ResultSet rsNV = null;
 
         try {
-            conn = DBConnection.openConnection();
+            //conn = DBConnection.openConnection();
             if (conn == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tải dữ liệu combobox. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
                 logger.log(Level.SEVERE, "loadComboBoxData() - Không thể kết nối CSDL."); // Sử dụng logger
@@ -209,12 +212,12 @@ public class pnlXuatHang extends javax.swing.JPanel {
 
         logger.log(Level.INFO, "DEBUG SQL Query Final (timKiemXuatHang): " + query.toString());
         logger.log(Level.INFO, "DEBUG SQL Params Final (timKiemXuatHang): " + params.toString());
-        Connection conn = null;
+        //Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
-            conn = DBConnection.openConnection();
+            //conn = DBConnection.openConnection();
             if (conn == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tìm kiếm. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
                 logger.log(Level.SEVERE, "timKiemXuatHang() - Kết nối CSDL null.");
@@ -270,12 +273,12 @@ public class pnlXuatHang extends javax.swing.JPanel {
                 "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            Connection conn = null;
+            //Connection conn = null;
             PreparedStatement psDeleteChiTiet = null;
             PreparedStatement psDeleteXuatHang = null; // Đã đổi tên
 
             try {
-                conn = DBConnection.openConnection();
+                //conn = DBConnection.openConnection();
                 if (conn == null) {
                     JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để xóa. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -416,6 +419,11 @@ public class pnlXuatHang extends javax.swing.JPanel {
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
         btnXoa.setName("btnXoa"); // NOI18N
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnChiTiet.setBackground(new java.awt.Color(153, 153, 153));
         btnChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -674,7 +682,7 @@ public class pnlXuatHang extends javax.swing.JPanel {
     }//GEN-LAST:event_cboLoaiLocNgayActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        frmHoaDonXuat themXuatHangDialog = new frmHoaDonXuat();
+        frmHoaDonXuat themXuatHangDialog = new frmHoaDonXuat(conn);
 
         // Thêm WindowListener để lắng nghe sự kiện đóng cửa sổ
         themXuatHangDialog.addWindowListener(new WindowAdapter() {
@@ -701,6 +709,10 @@ public class pnlXuatHang extends javax.swing.JPanel {
     private void btnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatActionPerformed
         exportToExcel();        // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        deleteSelectedXuatHang();
+    }//GEN-LAST:event_btnXoaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

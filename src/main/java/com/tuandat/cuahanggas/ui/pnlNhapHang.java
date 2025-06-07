@@ -42,10 +42,12 @@ import java.util.logging.Logger;
  */
 public class pnlNhapHang extends javax.swing.JPanel {
  private static final Logger logger = Logger.getLogger(pnlXuatHang.class.getName());
+ private Connection conn;
     /**
      * Creates new form pnlNhapHang
      */
-    public pnlNhapHang() {
+    public pnlNhapHang(Connection c) {
+        this.conn = c;
         initComponents();
         setupComponents();
         loadComboBoxData();
@@ -89,13 +91,13 @@ public class pnlNhapHang extends javax.swing.JPanel {
     }
 
     private void loadComboBoxData() {
-        Connection conn = null; // Khai báo biến conn
+        //Connection conn = null; // Khai báo biến conn
         Statement stmt = null; // Khai báo biến stmt
         ResultSet rsNCC = null; // Khai báo biến rsNCC
         ResultSet rsNV = null; // Khai báo biến rsNV
 
         try {
-            conn = DBConnection.openConnection(); // Chỉ lấy kết nối, không đóng ở đây
+            //conn = DBConnection.openConnection(); // Chỉ lấy kết nối, không đóng ở đây
             if (conn == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tải dữ liệu combobox. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -142,7 +144,7 @@ public class pnlNhapHang extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) dgvNhapHang.getModel();
         model.setRowCount(0);
 
-        Connection conn = DBConnection.openConnection(); // Lấy kết nối
+        //Connection conn = DBConnection.openConnection(); // Lấy kết nối
         if (conn == null) {
             JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tải dữ liệu chi tiết. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
             System.err.println("pnlNhapHang: loadData() - Kết nối CSDL null.");
@@ -247,12 +249,12 @@ public class pnlNhapHang extends javax.swing.JPanel {
                 + "ORDER BY nh.NgayNhap DESC, nh.MaNhapHang ASC");
         System.out.println("DEBUG SQL Query Final: " + query.toString());
         System.out.println("DEBUG SQL Params Final: " + params.toString());
-        Connection conn = null;
+        //Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
-            conn = DBConnection.openConnection();
+            //conn = DBConnection.openConnection();
             if (conn == null) {
                 JOptionPane.showMessageDialog(this, "Không thể kết nối CSDL để tìm kiếm. Vui lòng kiểm tra kết nối.", "Lỗi Kết Nối", JOptionPane.ERROR_MESSAGE);
                 System.err.println("pnlNhapHang: timKiemNhapHang() - Kết nối CSDL null.");
@@ -308,12 +310,12 @@ public class pnlNhapHang extends javax.swing.JPanel {
                 "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            Connection conn = null;
+            //Connection conn = null;
             PreparedStatement psDeleteChiTiet = null;
             PreparedStatement psDeleteNhapHang = null;
 
             try {
-                conn = DBConnection.openConnection();
+                //conn = DBConnection.openConnection();
                 conn.setAutoCommit(false); // Bắt đầu transaction
 
                 // Xóa chi tiết nhập hàng trước
@@ -686,7 +688,7 @@ private void exportNhapToExcel() {
     }//GEN-LAST:event_dtpNgayNhapPropertyChange
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-    frmHoaDonNhap hoaDonNhapForm = new frmHoaDonNhap(); // Khởi tạo form
+    frmHoaDonNhap hoaDonNhapForm = new frmHoaDonNhap(conn); // Khởi tạo form
     hoaDonNhapForm.setVisible(true); // Hiển thị form
     hoaDonNhapForm.addWindowListener(new java.awt.event.WindowAdapter() {
         @Override

@@ -48,6 +48,7 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
     private LocalDate selectedNgayNhap;
     private DefaultTableModel modelKetQuaTimKiemBinhGas;
     private boolean isSavedSuccessfully = false;
+    private Connection conn;
 
     public boolean isSavedSuccessfully() { // Getter
         return isSavedSuccessfully;
@@ -60,7 +61,8 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
     /**
      * Creates new form frmHoaDonNhap
      */
-    public frmHoaDonNhap() {
+    public frmHoaDonNhap(Connection con) {
+        this.conn = con;
         initComponents();
         initChiTietNhapHangTable();
         frmHoaDonNhap_Load();
@@ -154,20 +156,37 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
             return;
         }
 
+//        String sql = "SELECT MaNhaCungCap, SDT FROM NhaCungCap WHERE TenNhaCungCap = ?";
+//        try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//
+//            pstmt.setString(1, tenNhaCungCap);
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            if (rs.next()) {
+//                txtMaNCC.setText(rs.getString("MaNhaCungCap"));
+//                // Giả sử bạn có một JTextField tên là txtSdt cho số điện thoại nhà cung cấp
+//                txtSdt.setText(rs.getString("SDT"));
+//            } else {
+//                txtMaNCC.setText("");
+//                txtSdt.setText("");
+//                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho nhà cung cấp: " + tenNhaCungCap, "Lỗi", JOptionPane.WARNING_MESSAGE);
+//            }
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhà cung cấp: " + ex.getMessage(), "Lỗi DB", JOptionPane.ERROR_MESSAGE);
+//        }
         String sql = "SELECT MaNhaCungCap, SDT FROM NhaCungCap WHERE TenNhaCungCap = ?";
-        try (Connection con = DBConnection.openConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, tenNhaCungCap);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                txtMaNCC.setText(rs.getString("MaNhaCungCap"));
-                // Giả sử bạn có một JTextField tên là txtSdt cho số điện thoại nhà cung cấp
-                txtSdt.setText(rs.getString("SDT"));
-            } else {
-                txtMaNCC.setText("");
-                txtSdt.setText("");
-                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho nhà cung cấp: " + tenNhaCungCap, "Lỗi", JOptionPane.WARNING_MESSAGE);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    txtMaNCC.setText(rs.getString("MaNhaCungCap"));
+                    txtSdt.setText(rs.getString("SDT"));
+                } else {
+                    txtMaNCC.setText("");
+                    txtSdt.setText("");
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin cho nhà cung cấp: " + tenNhaCungCap, "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -176,120 +195,235 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
     }
 
     private void generateNewMaNhapHang() {
-        try (Connection conn = DBConnection.openConnection()) {
-            String query = "SELECT TOP 1 MaNhapHang FROM NhapHang WHERE ISNUMERIC(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang))) = 1 ORDER BY CAST(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang)) AS INT) DESC";
-            String lastMaNhapHang = null;
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT TOP 1 MaNhapHang FROM NhapHang WHERE ISNUMERIC(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang))) = 1 ORDER BY CAST(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang)) AS INT) DESC";
+//            String lastMaNhapHang = null;
+//
+//            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+//                if (rs.next()) {
+//                    lastMaNhapHang = rs.getString("MaNhapHang");
+//                }
+//            }
+//
+//            String newMaNhapHang = "NH001";
+//            if (lastMaNhapHang != null && lastMaNhapHang.startsWith("NH")) {
+//                try {
+//                    int lastNumber = Integer.parseInt(lastMaNhapHang.substring(2));
+//                    newMaNhapHang = String.format("NH%03d", ++lastNumber);
+//                } catch (NumberFormatException e) {
+//                    JOptionPane.showMessageDialog(this, "Định dạng mã hóa đơn nhập không đúng. Gán lại NH001.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+//                }
+//            }
+//            txtMaHoaDon.setText(newMaNhapHang);
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi tạo mã hóa đơn nhập mới", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tạo mã hóa đơn nhập mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//            txtMaHoaDon.setText("LỖI");
+//        }
+        String query = """
+    SELECT TOP 1 MaNhapHang 
+    FROM NhapHang 
+    WHERE ISNUMERIC(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang))) = 1 
+          AND LEFT(MaNhapHang, 2) = 'NH'
+    ORDER BY CAST(SUBSTRING(MaNhapHang, 3, LEN(MaNhapHang)) AS INT) DESC
+""";
 
-            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                if (rs.next()) {
-                    lastMaNhapHang = rs.getString("MaNhapHang");
-                }
+        try (Statement stmt = this.conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            String lastMa = null;
+            if (rs.next()) {
+                lastMa = rs.getString("MaNhapHang");
             }
 
-            String newMaNhapHang = "NH001";
-            if (lastMaNhapHang != null && lastMaNhapHang.startsWith("NH")) {
+            String newMa = "NH001";
+            if (lastMa != null) {
                 try {
-                    int lastNumber = Integer.parseInt(lastMaNhapHang.substring(2));
-                    newMaNhapHang = String.format("NH%03d", ++lastNumber);
+                    int number = Integer.parseInt(lastMa.substring(2));
+                    newMa = String.format("NH%03d", number + 1);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Định dạng mã hóa đơn nhập không đúng. Gán lại NH001.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Mã không đúng định dạng, tạo mới là NH001", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                 }
             }
-            txtMaHoaDon.setText(newMaNhapHang);
+
+            txtMaHoaDon.setText(newMa);
+
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Lỗi khi tạo mã hóa đơn nhập mới", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi khi tạo mã hóa đơn nhập mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Lỗi khi tạo mã nhập hàng mới", ex);
+            JOptionPane.showMessageDialog(this, "Không thể tạo mã mới", "Lỗi", JOptionPane.ERROR_MESSAGE);
             txtMaHoaDon.setText("LỖI");
         }
+
     }
 
     private void loadMaNhaCungCapComboBox() {
-        try (Connection conn = DBConnection.openConnection()) {
-            String query = "SELECT TenNhaCungCap FROM NhaCungCap ORDER BY TenNhaCungCap ASC";
-            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                Vector<String> items = new Vector<>();
-                items.add("--- Chọn Nhà Cung Cấp ---");
-                while (rs.next()) {
-                    items.add(rs.getString("TenNhaCungCap"));
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT TenNhaCungCap FROM NhaCungCap ORDER BY TenNhaCungCap ASC";
+//            try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+//                Vector<String> items = new Vector<>();
+//                items.add("--- Chọn Nhà Cung Cấp ---");
+//                while (rs.next()) {
+//                    items.add(rs.getString("TenNhaCungCap"));
+//                }
+//                cboTenNCC.setModel(new DefaultComboBoxModel<>(items));
+//                cboTenNCC.setSelectedIndex(0);
+//            }
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi tải danh sách nhà cung cấp", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tải danh sách nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//        }
+        String query = "SELECT TenNhaCungCap FROM NhaCungCap ORDER BY TenNhaCungCap ASC";
+
+        try (Statement stmt = this.conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+
+            Vector<String> items = new Vector<>();
+            items.add("--- Chọn Nhà Cung Cấp ---");
+
+            while (rs.next()) {
+                String tenNCC = rs.getString("TenNhaCungCap");
+                if (tenNCC != null && !tenNCC.trim().isEmpty()) {
+                    items.add(tenNCC);
                 }
-                cboTenNCC.setModel(new DefaultComboBoxModel<>(items));
-                cboTenNCC.setSelectedIndex(0);
             }
+
+            cboTenNCC.setModel(new DefaultComboBoxModel<>(items));
+            cboTenNCC.setSelectedIndex(0);
+
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Lỗi khi tải danh sách nhà cung cấp", ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi tải danh sách nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     private void cboMaNCC_SelectedIndexChanged() {
-        Object selectedItem = cboTenNCC.getSelectedItem();
-        if (selectedItem == null || selectedItem.equals("--- Chọn Nhà Cung Cấp ---")) {
+//        Object selectedItem = cboTenNCC.getSelectedItem();
+//        if (selectedItem == null || selectedItem.equals("--- Chọn Nhà Cung Cấp ---")) {
+//            txtMaNCC.setText("");
+//            txtSdt.setText("");
+//            return;
+//        }
+//
+//        String tenNCC = selectedItem.toString();
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String query = "SELECT MaNhaCungCap, SDT FROM NhaCungCap WHERE TenNhaCungCap = ?";
+//            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+//                pstmt.setString(1, tenNCC);
+//                try (ResultSet rs = pstmt.executeQuery()) {
+//                    if (rs.next()) {
+//                        txtMaNCC.setText(rs.getString("MaNhaCungCap"));
+//                        txtSdt.setText(rs.getString("SDT"));
+//                    } else {
+//                        txtMaNCC.setText("");
+//                        txtSdt.setText("");
+//                    }
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi lấy thông tin nhà cung cấp", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//        }
+        String tenNCC = String.valueOf(cboTenNCC.getSelectedItem());
+
+        if (tenNCC.equals("--- Chọn Nhà Cung Cấp ---") || tenNCC.isEmpty()) {
             txtMaNCC.setText("");
             txtSdt.setText("");
             return;
         }
 
-        String tenNCC = selectedItem.toString();
-        try (Connection conn = DBConnection.openConnection()) {
-            String query = "SELECT MaNhaCungCap, SDT FROM NhaCungCap WHERE TenNhaCungCap = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, tenNCC);
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    if (rs.next()) {
-                        txtMaNCC.setText(rs.getString("MaNhaCungCap"));
-                        txtSdt.setText(rs.getString("SDT"));
-                    } else {
-                        txtMaNCC.setText("");
-                        txtSdt.setText("");
-                    }
+        String sql = "SELECT MaNhaCungCap, SDT FROM NhaCungCap WHERE TenNhaCungCap = ?";
+        try (PreparedStatement pstmt = this.conn.prepareStatement(sql)) { // Sử dụng this.conn đã truyền vào từ constructor
+            pstmt.setString(1, tenNCC);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    txtMaNCC.setText(rs.getString("MaNhaCungCap"));
+                    txtSdt.setText(rs.getString("SDT"));
+                } else {
+                    txtMaNCC.setText("");
+                    txtSdt.setText("");
                 }
             }
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Lỗi khi lấy thông tin nhà cung cấp", ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     private void txtTimKiemBinhGas_TextChanged() {
-        try (Connection conn = DBConnection.openConnection()) {
-            String keyword = txtTimKiemBinhGas.getText().trim();
-            String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
+//        try (Connection conn = DBConnection.openConnection()) {
+//            String keyword = txtTimKiemBinhGas.getText().trim();
+//            String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
+//
+//            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+//                pstmt.setString(1, "%" + keyword + "%");
+//                pstmt.setString(2, "%" + keyword + "%");
+//                try (ResultSet rs = pstmt.executeQuery()) {
+//                    modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
+//                    while (rs.next()) {
+//                        Vector<Object> rowData = new Vector<>();
+//                        // Thêm dữ liệu theo thứ tự cột đã định nghĩa trong modelKetQuaTimKiemBinhGas
+//                        rowData.add(rs.getString("MaBinhGas"));
+//                        rowData.add(rs.getString("TenBinhGas"));
+//                        rowData.add(rs.getString("LoaiBinh"));
+//                        rowData.add(rs.getInt("SoLuong")); // Tương ứng với cột "Tồn Kho"
+//                        rowData.add(rs.getObject("GiaVonTrungBinh")); // Tương ứng với cột "Giá Vốn Trung Bình"
+//                        modelKetQuaTimKiemBinhGas.addRow(rowData);
+//                    }
+//                }
+//            }
+//            int giaVonColumnIndex = -1;
+//            for (int i = 0; i < modelKetQuaTimKiemBinhGas.getColumnCount(); i++) {
+//                if (modelKetQuaTimKiemBinhGas.getColumnName(i).equalsIgnoreCase("GiaVonTrungBinh")) {
+//                    giaVonColumnIndex = i;
+//                    break;
+//                }
+//            }
+//
+//            if (giaVonColumnIndex != -1) {
+//                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMinWidth(0);
+//                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMaxWidth(0);
+//                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setWidth(0);
+//                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setPreferredWidth(0);
+//            }
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas", ex);
+//            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//        }
+        String keyword = txtTimKiemBinhGas.getText().trim();
+        String query = "SELECT MaBinhGas, TenBinhGas, LoaiBinh, SoLuong, GiaVonTrungBinh FROM BinhGas WHERE MaBinhGas LIKE ? OR TenBinhGas LIKE ?";
 
-            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setString(1, "%" + keyword + "%");
-                pstmt.setString(2, "%" + keyword + "%");
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
-                    while (rs.next()) {
-                        Vector<Object> rowData = new Vector<>();
-                        // Thêm dữ liệu theo thứ tự cột đã định nghĩa trong modelKetQuaTimKiemBinhGas
-                        rowData.add(rs.getString("MaBinhGas"));
-                        rowData.add(rs.getString("TenBinhGas"));
-                        rowData.add(rs.getString("LoaiBinh"));
-                        rowData.add(rs.getInt("SoLuong")); // Tương ứng với cột "Tồn Kho"
-                        rowData.add(rs.getObject("GiaVonTrungBinh")); // Tương ứng với cột "Giá Vốn Trung Bình"
-                        modelKetQuaTimKiemBinhGas.addRow(rowData);
-                    }
-                }
-            }
-            int giaVonColumnIndex = -1;
-            for (int i = 0; i < modelKetQuaTimKiemBinhGas.getColumnCount(); i++) {
-                if (modelKetQuaTimKiemBinhGas.getColumnName(i).equalsIgnoreCase("GiaVonTrungBinh")) {
-                    giaVonColumnIndex = i;
-                    break;
-                }
-            }
+        try (PreparedStatement pstmt = this.conn.prepareStatement(query)) { // Dùng this.conn đã truyền từ constructor
+            pstmt.setString(1, "%" + keyword + "%");
+            pstmt.setString(2, "%" + keyword + "%");
 
-            if (giaVonColumnIndex != -1) {
-                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMinWidth(0);
-                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMaxWidth(0);
-                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setWidth(0);
-                dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setPreferredWidth(0);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                modelKetQuaTimKiemBinhGas.setRowCount(0); // Xóa dữ liệu cũ
+                while (rs.next()) {
+                    Vector<Object> rowData = new Vector<>();
+                    // Thêm dữ liệu theo thứ tự cột đã định nghĩa trong modelKetQuaTimKiemBinhGas
+                    rowData.add(rs.getString("MaBinhGas"));
+                    rowData.add(rs.getString("TenBinhGas"));
+                    rowData.add(rs.getString("LoaiBinh"));
+                    rowData.add(rs.getInt("SoLuong")); // Tồn Kho
+                    rowData.add(rs.getObject("GiaVonTrungBinh")); // Giá Vốn Trung Bình
+                    modelKetQuaTimKiemBinhGas.addRow(rowData);
+                }
             }
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Lỗi khi tìm kiếm bình gas", ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm bình gas", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        // Ẩn cột "GiaVonTrungBinh" nếu tồn tại
+        int giaVonColumnIndex = modelKetQuaTimKiemBinhGas.findColumn("GiaVonTrungBinh");
+        if (giaVonColumnIndex != -1) {
+            dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMinWidth(0);
+            dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setMaxWidth(0);
+            dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setWidth(0);
+            dgvKetQuaTimKiemBinhGas.getColumnModel().getColumn(giaVonColumnIndex).setPreferredWidth(0);
+        }
+
     }
 
     private void dgvKetQuaTimKiemBinhGas_CellClick(MouseEvent evt) {
@@ -837,9 +971,9 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
             return;
         }
 
-        Connection conn = null;
+        //Connection conn = null;
         try {
-            conn = DBConnection.openConnection();
+            //conn = DBConnection.openConnection();
             conn.setAutoCommit(false); // Bắt đầu transaction
 
             // 1. Thêm mới bản ghi vào bảng NhapHang
@@ -909,16 +1043,16 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
             // logger.log(Level.SEVERE, "Lỗi khi lưu hóa đơn nhập", ex); // Uncomment nếu có logger
             System.err.println("Lỗi khi lưu hóa đơn nhập: " + ex.getMessage());
             JOptionPane.showMessageDialog(this, "Lỗi khi lưu hóa đơn nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true); // Đặt lại auto-commit
-                    conn.close();
-                } catch (SQLException closeEx) {
-                    // logger.log(Level.SEVERE, "Lỗi khi đóng kết nối", closeEx); // Uncomment nếu có logger
-                    System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
-                }
-            }
+//        } finally {
+//            if (conn != null) {
+//                try {
+//                    conn.setAutoCommit(true); // Đặt lại auto-commit
+//                    conn.close();
+//                } catch (SQLException closeEx) {
+//                    // logger.log(Level.SEVERE, "Lỗi khi đóng kết nối", closeEx); // Uncomment nếu có logger
+//                    System.err.println("Lỗi khi đóng kết nối: " + closeEx.getMessage());
+//                }
+//            }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
