@@ -275,6 +275,9 @@
                 <Property name="alignmentY" type="float" value="0.0"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTongQuanActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnGiaoDich">
               <Properties>

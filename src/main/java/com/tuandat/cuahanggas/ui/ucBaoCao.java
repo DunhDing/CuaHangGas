@@ -71,7 +71,7 @@ public class ucBaoCao extends javax.swing.JPanel {
             cboDanhMucTheoBinhGas.addItem("Doanh thu & Lợi nhuận");
             cboDanhMucTheoBinhGas.addItem("Giá trị kho");
             cboDanhMucTheoBinhGas.addItem("Số lượng & Giá trị nhập hàng");
-        
+
         } else {
             cboDanhMucTheoBinhGas.setEnabled(false);
         }
@@ -324,7 +324,7 @@ public class ucBaoCao extends javax.swing.JPanel {
                     filterSqlNhap = "AND CAST(nh.NgayNhap AS DATE) BETWEEN '" + sdf.format(fromDate) + "' AND '" + sdf.format(toDate) + "'";
                     break;
                 case "Theo tháng":
-                    
+
                     cal.setTime(fromDate);
                     int fromYM = cal.get(Calendar.YEAR) * 100 + cal.get(Calendar.MONTH) + 1;
 
@@ -516,7 +516,7 @@ public class ucBaoCao extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnXuatBaoCaoMouseClicked
-    
+
     private void exportNhapToExcel() {
         // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
         DefaultTableModel model = (DefaultTableModel) tbleBaoCao.getModel();
@@ -546,7 +546,7 @@ public class ucBaoCao extends javax.swing.JPanel {
                         tbleBaoCao, // JTable chứa dữ liệu nhập hàng
                         fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
                         "Danh Sách Bao Cao" + cboDoiTuong.getSelectedItem().toString(), // Tên sheet trong Excel
-                            "DANH SÁCH BÁO CÁO" // Tiêu đề chính của báo cáo
+                        "DANH SÁCH BÁO CÁO" // Tiêu đề chính của báo cáo
                 );
                 JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
             } catch (Exception ex) {
@@ -556,7 +556,7 @@ public class ucBaoCao extends javax.swing.JPanel {
         }
 
     }
-                                  
+
     private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
         exportNhapToExcel();
     }//GEN-LAST:event_btnXuatFileMouseClicked

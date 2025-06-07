@@ -29,7 +29,7 @@ public class frmMain extends javax.swing.JFrame {
     private KhachHangDAO khachHangDAO;
     private TaiKhoanNguoiDungDAO taiKhoanDAO;
     private NhanVienDAO nhanVienDAO;
-    private  ChiTietNhapHangDAO chiTietNhapHangDAO;
+    private ChiTietNhapHangDAO chiTietNhapHangDAO;
     private ChiTietXuatHangDAOV2 chiTietXuatHangDAO;
     private KhachHangDAO khachHangDAO1;
     private XuatHangDAO xuatHangDAO;
@@ -96,7 +96,7 @@ public class frmMain extends javax.swing.JFrame {
     public boolean isLogout() {
         return isLogout;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -256,6 +256,11 @@ public class frmMain extends javax.swing.JFrame {
         btnTongQuan.setText("Tổng quan");
         btnTongQuan.setAlignmentY(0.0F);
         btnTongQuan.setBorderPainted(false);
+        btnTongQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTongQuanActionPerformed(evt);
+            }
+        });
 
         btnGiaoDich.setBackground(new java.awt.Color(0, 102, 204));
         btnGiaoDich.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -413,7 +418,7 @@ public class frmMain extends javax.swing.JFrame {
         pnlMain.setLayout(new BorderLayout());
         pnlMain.add(nhapHangPanel, BorderLayout.CENTER);
         pnlMain.revalidate();
-        pnlMain.repaint();        // TODO add your handling code here:
+        pnlMain.repaint();
     }//GEN-LAST:event_menuNhapHangActionPerformed
 
     private void btnHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangHoaActionPerformed
@@ -445,6 +450,11 @@ public class frmMain extends javax.swing.JFrame {
         f.loadData();
         showPanel(f);
     }//GEN-LAST:event_btnBaoCaoMouseClicked
+
+    private void btnTongQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTongQuanActionPerformed
+        ucTongQuan f = new ucTongQuan(con);
+        showPanel(f);
+    }//GEN-LAST:event_btnTongQuanActionPerformed
 
     private void showPanel(JPanel panel) {
         pnlMain.removeAll();
