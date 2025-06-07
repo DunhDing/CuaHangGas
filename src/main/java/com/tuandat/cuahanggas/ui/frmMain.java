@@ -295,6 +295,11 @@ public class frmMain extends javax.swing.JFrame {
         btnBaoCao.setForeground(new java.awt.Color(255, 255, 255));
         btnBaoCao.setText("Báo cáo");
         btnBaoCao.setBorderPainted(false);
+        btnBaoCao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBaoCaoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlNavigationLayout = new javax.swing.GroupLayout(pnlNavigation);
         pnlNavigation.setLayout(pnlNavigationLayout);
@@ -434,6 +439,12 @@ public class frmMain extends javax.swing.JFrame {
         f.loadData();
         showPanel(f);
     }//GEN-LAST:event_menuNhaCungCapActionPerformed
+
+    private void btnBaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBaoCaoMouseClicked
+        ucBaoCao f = new ucBaoCao(con);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_btnBaoCaoMouseClicked
 
     private void showPanel(JPanel panel) {
         pnlMain.removeAll();

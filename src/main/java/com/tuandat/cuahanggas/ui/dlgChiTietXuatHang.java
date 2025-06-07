@@ -419,53 +419,53 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Test Frame");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(400, 300);
-                frame.setLocationRelativeTo(null); // Đặt frame ở giữa màn hình
-                // frame.setVisible(true); // Có thể ẩn frame này nếu bạn chỉ muốn test dialog
-
-                // Tạo đối tượng dlgChiTietXuatHang
-                dlgChiTietXuatHang dialog = new dlgChiTietXuatHang(frame, true); // true cho modal
-
-                // --- Thiết lập mã xuất hàng để test ---
-                // Bạn cần cung cấp một mã xuất hàng có sẵn trong database của bạn để dialog có thể load dữ liệu
-                String testMaXuatHang = "XH001"; // Thay thế bằng một mã xuất hàng thực tế trong DB của bạn
-
-                // Gọi phương thức setMaXuatHang để dialog tải dữ liệu
-                dialog.setMaXuatHang(testMaXuatHang);
-
-                // Hiển thị dialog
-                dialog.setVisible(true);
-
-                // Khi dialog đóng, bạn có thể thực hiện một số hành động ở đây nếu cần
-                System.out.println("Dialog đã đóng.");
-                // frame.dispose(); // Nếu bạn không muốn giữ lại frame test
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                JFrame frame = new JFrame("Test Frame");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setSize(400, 300);
+//                frame.setLocationRelativeTo(null); // Đặt frame ở giữa màn hình
+//                // frame.setVisible(true); // Có thể ẩn frame này nếu bạn chỉ muốn test dialog
+//
+//                // Tạo đối tượng dlgChiTietXuatHang
+//                dlgChiTietXuatHang dialog = new dlgChiTietXuatHang(frame, true); // true cho modal
+//
+//                // --- Thiết lập mã xuất hàng để test ---
+//                // Bạn cần cung cấp một mã xuất hàng có sẵn trong database của bạn để dialog có thể load dữ liệu
+//                String testMaXuatHang = "XH001"; // Thay thế bằng một mã xuất hàng thực tế trong DB của bạn
+//
+//                // Gọi phương thức setMaXuatHang để dialog tải dữ liệu
+//                dialog.setMaXuatHang(testMaXuatHang);
+//
+//                // Hiển thị dialog
+//                dialog.setVisible(true);
+//
+//                // Khi dialog đóng, bạn có thể thực hiện một số hành động ở đây nếu cần
+//                System.out.println("Dialog đã đóng.");
+//                // frame.dispose(); // Nếu bạn không muốn giữ lại frame test
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;

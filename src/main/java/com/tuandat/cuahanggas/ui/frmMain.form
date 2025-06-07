@@ -344,6 +344,9 @@
                 <Property name="text" type="java.lang.String" value="B&#xe1;o c&#xe1;o"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnBaoCaoMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

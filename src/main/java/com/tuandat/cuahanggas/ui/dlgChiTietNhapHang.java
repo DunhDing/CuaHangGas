@@ -306,33 +306,33 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
  luuThongTinNhapHang();        // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
- public static void main(String args[]) {
-       try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(() -> {
-            // SỬA DÒNG NÀY ĐỂ TRUYỀN THAM SỐ CHO CONSTRUCTOR
-            dlgChiTietNhapHang form = new dlgChiTietNhapHang(null, false); // <--- Đã sửa ở đây
-            form.setMaNhapHang("NH001"); // truyền mã nhập hàng cần hiển thị
-            form.setVisible(true);
-        });
-    }
+// public static void main(String args[]) {
+//       try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(() -> {
+//            // SỬA DÒNG NÀY ĐỂ TRUYỀN THAM SỐ CHO CONSTRUCTOR
+//            dlgChiTietNhapHang form = new dlgChiTietNhapHang(null, false); // <--- Đã sửa ở đây
+//            form.setMaNhapHang("NH001"); // truyền mã nhập hàng cần hiển thị
+//            form.setVisible(true);
+//        });
+//    }
 
     void setMaNhapHang(String maNhapHang) {
     this.maNhapHangHienTai = maNhapHang;

@@ -349,9 +349,9 @@ public class frmTest extends javax.swing.JFrame {
     }//GEN-LAST:event_menuQuanLyTaiKhoanActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        ucHangHoa f = new ucHangHoa(binhGasDAO);
-//        f.loadData();
-//        showPanel(f);
+        ucBaoCao f = new ucBaoCao(appConnection);
+        f.loadData();
+        showPanel(f);
     }//GEN-LAST:event_formWindowOpened
 
     private void showPanel(JPanel panel) {
