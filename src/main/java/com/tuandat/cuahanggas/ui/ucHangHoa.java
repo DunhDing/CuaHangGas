@@ -329,6 +329,11 @@ public class ucHangHoa extends javax.swing.JPanel {
                 btnXuatFileMouseClicked(evt);
             }
         });
+        btnXuatFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatFileActionPerformed(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(237, 28, 36));
         btnXoa.setText("Xóa");
@@ -495,6 +500,10 @@ public class ucHangHoa extends javax.swing.JPanel {
     private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
         exportNhapToExcel();
     }//GEN-LAST:event_btnXuatFileMouseClicked
+
+    private void btnXuatFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXuatFileActionPerformed
 
     //VIẾT SỰ KIỆN SELECTION_CHANGED TRONG JTABLE
 //    private void setupSelectionListener() {
