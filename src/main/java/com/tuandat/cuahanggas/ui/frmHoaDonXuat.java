@@ -6,11 +6,13 @@ package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
 import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
+import com.tuandat.cuahanggas.model.BinhGas;
 import com.tuandat.cuahanggas.model.ChiTietXuatHang;
 import com.tuandat.cuahanggas.model.ChiTietXuatHangTableModel;
 import com.tuandat.cuahanggas.ui.dlgChiTietKhachHang;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import com.tuandat.cuahanggas.utils.Session;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -35,7 +38,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static org.apache.commons.math3.fitting.leastsquares.LeastSquaresFactory.model;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -88,7 +94,7 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         dtpNgayXuat.setEnabled(false);
         txtMaKhachHang.setEnabled(false);
         txtSdt.setEnabled(false);
-        
+
         // Corrected: Call IsLoggedIn() as a method
         if (Session.IsLoggedIn()) { // Kiểm tra xem người dùng đã đăng nhập chưa
             txtMaNhanVien.setText(Session.MaNhanVien);
@@ -948,84 +954,165 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     private void txtSdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSdtActionPerformed
-    private void exportHoaDonToExcel() {
-        //DefaultTableModel model = (DefaultTableModel) dgvChiTietXuatHang.getModel();
-        ChiTietXuatHangTableModel model = (ChiTietXuatHangTableModel) dgvChiTietXuatHang.getModel(); 
-
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất hóa đơn.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
+    public void exportHoaDonToExcel() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Lưu hóa đơn Excel");
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
-        fileChooser.setSelectedFile(new File("HoaDon_" + txtMaHoaDon.getText() + "_" + System.currentTimeMillis() + ".xlsx"));
+        fileChooser.setDialogTitle("Chọn nơi lưu file Excel");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
 
-        int userSelection = fileChooser.showSaveDialog(this);
-        if (userSelection != JFileChooser.APPROVE_OPTION) {
-            return;
+        // Hiển thị hộp thoại lưu file
+        if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) { // Sử dụng 'this' làm parentComponent
+            return; // Người dùng đã hủy
         }
 
         File fileToSave = fileChooser.getSelectedFile();
-        if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
-            fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        // Đảm bảo file có đuôi .xlsx
+        if (!fileToSave.getName().toLowerCase().endsWith(".xlsx")) {
+            fileToSave = new File(fileToSave.toString() + ".xlsx");
         }
+        System.out.println("DEBUG: Giá trị gốc từ txtTongTien: [" + txtTongTien.getText() + "]");
+        System.out.println("DEBUG: tongTienText sau trim và bỏ VND: [" + txtTongTien + "]");
+        System.out.println("DEBUG: tongTienText sau replace '.' và ',': [" + txtTongTien + "]");
 
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Hóa đơn");
+        try (Workbook workbook = new XSSFWorkbook(); // Tạo workbook mới cho .xlsx
+                 FileOutputStream out = new FileOutputStream(fileToSave)) { // Mở luồng ghi file
 
-            int rowIdx = 0;
+            Sheet sheet = workbook.createSheet("HoaDonXuat"); // Tạo sheet mới
 
-            // Header
-            Row titleRow = sheet.createRow(rowIdx++);
-            Cell titleCell = titleRow.createCell(0);
-            titleCell.setCellValue("HÓA ĐƠN XUẤT BÌNH GAS");
+            // --- Định dạng Style cho Excel ---
+            // Font in đậm
+            org.apache.poi.ss.usermodel.Font boldFont = workbook.createFont();
+            boldFont.setBold(true);
 
-            // Thông tin hóa đơn
+            // Style in đậm và căn giữa
+            CellStyle boldCenterStyle = workbook.createCellStyle();
+            boldCenterStyle.setFont(boldFont);
+            boldCenterStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            // Style định dạng tiền tệ (VD: 1.000, 10.000)
+            CellStyle moneyStyle = workbook.createCellStyle();
+            moneyStyle.setDataFormat(workbook.createDataFormat().getFormat("#,##0")); // Định dạng số nguyên
+            // Nếu có số thập phân và cần định dạng: "#,##0.00"
+
+            int rowIdx = 0; // Chỉ số hàng hiện tại trong Excel
+
+            // ===== Thông tin tiêu đề hóa đơn =====
+            // Dòng 1: Tên công ty và Phiếu xuất bán
+            sheet.createRow(rowIdx).createCell(0).setCellValue("NHÀ PHÂN PHỐI GAS TUẤN ĐẠT");
+            sheet.getRow(rowIdx).createCell(5).setCellValue("PHIẾU XUẤT BÁN");
             rowIdx++;
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã hóa đơn: " + txtMaHoaDon.getText());
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã nhân viên: " + txtMaNhanVien.getText());
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Ngày xuất: " + dtpNgayXuat.getDate());
 
-            // Thông tin khách hàng
-            rowIdx++;
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã khách hàng: " + txtMaKhachHang.getText());
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Tên khách hàng: " + cboTenKhachHang.getSelectedItem());
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Số điện thoại: " + txtSdt.getText());
-
-            // Dòng trống
+            // Dòng 2: Địa chỉ và Số hóa đơn
+            sheet.createRow(rowIdx).createCell(0).setCellValue("Tổ 16, Tân Quang, TP Tuyên Quang");
+            sheet.getRow(rowIdx).createCell(5).setCellValue("Số: " + txtMaHoaDon.getText());
             rowIdx++;
 
-            // Header bảng chi tiết
+            // Dòng 3: SĐT và Ngày xuất
+            // Lấy ngày xuất từ dtpNgayXuat
+            String ngayXuat = "";
+            if (dtpNgayXuat.getDate() != null) {
+                ngayXuat = new SimpleDateFormat("dd / MM /yyyy").format(dtpNgayXuat.getDate()); // Sửa YYYY thành yyyy
+            } else {
+                ngayXuat = "Chưa chọn ngày"; // Xử lý nếu ngày chưa được chọn
+            }
+            sheet.createRow(rowIdx).createCell(0).setCellValue("SDT: 02073.827.563 | 0376.123.678");
+            sheet.getRow(rowIdx).createCell(5).setCellValue("Ngày: " + ngayXuat);
+            rowIdx++;
+
+            rowIdx++; // Dòng trống
+
+            // ===== Thông tin khách hàng =====
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã KH: " + txtMaKhachHang.getText());
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Tên: " + (cboTenKhachHang.getSelectedItem() != null ? cboTenKhachHang.getSelectedItem().toString() : ""));
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("SĐT: " + txtSdt.getText());
+
+            rowIdx++; // Dòng trống
+
+            // ===== Header bảng chi tiết hàng =====
+            String[] headers = {"TT", "Mã hàng", "Tên hàng", "ĐVT", "SL", "Đơn giá", "CK", "Thành tiền"};
             Row headerRow = sheet.createRow(rowIdx++);
-            for (int col = 0; col < model.getColumnCount(); col++) {
-                headerRow.createCell(col).setCellValue(model.getColumnName(col));
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(boldCenterStyle);
             }
 
-            // Dữ liệu từ JTable
-            for (int i = 0; i < model.getRowCount(); i++) {
-                Row dataRow = sheet.createRow(rowIdx++);
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    Object value = model.getValueAt(i, j);
-                    dataRow.createCell(j).setCellValue(value != null ? value.toString() : "");
-                }
+            // ===== Dữ liệu chi tiết hàng (từ modelChiTietXuatHang) =====
+            int stt = 1;
+            // Dòng này sử dụng biến thành viên modelChiTietXuatHang
+            for (ChiTietXuatHang item : modelChiTietXuatHang.getData()) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(stt++);
+                row.createCell(1).setCellValue(item.getMaBinhGas());
+                row.createCell(2).setCellValue(item.getTenBinhGas());
+                row.createCell(3).setCellValue("Bình"); // Đơn vị tính
+                row.createCell(4).setCellValue(item.getSoLuongXuat());
+
+                Cell donGiaCell = row.createCell(5);
+                donGiaCell.setCellValue(item.getDonGiaXuat());
+                donGiaCell.setCellStyle(moneyStyle);
+
+                row.createCell(6).setCellValue(0); // Cột chiết khấu, hiện đang là 0
+
+                Cell thanhTienCell = row.createCell(7);
+                double thanhTien = item.getSoLuongXuat() * item.getDonGiaXuat();
+                thanhTienCell.setCellValue(thanhTien);
+                thanhTienCell.setCellStyle(moneyStyle);
             }
 
-            // Dòng trống và tổng tiền
-            rowIdx++;
-            sheet.createRow(rowIdx++).createCell(0).setCellValue("Tổng tiền: " + txtTongTien.getText());
+              rowIdx++; // Dòng trống
+            Row totalRow = sheet.createRow(rowIdx++);
+            totalRow.createCell(6).setCellValue("Tổng cộng:");
+            Cell totalCell = totalRow.createCell(7);
+            
+            // --- XỬ LÝ LỖI "For input string: '279.500 VND'" TẠI ĐÂY ---
+             String tongTienRaw = txtTongTien.getText(); 
+            double totalAmount = 0.0;
 
-            // Ghi file
-            try (FileOutputStream out = new FileOutputStream(fileToSave)) {
-                workbook.write(out);
+            System.out.println("DEBUG: Giá trị gốc từ txtTongTien: [" + tongTienRaw + "]");
+
+            String tongTienCleaned = tongTienRaw.trim(); 
+
+            // 1. Loại bỏ " VN?" hoặc bất kỳ ký hiệu tiền tệ nào khác
+            // Sử dụng regex để xử lý linh hoạt hơn các ký tự không phải số hoặc dấu phẩy/chấm
+            tongTienCleaned = tongTienCleaned.replaceAll("[^\\d.,]", ""); // Giữ lại chỉ chữ số, dấu chấm, dấu phẩy
+
+            System.out.println("DEBUG: tongTienCleaned sau khi loại bỏ ký tự không phải số: [" + tongTienCleaned + "]");
+
+            tongTienCleaned = tongTienCleaned.replace(".", ""); 
+            
+            // Bước B: Thay thế dấu phẩy thập phân bằng dấu chấm thập phân
+            tongTienCleaned = tongTienCleaned.replace(",", "."); 
+            
+            System.out.println("DEBUG: tongTienCleaned cuối cùng trước khi parse: [" + tongTienCleaned + "]");
+
+            try {
+                totalAmount = Double.parseDouble(tongTienCleaned); 
+            } catch (NumberFormatException e) {
+                System.err.println("Lỗi định dạng tổng tiền khi xuất Excel: Chuỗi gốc: [" + tongTienRaw + "], Chuỗi đã làm sạch: [" + tongTienCleaned + "] -> " + e.getMessage()); 
+                JOptionPane.showMessageDialog(this, "❌ Lỗi định dạng tổng tiền. Vui lòng kiểm tra lại giá trị tổng cộng.", "Lỗi dữ liệu", JOptionPane.ERROR_MESSAGE); 
+                return; 
+            }
+            totalCell.setCellValue(totalAmount);
+            totalCell.setCellStyle(moneyStyle);
+
+            // ===== Chữ ký =====
+            rowIdx += 2; // Khoảng cách
+            Row signRow = sheet.createRow(rowIdx++);
+            signRow.createCell(0).setCellValue("Khách hàng\n(Ký, họ tên)");
+            signRow.createCell(3).setCellValue("Người giao\n(Ký, họ tên)");
+            signRow.createCell(6).setCellValue("Thủ kho\n(Ký, họ tên)");
+
+            // Tự động điều chỉnh độ rộng cột
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
             }
 
-            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi xuất hóa đơn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            workbook.write(out); // Ghi dữ liệu vào file Excel
+            JOptionPane.showMessageDialog(this, "✅ Xuất hóa đơn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) { // Bắt các ngoại lệ chung (ví dụ: IOException, FileNotFoundException)
+            e.printStackTrace(); // In stack trace để debug
+            JOptionPane.showMessageDialog(this, "❌ Lỗi khi xuất Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
