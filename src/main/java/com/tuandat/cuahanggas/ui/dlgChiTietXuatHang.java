@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -38,11 +39,10 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
 
     public dlgChiTietXuatHang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
         ImageIcon iconLuu = new ImageIcon(getClass().getResource("/luu.png"));
         Image imgLuu = iconLuu.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         btnLuu.setIcon(new ImageIcon(imgLuu));
-        
-        initComponents();
         resetForm();
 
     }
@@ -322,7 +322,15 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(dgvXuatHang);
 
         txtMaKhachHang.addActionListener(new java.awt.event.ActionListener() {

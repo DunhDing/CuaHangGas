@@ -39,6 +39,7 @@ import javax.swing.filechooser.FileNameExtensionFilter; // Có thể giữ nếu
 import java.util.logging.Level; // Thêm import cho Logger
 import java.util.logging.Logger; // Thêm import cho Logger
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -685,9 +686,8 @@ public class pnlXuatHang extends javax.swing.JPanel {
         }
         String maXuatHang = (String) dgvXuatHang.getValueAt(selectedRow, 0); // Giả sử Mã Xuất Hàng ở cột 0
 
-        // Mở dialog chi tiết xuất hàng và truyền mã xuất hàng
-        // Bạn cần đảm bảo đã tạo lớp dlgChiTietXuatHang tương tự dlgChiTietNhapHang
-        dlgChiTietXuatHang chiTietDialog = new dlgChiTietXuatHang(null, true); // Thay 'null' bằng JFrame cha thực tế
+          JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        dlgChiTietXuatHang chiTietDialog = new dlgChiTietXuatHang(parentFrame, true); // Thay 'null' bằng JFrame cha thực tế
         chiTietDialog.setMaXuatHang(maXuatHang);
         chiTietDialog.setVisible(true);
 
