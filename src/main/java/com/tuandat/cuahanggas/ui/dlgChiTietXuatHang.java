@@ -9,6 +9,7 @@ import com.tuandat.cuahanggas.dao.impl.ChiTietXuatHangDAO;
 import com.tuandat.cuahanggas.model.BinhGas;
 import com.tuandat.cuahanggas.model.ChiTietXuatHang;
 import com.tuandat.cuahanggas.utils.DBConnection;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,10 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
 
     public dlgChiTietXuatHang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        ImageIcon iconLuu = new ImageIcon(getClass().getResource("/luu.png"));
+        Image imgLuu = iconLuu.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        btnLuu.setIcon(new ImageIcon(imgLuu));
+        
         initComponents();
         resetForm();
 
@@ -331,6 +337,9 @@ public class dlgChiTietXuatHang extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Ngày xuất");
 
+        btnLuu.setBackground(new java.awt.Color(0, 176, 80));
+        btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

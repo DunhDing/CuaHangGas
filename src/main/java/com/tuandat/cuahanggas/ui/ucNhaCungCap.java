@@ -47,7 +47,10 @@ public class ucNhaCungCap extends javax.swing.JPanel {
             initComponents();
 //        ImageIcon icon = new ImageIcon("Logo.png"); // Đường dẫn đến ảnh
 //        JLabel label = new JLabel("Text", icon, JLabel.LEFT);
-
+            ImageIcon iconTimKiem = new ImageIcon(getClass().getResource("/timkiem.png"));
+            Image imgTimKiem = iconTimKiem.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            lblTimKiem.setIcon(new ImageIcon(imgTimKiem));
+            
             ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
             Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
             btnThem.setIcon(new ImageIcon(imgThem));
@@ -103,12 +106,12 @@ public class ucNhaCungCap extends javax.swing.JPanel {
         }
 
         tbleHangHoa.setModel(MyToys.listToTableModel(danhSachCaps));
-         String[] columnNames = {"Mã Nhà Cung Cấp", "Tên Nhà Cung Cấp", "Số Điện Thoại", "Email", "Địa Chỉ", "Ghi Chú"};
-    for (int i = 0; i < columnNames.length; i++) {
-        if (i < tbleHangHoa.getColumnModel().getColumnCount()) {
-            tbleHangHoa.getColumnModel().getColumn(i).setHeaderValue(columnNames[i]);
+        String[] columnNames = {"Mã Nhà Cung Cấp", "Tên Nhà Cung Cấp", "Số Điện Thoại", "Email", "Địa Chỉ", "Ghi Chú"};
+        for (int i = 0; i < columnNames.length; i++) {
+            if (i < tbleHangHoa.getColumnModel().getColumnCount()) {
+                tbleHangHoa.getColumnModel().getColumn(i).setHeaderValue(columnNames[i]);
+            }
         }
-    }
         selectedNhaCungCap = null;
     }
 
@@ -125,7 +128,6 @@ public class ucNhaCungCap extends javax.swing.JPanel {
         fillTable(filtered);
     }
 
-
     private void fillTable(List<NhaCungCap> list) {
         DefaultTableModel model = (DefaultTableModel) tbleHangHoa.getModel();
         model.setRowCount(0); // clear old data
@@ -137,8 +139,7 @@ public class ucNhaCungCap extends javax.swing.JPanel {
                 b.getDiaChi(),
                 b.getEmail(),
                 b.getGhiChu(),
-                b.getSdt(),
-            });
+                b.getSdt(),});
         }
     }
 
@@ -154,6 +155,7 @@ public class ucNhaCungCap extends javax.swing.JPanel {
         scpHangHoa = new javax.swing.JScrollPane();
         tbleHangHoa = new javax.swing.JTable();
         lblQuanLyTaiKhoan = new javax.swing.JLabel();
+        lblTimKiem = new javax.swing.JLabel();
 
         setRequestFocusEnabled(false);
 
@@ -174,10 +176,10 @@ public class ucNhaCungCap extends javax.swing.JPanel {
             }
         });
 
-        btnChiTiet.setBackground(new java.awt.Color(102, 102, 102));
+        btnChiTiet.setBackground(java.awt.Color.gray);
         btnChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChiTiet.setForeground(new java.awt.Color(255, 255, 255));
-        btnChiTiet.setText("Chi Tiết");
+        btnChiTiet.setText("Chi tiết");
         btnChiTiet.setName("btnChiTiet"); // NOI18N
         btnChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -231,9 +233,11 @@ public class ucNhaCungCap extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem)
                         .addGap(18, 18, 18)
@@ -248,15 +252,21 @@ public class ucNhaCungCap extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(scpHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -393,6 +403,7 @@ public class ucNhaCungCap extends javax.swing.JPanel {
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton btnXuatFile;
     private javax.swing.JLabel lblQuanLyTaiKhoan;
+    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JScrollPane scpHangHoa;
     private javax.swing.JTable tbleHangHoa;
     private javax.swing.JTextField txtTimKiem;

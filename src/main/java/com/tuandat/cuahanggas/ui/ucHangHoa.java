@@ -53,7 +53,10 @@ public class ucHangHoa extends javax.swing.JPanel {
             initComponents();
 //        ImageIcon icon = new ImageIcon("Logo.png"); // Đường dẫn đến ảnh
 //        JLabel label = new JLabel("Text", icon, JLabel.LEFT);
-
+            ImageIcon iconTimKiem = new ImageIcon(getClass().getResource("/timkiem.png"));
+            Image imgTimKiem = iconTimKiem.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            lblTimKiem.setIcon(new ImageIcon(imgTimKiem));
+            
             ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
             Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
             btnThem.setIcon(new ImageIcon(imgThem));
@@ -199,6 +202,7 @@ public class ucHangHoa extends javax.swing.JPanel {
         scpHangHoa = new javax.swing.JScrollPane();
         tbleHangHoa = new javax.swing.JTable();
         lblQuanLyTaiKhoan = new javax.swing.JLabel();
+        lblTimKiem = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(255, 255, 255));
         setRequestFocusEnabled(false);
@@ -208,7 +212,7 @@ public class ucHangHoa extends javax.swing.JPanel {
         pnlLoaiBinh.setName("pnlLoaiBinh"); // NOI18N
 
         lblLoaiBinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblLoaiBinh.setText("Loại Bình");
+        lblLoaiBinh.setText("Loại bình");
         lblLoaiBinh.setName("txtLoaiBinh"); // NOI18N
 
         cboLoaiBinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -219,18 +223,21 @@ public class ucHangHoa extends javax.swing.JPanel {
         pnlLoaiBinhLayout.setHorizontalGroup(
             pnlLoaiBinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoaiBinhLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
                 .addGroup(pnlLoaiBinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLoaiBinh)
-                    .addComponent(cboLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlLoaiBinhLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblLoaiBinh))
+                    .addGroup(pnlLoaiBinhLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(cboLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLoaiBinhLayout.setVerticalGroup(
             pnlLoaiBinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoaiBinhLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(lblLoaiBinh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(cboLoaiBinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -240,7 +247,7 @@ public class ucHangHoa extends javax.swing.JPanel {
         pnlLoaiVan.setName("pnlLoaiVan"); // NOI18N
 
         lbLoaiVan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbLoaiVan.setText("Loại Van");
+        lbLoaiVan.setText("Loại van");
         lbLoaiVan.setName("txtLoaiVan"); // NOI18N
 
         cboLoaiVan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -251,18 +258,21 @@ public class ucHangHoa extends javax.swing.JPanel {
         pnlLoaiVanLayout.setHorizontalGroup(
             pnlLoaiVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoaiVanLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
                 .addGroup(pnlLoaiVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbLoaiVan)
-                    .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addGroup(pnlLoaiVanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbLoaiVan))
+                    .addGroup(pnlLoaiVanLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         pnlLoaiVanLayout.setVerticalGroup(
             pnlLoaiVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoaiVanLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(11, 11, 11)
                 .addComponent(lbLoaiVan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(cboLoaiVan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -278,21 +288,26 @@ public class ucHangHoa extends javax.swing.JPanel {
             }
         });
 
-        btnChiTiet.setBackground(new java.awt.Color(102, 102, 102));
+        btnChiTiet.setBackground(java.awt.Color.gray);
         btnChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChiTiet.setForeground(new java.awt.Color(255, 255, 255));
-        btnChiTiet.setText("Chi Tiết");
+        btnChiTiet.setText("Chi tiết");
         btnChiTiet.setName("btnChiTiet"); // NOI18N
         btnChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnChiTietMouseClicked(evt);
             }
         });
+        btnChiTiet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChiTietActionPerformed(evt);
+            }
+        });
 
         btnXuatFile.setBackground(new java.awt.Color(0, 176, 80));
         btnXuatFile.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXuatFile.setForeground(new java.awt.Color(255, 255, 255));
-        btnXuatFile.setText("Xuất File");
+        btnXuatFile.setText("Xuất file");
         btnXuatFile.setName("btnXuatFile"); // NOI18N
         btnXuatFile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -345,8 +360,13 @@ public class ucHangHoa extends javax.swing.JPanel {
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, Short.MAX_VALUE)
+                        .addComponent(scpHangHoa, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem)
                         .addGap(18, 18, 18)
                         .addComponent(btnChiTiet)
@@ -354,22 +374,25 @@ public class ucHangHoa extends javax.swing.JPanel {
                         .addComponent(btnXuatFile)
                         .addGap(18, 18, 18)
                         .addComponent(btnXoa)
-                        .addGap(35, 35, 35))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(scpHangHoa)
-                        .addContainerGap())))
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -481,6 +504,10 @@ public class ucHangHoa extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatFileActionPerformed
 
+    private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnChiTietActionPerformed
+
     //VIẾT SỰ KIỆN SELECTION_CHANGED TRONG JTABLE
 //    private void setupSelectionListener() {
 //        ListSelectionModel selectionModel = tbleHangHoa.getSelectionModel();
@@ -524,6 +551,7 @@ public class ucHangHoa extends javax.swing.JPanel {
     private javax.swing.JLabel lbLoaiVan;
     private javax.swing.JLabel lblLoaiBinh;
     private javax.swing.JLabel lblQuanLyTaiKhoan;
+    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JPanel pnlLoaiBinh;
     private javax.swing.JPanel pnlLoaiVan;
     private javax.swing.JScrollPane scpHangHoa;

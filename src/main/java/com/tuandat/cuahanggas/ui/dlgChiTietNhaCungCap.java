@@ -272,6 +272,8 @@ public class dlgChiTietNhaCungCap extends javax.swing.JDialog {
         );
 
         btnLuu.setBackground(new java.awt.Color(0, 176, 80));
+        btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("Lưu");
         btnLuu.setName("btnLuu"); // NOI18N
         btnLuu.addMouseListener(new java.awt.event.MouseAdapter() {

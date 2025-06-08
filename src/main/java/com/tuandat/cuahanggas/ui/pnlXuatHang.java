@@ -52,21 +52,25 @@ public class pnlXuatHang extends javax.swing.JPanel {
     public pnlXuatHang(Connection c) {
         this.conn = c;
         initComponents();
-         ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
-            Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnThem.setIcon(new ImageIcon(imgThem));
+        ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
+        Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnThem.setIcon(new ImageIcon(imgThem));
 
-            ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
-            Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
+        ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
+        Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
 
-            ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
-            Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnXuat.setIcon(new ImageIcon(imgXuatFile));
+        ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
+        Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnXuat.setIcon(new ImageIcon(imgXuatFile));
 
-            ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
-            Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnXoa.setIcon(new ImageIcon(imgXoa));
+        ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
+        Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnXoa.setIcon(new ImageIcon(imgXoa));
+        
+        ImageIcon iconTimKiem = new ImageIcon(getClass().getResource("/timkiem.png"));
+        Image imgTimKiem = iconTimKiem.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        lblTimKiem.setIcon(new ImageIcon(imgTimKiem));
         setupComponents();
         loadComboBoxData();
         timKiemXuatHang(); // Đã đổi từ timKiemNhapHang
@@ -419,11 +423,12 @@ public class pnlXuatHang extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         cboMaKhachHang = new javax.swing.JComboBox<>();
         lblQuanLyTaiKhoan = new javax.swing.JLabel();
+        lblTimKiem = new javax.swing.JLabel();
 
         btnXuat.setBackground(new java.awt.Color(0, 176, 80));
         btnXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXuat.setForeground(new java.awt.Color(255, 255, 255));
-        btnXuat.setText("Xuất File");
+        btnXuat.setText("Xuất file");
         btnXuat.setName("btnXuatFile"); // NOI18N
         btnXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -445,7 +450,7 @@ public class pnlXuatHang extends javax.swing.JPanel {
         btnChiTiet.setBackground(new java.awt.Color(153, 153, 153));
         btnChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChiTiet.setForeground(new java.awt.Color(255, 255, 255));
-        btnChiTiet.setText("Chi Tiết");
+        btnChiTiet.setText("Chi tiết");
         btnChiTiet.setName("btnChiTiet"); // NOI18N
         btnChiTiet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -623,8 +628,10 @@ public class pnlXuatHang extends javax.swing.JPanel {
                         .addGap(53, 53, 53)
                         .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem)
@@ -642,15 +649,21 @@ public class pnlXuatHang extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(137, 137, 137)
@@ -750,6 +763,7 @@ public class pnlXuatHang extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblQuanLyTaiKhoan;
+    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -32,8 +32,10 @@
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
+                      <Component id="lblTimKiem" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtTimKiem" min="-2" pref="442" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnThem" min="-2" max="-2" attributes="0"/>
@@ -55,16 +57,25 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtTimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnThem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnXoa" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnXuat" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnChiTiet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="lblQuanLyTaiKhoan" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtTimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="btnThem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="btnXoa" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="btnXuat" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="btnChiTiet" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="lblQuanLyTaiKhoan" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblTimKiem" min="-2" pref="26" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="488" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -94,7 +105,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t File"/>
+        <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t file"/>
         <Property name="name" type="java.lang.String" value="btnXuatFile" noResource="true"/>
       </Properties>
       <Events>
@@ -130,7 +141,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Chi Ti&#x1ebf;t"/>
+        <Property name="text" type="java.lang.String" value="Chi ti&#x1ebf;t"/>
         <Property name="name" type="java.lang.String" value="btnChiTiet" noResource="true"/>
       </Properties>
       <Events>
@@ -408,6 +419,8 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t h&#xe0;ng"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTimKiem">
     </Component>
   </SubComponents>
 </Form>

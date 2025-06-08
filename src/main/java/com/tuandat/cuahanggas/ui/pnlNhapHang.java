@@ -36,36 +36,43 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+
 /**
  *
  * @author duck
  */
 public class pnlNhapHang extends javax.swing.JPanel {
- private static final Logger logger = Logger.getLogger(pnlXuatHang.class.getName());
- private Connection conn;
+
+    private static final Logger logger = Logger.getLogger(pnlXuatHang.class.getName());
+    private Connection conn;
+
     /**
      * Creates new form pnlNhapHang
      */
     public pnlNhapHang(Connection c) {
         this.conn = c;
         initComponents();
-         ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
-            Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnThem.setIcon(new ImageIcon(imgThem));
+        ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
+        Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnThem.setIcon(new ImageIcon(imgThem));
 
-            ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
-            Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
+        ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
+        Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
 
-            ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
-            Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnXuat.setIcon(new ImageIcon(imgXuatFile));
+        ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
+        Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnXuat.setIcon(new ImageIcon(imgXuatFile));
 
-            ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
-            Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            btnXoa.setIcon(new ImageIcon(imgXoa));
+        ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
+        Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnXoa.setIcon(new ImageIcon(imgXoa));
+        
+        ImageIcon iconTimKiem = new ImageIcon(getClass().getResource("/timkiem.png"));
+        Image imgTimKiem = iconTimKiem.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        lblTimKiem.setIcon(new ImageIcon(imgTimKiem));
         setupComponents();
         loadComboBoxData();
         timKiemNhapHang();
@@ -382,44 +389,46 @@ public class pnlNhapHang extends javax.swing.JPanel {
             }
         }
     }
-private void exportNhapToExcel() {
-    // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
-    DefaultTableModel model = (DefaultTableModel) dgvNhapHang.getModel();
-    if (model.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
 
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setDialogTitle("Lưu file Excel Hóa đơn Nhập"); // Đổi tiêu đề hộp thoại
-    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-    fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
-    // Đổi tên file gợi ý ban đầu
-    fileChooser.setSelectedFile(new File("DanhSachHoaDonNhap_" + System.currentTimeMillis() + ".xlsx"));
-
-    int userSelection = fileChooser.showSaveDialog(this);
-
-    if (userSelection == JFileChooser.APPROVE_OPTION) {
-        File fileToSave = fileChooser.getSelectedFile();
-        if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
-            fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+    private void exportNhapToExcel() {
+        // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
+        DefaultTableModel model = (DefaultTableModel) dgvNhapHang.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
 
-        try {
-            // Gọi phương thức xuất nhập hàng từ class ExcelExporter
-            ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
-                    dgvNhapHang, // JTable chứa dữ liệu nhập hàng
-                    fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
-                    "Danh Sách Hóa Đơn Nhập", // Tên sheet trong Excel
-                    "DANH SÁCH HÓA ĐƠN NHẬP HÀNG" // Tiêu đề chính của báo cáo
-            );
-            JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
-            logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu file Excel Hóa đơn Nhập"); // Đổi tiêu đề hộp thoại
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+        // Đổi tên file gợi ý ban đầu
+        fileChooser.setSelectedFile(new File("DanhSachHoaDonNhap_" + System.currentTimeMillis() + ".xlsx"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+            }
+
+            try {
+                // Gọi phương thức xuất nhập hàng từ class ExcelExporter
+                ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
+                        dgvNhapHang, // JTable chứa dữ liệu nhập hàng
+                        fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
+                        "Danh Sách Hóa Đơn Nhập", // Tên sheet trong Excel
+                        "DANH SÁCH HÓA ĐƠN NHẬP HÀNG" // Tiêu đề chính của báo cáo
+                );
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
+                logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
+            }
         }
     }
-}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -447,6 +456,7 @@ private void exportNhapToExcel() {
         cboMaNhaCungCap = new javax.swing.JComboBox<>();
         btnChiTiet = new javax.swing.JButton();
         lblQuanLyTaiKhoan = new javax.swing.JLabel();
+        lblTimKiem = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -496,7 +506,7 @@ private void exportNhapToExcel() {
         btnXuat.setBackground(new java.awt.Color(0, 176, 80));
         btnXuat.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXuat.setForeground(new java.awt.Color(255, 255, 255));
-        btnXuat.setText("Xuất File");
+        btnXuat.setText("Xuất file");
         btnXuat.setName("btnXuatFile"); // NOI18N
         btnXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -618,7 +628,7 @@ private void exportNhapToExcel() {
         btnChiTiet.setBackground(new java.awt.Color(153, 153, 153));
         btnChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChiTiet.setForeground(new java.awt.Color(255, 255, 255));
-        btnChiTiet.setText("Chi Tiết");
+        btnChiTiet.setText("Chi tiết");
         btnChiTiet.setName("btnChiTiet"); // NOI18N
         btnChiTiet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -643,9 +653,14 @@ private void exportNhapToExcel() {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem)
@@ -654,8 +669,7 @@ private void exportNhapToExcel() {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnXuat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXoa))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnXoa)))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -664,14 +678,19 @@ private void exportNhapToExcel() {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
@@ -705,19 +724,19 @@ private void exportNhapToExcel() {
     }//GEN-LAST:event_dtpNgayNhapPropertyChange
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-    frmHoaDonNhap hoaDonNhapForm = new frmHoaDonNhap(conn); // Khởi tạo form
-    hoaDonNhapForm.setVisible(true); // Hiển thị form
-    hoaDonNhapForm.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-            // Sự kiện này được gọi khi form frmHoaDonNhap đóng
-            if (hoaDonNhapForm.isSavedSuccessfully()) {
-                timKiemNhapHang(); // Gọi phương thức tải lại dữ liệu trên pnlNhapHang
+        frmHoaDonNhap hoaDonNhapForm = new frmHoaDonNhap(conn); // Khởi tạo form
+        hoaDonNhapForm.setVisible(true); // Hiển thị form
+        hoaDonNhapForm.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                // Sự kiện này được gọi khi form frmHoaDonNhap đóng
+                if (hoaDonNhapForm.isSavedSuccessfully()) {
+                    timKiemNhapHang(); // Gọi phương thức tải lại dữ liệu trên pnlNhapHang
+                }
+                hoaDonNhapForm.dispose(); // Đảm bảo form đã được đóng hoàn toàn
             }
-            hoaDonNhapForm.dispose(); // Đảm bảo form đã được đóng hoàn toàn
-        }
-    });
-        
+        });
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
@@ -742,7 +761,7 @@ private void exportNhapToExcel() {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatActionPerformed
-      exportNhapToExcel();  // TODO add your handling code here:
+        exportNhapToExcel();  // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatActionPerformed
 
 
@@ -764,6 +783,7 @@ private void exportNhapToExcel() {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblQuanLyTaiKhoan;
+    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,6 +8,7 @@ import com.tuandat.cuahanggas.dao.impl.ChiTietNhapHangDAO;
 import com.tuandat.cuahanggas.model.BinhGas;
 import com.tuandat.cuahanggas.model.ChiTietNhapHang;
 import com.tuandat.cuahanggas.utils.DBConnection;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class dlgChiTietNhapHang extends javax.swing.JDialog {
 
-      private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dlgChiTietNhapHang.class.getName());
     private String maNhapHangHienTai;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -36,10 +38,13 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
      */
     public dlgChiTietNhapHang(java.awt.Frame parent, boolean modal) {
         initComponents();
+        ImageIcon iconLuu = new ImageIcon(getClass().getResource("/luu.png"));
+        Image imgLuu = iconLuu.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        btnLuu.setIcon(new ImageIcon(imgLuu));
         resetForm();
     }
 
-   private void resetForm() {
+    private void resetForm() {
         txtMaNhapHang.setText("");
         txtMaNhaCungCap.setText("");
         txtMaNhanVien.setText("");
@@ -47,95 +52,105 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
         txtGhiChu.setText("");
         dgvNhapHang.setModel(new DefaultTableModel());
     }
-   private void loadChiTietNhapHang() {
-    if (maNhapHangHienTai == null || maNhapHangHienTai.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Mã nhập hàng chưa được thiết lập!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
 
-    Connection conn = DBConnection.openConnection();
-    if (conn == null) {
-        JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    PreparedStatement ps1 = null;
-    ResultSet rs1 = null;
-    PreparedStatement ps2 = null;
-    ResultSet rs2 = null;
-
-    try {
-        // 1. Truy vấn thông tin phiếu nhập
-        String sqlNhapHang = "SELECT NgayNhap, MaNhanVien, MaNhaCungCap, GhiChu FROM NhapHang WHERE MaNhapHang = ?";
-        ps1 = conn.prepareStatement(sqlNhapHang);
-        ps1.setString(1, maNhapHangHienTai);
-        rs1 = ps1.executeQuery();
-
-        if (rs1.next()) {
-            txtMaNhapHang.setText(maNhapHangHienTai);
-            txtNgayNhap.setText(sdf.format(rs1.getDate("NgayNhap")));
-            txtMaNhanVien.setText(rs1.getString("MaNhanVien"));
-            txtMaNhaCungCap.setText(rs1.getString("MaNhaCungCap"));
-            txtGhiChu.setText(rs1.getString("GhiChu"));
-        } else {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu nhập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    private void loadChiTietNhapHang() {
+        if (maNhapHangHienTai == null || maNhapHangHienTai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã nhập hàng chưa được thiết lập!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 2. Truy vấn chi tiết nhập hàng
-        String sqlChiTiet = """
+        Connection conn = DBConnection.openConnection();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        PreparedStatement ps1 = null;
+        ResultSet rs1 = null;
+        PreparedStatement ps2 = null;
+        ResultSet rs2 = null;
+
+        try {
+            // 1. Truy vấn thông tin phiếu nhập
+            String sqlNhapHang = "SELECT NgayNhap, MaNhanVien, MaNhaCungCap, GhiChu FROM NhapHang WHERE MaNhapHang = ?";
+            ps1 = conn.prepareStatement(sqlNhapHang);
+            ps1.setString(1, maNhapHangHienTai);
+            rs1 = ps1.executeQuery();
+
+            if (rs1.next()) {
+                txtMaNhapHang.setText(maNhapHangHienTai);
+                txtNgayNhap.setText(sdf.format(rs1.getDate("NgayNhap")));
+                txtMaNhanVien.setText(rs1.getString("MaNhanVien"));
+                txtMaNhaCungCap.setText(rs1.getString("MaNhaCungCap"));
+                txtGhiChu.setText(rs1.getString("GhiChu"));
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu nhập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 2. Truy vấn chi tiết nhập hàng
+            String sqlChiTiet = """
             SELECT ct.MaBinhGas, bg.TenBinhGas, ct.SoLuongNhap, ct.DonGiaNhap,
                    (ct.SoLuongNhap * ct.DonGiaNhap) AS ThanhTien
             FROM ChiTietNhapHang ct
             JOIN BinhGas bg ON ct.MaBinhGas = bg.MaBinhGas
             WHERE ct.MaNhapHang = ?
         """;
-        ps2 = conn.prepareStatement(sqlChiTiet);
-        ps2.setString(1, maNhapHangHienTai);
-        rs2 = ps2.executeQuery();
+            ps2 = conn.prepareStatement(sqlChiTiet);
+            ps2.setString(1, maNhapHangHienTai);
+            rs2 = ps2.executeQuery();
 
-        Vector<String> columnNames = new Vector<>(Arrays.asList(
-            "Mã Bình Gas", "Tên Bình Gas", "Số Lượng Nhập", "Đơn Giá Nhập", "Thành Tiền"
-        ));
-        Vector<Vector<Object>> data = new Vector<>();
+            Vector<String> columnNames = new Vector<>(Arrays.asList(
+                    "Mã Bình Gas", "Tên Bình Gas", "Số Lượng Nhập", "Đơn Giá Nhập", "Thành Tiền"
+            ));
+            Vector<Vector<Object>> data = new Vector<>();
 
-        while (rs2.next()) {
-            Vector<Object> row = new Vector<>();
-            row.add(rs2.getString("MaBinhGas"));
-            row.add(rs2.getString("TenBinhGas"));
-            row.add(rs2.getInt("SoLuongNhap"));
-            row.add(rs2.getInt("DonGiaNhap"));
-            row.add(rs2.getInt("ThanhTien"));
-            data.add(row);
-        }
-
-        if (data.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không có chi tiết nhập hàng nào!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // không cho sửa dữ liệu trong bảng
+            while (rs2.next()) {
+                Vector<Object> row = new Vector<>();
+                row.add(rs2.getString("MaBinhGas"));
+                row.add(rs2.getString("TenBinhGas"));
+                row.add(rs2.getInt("SoLuongNhap"));
+                row.add(rs2.getInt("DonGiaNhap"));
+                row.add(rs2.getInt("ThanhTien"));
+                data.add(row);
             }
-        };
 
-        dgvNhapHang.setModel(model);
+            if (data.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không có chi tiết nhập hàng nào!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Lỗi khi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        try {
-            if (rs1 != null) rs1.close();
-            if (ps1 != null) ps1.close();
-            if (rs2 != null) rs2.close();
-            if (ps2 != null) ps2.close();
-        } catch (SQLException e) {
-            // Ghi log hoặc bỏ qua nếu cần
+            DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // không cho sửa dữ liệu trong bảng
+                }
+            };
+
+            dgvNhapHang.setModel(model);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi truy vấn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (rs1 != null) {
+                    rs1.close();
+                }
+                if (ps1 != null) {
+                    ps1.close();
+                }
+                if (rs2 != null) {
+                    rs2.close();
+                }
+                if (ps2 != null) {
+                    ps2.close();
+                }
+            } catch (SQLException e) {
+                // Ghi log hoặc bỏ qua nếu cần
+            }
         }
     }
-}
- private void luuThongTinNhapHang() {
+
+    private void luuThongTinNhapHang() {
         String maNV = txtMaNhanVien.getText().trim();
         String maNCC = txtMaNhaCungCap.getText().trim();
         String ngay = txtNgayNhap.getText().trim();
@@ -174,6 +189,7 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
         } finally {
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -206,6 +222,9 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Ngày nhập");
 
+        btnLuu.setBackground(new java.awt.Color(0, 176, 80));
+        btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,7 +323,7 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
     }//GEN-LAST:event_txtMaNhaCungCapActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
- luuThongTinNhapHang();        // TODO add your handling code here:
+        luuThongTinNhapHang();        // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
 // public static void main(String args[]) {
 //       try {
@@ -335,14 +354,14 @@ public class dlgChiTietNhapHang extends javax.swing.JDialog {
 //    }
 
     void setMaNhapHang(String maNhapHang) {
-    this.maNhapHangHienTai = maNhapHang;
+        this.maNhapHangHienTai = maNhapHang;
 
-    if (maNhapHang == null || maNhapHang.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Mã nhập hàng chưa được thiết lập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (maNhapHang == null || maNhapHang.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã nhập hàng chưa được thiết lập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    loadChiTietNhapHang();
+        loadChiTietNhapHang();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -158,6 +158,7 @@ com\tuandat\cuahanggas\ui\frmHoaDonNhap$1.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap$12.class
 com\tuandat\cuahanggas\ui\frmLogin.class
 com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAOV2.class
+com\tuandat\cuahanggas\ui\ucHangHoa$8.class
 com\tuandat\cuahanggas\ui\dlgChiTietHangHoa$2.class
 com\tuandat\cuahanggas\ui\dlgChiTietNhapHang$3.class
 com\tuandat\cuahanggas\ui\frmTest$1.class
