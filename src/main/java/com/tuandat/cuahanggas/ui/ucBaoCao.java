@@ -6,6 +6,7 @@ package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.DAO;
 import com.tuandat.cuahanggas.model.ExcelExporter;
+import java.awt.Image;
 import java.io.File;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -35,6 +37,9 @@ public class ucBaoCao extends javax.swing.JPanel {
     public ucBaoCao(Connection conn) {
         this.conn = conn;
         initComponents();
+                ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
+        Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnXuatFile.setIcon(new ImageIcon(imgXuatFile));
 
         cboDoiTuong.addActionListener(e -> filterForDoiTuong());
 
@@ -55,8 +60,8 @@ public class ucBaoCao extends javax.swing.JPanel {
         cboThoiGian.addItem("Theo năm");
 
         cboDanhMucTheoBinhGas.setEnabled(false);
-        btnXuatFile.setEnabled(false);
-        btnXuatBaoCao.setEnabled(false);
+        btnXuatFile.setEnabled(true);
+        btnXuatBaoCao.setEnabled(true);
 
         dcrTGBD.setDate(new Date());
         dcrTGKT.setDate(new Date());
@@ -81,8 +86,6 @@ public class ucBaoCao extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlHangHoa = new javax.swing.JPanel();
-        lblHangHoa = new javax.swing.JLabel();
         pnlDanhMucBaoCao = new javax.swing.JPanel();
         lblLoaiBinh = new javax.swing.JLabel();
         cboDoiTuong = new javax.swing.JComboBox<>();
@@ -98,33 +101,13 @@ public class ucBaoCao extends javax.swing.JPanel {
         lblThoiGian = new javax.swing.JLabel();
         lblTu = new javax.swing.JLabel();
         lblDen = new javax.swing.JLabel();
-
-        pnlHangHoa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlHangHoa.setName("pnlHeader"); // NOI18N
-
-        lblHangHoa.setText("Báo Cáo");
-
-        javax.swing.GroupLayout pnlHangHoaLayout = new javax.swing.GroupLayout(pnlHangHoa);
-        pnlHangHoa.setLayout(pnlHangHoaLayout);
-        pnlHangHoaLayout.setHorizontalGroup(
-            pnlHangHoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHangHoaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHangHoa)
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        pnlHangHoaLayout.setVerticalGroup(
-            pnlHangHoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHangHoaLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblHangHoa)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+        lblQuanLyTaiKhoan = new javax.swing.JLabel();
 
         pnlDanhMucBaoCao.setBackground(new java.awt.Color(255, 255, 255));
         pnlDanhMucBaoCao.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlDanhMucBaoCao.setName("pnlDanhMucBaoCao"); // NOI18N
 
+        lblLoaiBinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblLoaiBinh.setText("Danh Mục Báo Cáo");
         lblLoaiBinh.setName("txtLoaiBinh"); // NOI18N
 
@@ -162,16 +145,20 @@ public class ucBaoCao extends javax.swing.JPanel {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        btnXuatBaoCao.setBackground(new java.awt.Color(0, 255, 0));
+        btnXuatBaoCao.setBackground(new java.awt.Color(0, 176, 80));
+        btnXuatBaoCao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXuatBaoCao.setForeground(new java.awt.Color(255, 255, 255));
         btnXuatBaoCao.setText("Xuất Báo Cáo");
         btnXuatBaoCao.setName("btnXuatBaoCao"); // NOI18N
-        btnXuatBaoCao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnXuatBaoCaoMouseClicked(evt);
+        btnXuatBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatBaoCaoActionPerformed(evt);
             }
         });
 
         btnXuatFile.setBackground(new java.awt.Color(0, 176, 80));
+        btnXuatFile.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXuatFile.setForeground(new java.awt.Color(255, 255, 255));
         btnXuatFile.setText("Xuất File");
         btnXuatFile.setName("btnXuatFile"); // NOI18N
         btnXuatFile.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -198,6 +185,7 @@ public class ucBaoCao extends javax.swing.JPanel {
         cboThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboThoiGian.setName("cboLoaiBinh"); // NOI18N
 
+        lblThoiGian.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblThoiGian.setText("Thời Gian");
         lblThoiGian.setName("txtLoaiBinh"); // NOI18N
 
@@ -245,49 +233,101 @@ public class ucBaoCao extends javax.swing.JPanel {
                 .addGap(17, 17, 17))
         );
 
+        lblQuanLyTaiKhoan.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lblQuanLyTaiKhoan.setText("Báo cáo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlDanhMucBaoCao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlThoiGian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(33, 33, 33)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnXuatBaoCao)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1013, Short.MAX_VALUE))
-                    .addComponent(scpHangHoa))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnlDanhMucBaoCao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(btnXuatBaoCao)))
+                        .addGap(32, 32, 32)
+                        .addComponent(scpHangHoa, javax.swing.GroupLayout.DEFAULT_SIZE, 1252, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnXuatBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnXuatFile, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scpHangHoa, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnXuatBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(pnlDanhMucBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(pnlThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 51, Short.MAX_VALUE))
-                    .addComponent(scpHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnXuatBaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatBaoCaoMouseClicked
-        btnXuatFile.setEnabled(false);
+    private void exportNhapToExcel() {
+        // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
+        DefaultTableModel model = (DefaultTableModel) tbleBaoCao.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu file Excel báo cáo"); // Đổi tiêu đề hộp thoại
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+        // Đổi tên file gợi ý ban đầu
+        fileChooser.setSelectedFile(new File("DanhSachHH_" + System.currentTimeMillis() + ".xlsx"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+            }
+
+            try {
+                // Gọi phương thức xuất nhập hàng từ class ExcelExporter
+                ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
+                        tbleBaoCao, // JTable chứa dữ liệu nhập hàng
+                        fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
+                        "Danh Sách Bao Cao" + cboDoiTuong.getSelectedItem().toString(), // Tên sheet trong Excel
+                        "DANH SÁCH BÁO CÁO" // Tiêu đề chính của báo cáo
+                );
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
+                logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
+            }
+        }
+
+    }
+
+    private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
+        exportNhapToExcel();
+    }//GEN-LAST:event_btnXuatFileMouseClicked
+
+    private void btnXuatBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatBaoCaoActionPerformed
+        btnXuatFile.setEnabled(true);
 
         boolean canShowButtons = false;
 
@@ -513,52 +553,8 @@ public class ucBaoCao extends javax.swing.JPanel {
                 tbleBaoCao.getColumnModel().getColumn(i).setHeaderValue(columnNamesMap.get(columnName));
             }
         }
-
-    }//GEN-LAST:event_btnXuatBaoCaoMouseClicked
-
-    private void exportNhapToExcel() {
-        // Thay dgvXuatHang bằng JTable của nhập hàng, ví dụ: dgvNhapHang
-        DefaultTableModel model = (DefaultTableModel) tbleBaoCao.getModel();
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu nhập hàng để xuất ra Excel.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Lưu file Excel báo cáo"); // Đổi tiêu đề hộp thoại
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
-        // Đổi tên file gợi ý ban đầu
-        fileChooser.setSelectedFile(new File("DanhSachHH_" + System.currentTimeMillis() + ".xlsx"));
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
-                fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
-            }
-
-            try {
-                // Gọi phương thức xuất nhập hàng từ class ExcelExporter
-                ExcelExporter.exportHoaDonXuatToExcel( // Đổi sang exportHoaDonNhapToExcel
-                        tbleBaoCao, // JTable chứa dữ liệu nhập hàng
-                        fileToSave.getAbsolutePath(), // Đường dẫn file sẽ lưu
-                        "Danh Sách Bao Cao" + cboDoiTuong.getSelectedItem().toString(), // Tên sheet trong Excel
-                        "DANH SÁCH BÁO CÁO" // Tiêu đề chính của báo cáo
-                );
-                JOptionPane.showMessageDialog(this, "Xuất file Excel Hóa đơn Nhập thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE); // Đổi thông báo
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Lỗi khi xuất file Excel Hóa đơn Nhập: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE); // Đổi thông báo lỗi
-                logger.log(Level.SEVERE, "Lỗi khi xuất file Excel Hóa đơn Nhập", ex); // Đổi thông báo log
-            }
-        }
-
-    }
-
-    private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
-        exportNhapToExcel();
-    }//GEN-LAST:event_btnXuatFileMouseClicked
+ // TODO add your handling code here:
+    }//GEN-LAST:event_btnXuatBaoCaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -570,12 +566,11 @@ public class ucBaoCao extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser dcrTGBD;
     private com.toedter.calendar.JDateChooser dcrTGKT;
     private javax.swing.JLabel lblDen;
-    private javax.swing.JLabel lblHangHoa;
     private javax.swing.JLabel lblLoaiBinh;
+    private javax.swing.JLabel lblQuanLyTaiKhoan;
     private javax.swing.JLabel lblThoiGian;
     private javax.swing.JLabel lblTu;
     private javax.swing.JPanel pnlDanhMucBaoCao;
-    private javax.swing.JPanel pnlHangHoa;
     private javax.swing.JPanel pnlThoiGian;
     private javax.swing.JScrollPane scpHangHoa;
     private javax.swing.JTable tbleBaoCao;

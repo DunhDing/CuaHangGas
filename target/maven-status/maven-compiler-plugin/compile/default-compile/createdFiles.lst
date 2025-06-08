@@ -7,6 +7,7 @@ com\tuandat\cuahanggas\ui\pnlNhapHang$4.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap$13.class
 com\tuandat\cuahanggas\ui\pnlXuatHang.class
 com\tuandat\cuahanggas\ui\frmHoaDonXuat$9.class
+com\tuandat\cuahanggas\ui\ucNhanVien$7.class
 com\tuandat\cuahanggas\ui\ucNhaCungCap$1.class
 com\tuandat\cuahanggas\ui\pnlNhapHang$10.class
 com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan$2.class
@@ -43,6 +44,7 @@ com\tuandat\cuahanggas\model\ExcelExporter.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap$9.class
 com\tuandat\cuahanggas\model\ChiTietXuatHang.class
 com\tuandat\cuahanggas\ui\ucKhachHang$6.class
+com\tuandat\cuahanggas\ui\ucNhaCungCap$7.class
 com\tuandat\cuahanggas\ui\dlgChiTietXuatHang$1.class
 com\tuandat\cuahanggas\ui\frmHoaDonNhap$3.class
 com\tuandat\cuahanggas\ui\frmHoaDonXuat$2.class
