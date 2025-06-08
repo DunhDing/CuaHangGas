@@ -1,51 +1,51 @@
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhaCungCap.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucHangHoa.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\CuaHangGas.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\XuatHangDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietNhapHangTableModel.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\TableHelper.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\DBConnection.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhanVien.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucKhachHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\TaiKhoanNguoiDungDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\XuatHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhanVien.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhanVienDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietXuatHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\AbstractDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhaCungCapDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmLogin.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietXuatHangTableModel.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAOV2.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\BinhGas.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhapHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\MyToys.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmTest.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\KhachHangDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucTongQuan.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\TaiKhoanNguoiDung.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ExcelExporter.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhaCungCap.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\KhachHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmMain.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhaCungCap.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietTaiKhoan.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietXuatHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietNhapHangDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmHoaDonXuat.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhapHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\pnlNhapHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\DAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmHoaDonNhap.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\Session.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietHangHoa.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietKhachHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhapHangDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucBaoCao.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhanVien.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\pnlXuatHang.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\IGenericDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\BinhGasDAO.java
-C:\Users\duck\OneDrive\Máy tính\hoc di nhe dmm\javabtl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietNhapHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\AbstractDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\BinhGas.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhapHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhaCungCapDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\pnlXuatHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhapHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietNhapHangTableModel.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucTongQuan.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhaCungCap.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhaCungCap.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmHoaDonNhap.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\TableHelper.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietTaiKhoan.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucKhachHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\pnlNhapHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmMain.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\IGenericDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietXuatHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucNhanVien.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmTest.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\DBConnection.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucHangHoa.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucBaoCao.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietXuatHangTableModel.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\KhachHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhaCungCap.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhanVienDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietXuatHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\KhachHangDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\TaiKhoanNguoiDung.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\NhapHangDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ChiTietNhapHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\ExcelExporter.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietNhapHangDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\BinhGasDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\NhanVien.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\ChiTietXuatHangDAOV2.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\MyToys.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmHoaDonXuat.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\XuatHangDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\model\XuatHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietHangHoa.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietKhachHang.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\utils\Session.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\CuaHangGas.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\impl\TaiKhoanNguoiDungDAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\dlgChiTietNhanVien.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\dao\DAO.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\ucQuanLyTaiKhoan.java
+C:\Users\PC\Desktop\CNTTB\Semester 4\oopWithJava\btl\CuaHangGas\src\main\java\com\tuandat\cuahanggas\ui\frmLogin.java

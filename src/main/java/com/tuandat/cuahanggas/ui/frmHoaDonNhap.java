@@ -20,23 +20,33 @@ import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 import com.tuandat.cuahanggas.model.ChiTietNhapHang;
 import com.tuandat.cuahanggas.model.ChiTietNhapHangTableModel;
+import com.tuandat.cuahanggas.model.ChiTietXuatHangTableModel;
 import com.tuandat.cuahanggas.utils.Session;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.ResultSetMetaData;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -82,6 +92,13 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
         initChiTietNhapHangTable();
         frmHoaDonNhap_Load();
         setExtendedState(MAXIMIZED_BOTH);
+        
+        txtMaHoaDon.setEnabled(false);
+        txtMaNhanVien.setEnabled(false);
+        dtpNgayXuat.setEnabled(false);
+        txtMaNCC.setEnabled(false);
+        txtSdt.setEnabled(false);
+        
         if (Session.IsLoggedIn()) { // Kiểm tra xem người dùng đã đăng nhập chưa
             txtMaNhanVien.setText(Session.MaNhanVien);
             txtMaNhanVien.setEditable(false); // Có thể đặt không cho chỉnh sửa để tránh nhầm lẫn
@@ -974,6 +991,86 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btnXoaChiTietActionPerformed
 
+    private void exportHoaDonToExcel() {
+        ChiTietNhapHangTableModel model = (ChiTietNhapHangTableModel) dgvChiTietNhapHang.getModel();
+
+
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất hóa đơn.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu hóa đơn Excel");
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx"));
+        fileChooser.setSelectedFile(new File("HoaDon_" + txtMaHoaDon.getText() + "_" + System.currentTimeMillis() + ".xlsx"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        File fileToSave = fileChooser.getSelectedFile();
+        if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+            fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Hóa đơn");
+
+            int rowIdx = 0;
+
+            // Header
+            Row titleRow = sheet.createRow(rowIdx++);
+            Cell titleCell = titleRow.createCell(0);
+            titleCell.setCellValue("HÓA ĐƠN XUẤT BÌNH GAS");
+
+            // Thông tin hóa đơn
+            rowIdx++;
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã hóa đơn: " + txtMaHoaDon.getText());
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã nhân viên: " + txtMaNhanVien.getText());
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Ngày xuất: " + dtpNgayXuat.getDate());
+
+            // Thông tin khách hàng
+            rowIdx++;
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Mã khách hàng: " + txtMaNCC.getText());
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Tên khách hàng: " + cboTenNCC.getSelectedItem());
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Số điện thoại: " + txtSdt.getText());
+
+            // Dòng trống
+            rowIdx++;
+
+            // Header bảng chi tiết
+            Row headerRow = sheet.createRow(rowIdx++);
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                headerRow.createCell(col).setCellValue(model.getColumnName(col));
+            }
+
+            // Dữ liệu từ JTable
+            for (int i = 0; i < model.getRowCount(); i++) {
+                Row dataRow = sheet.createRow(rowIdx++);
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    Object value = model.getValueAt(i, j);
+                    dataRow.createCell(j).setCellValue(value != null ? value.toString() : "");
+                }
+            }
+
+            // Dòng trống và tổng tiền
+            rowIdx++;
+            sheet.createRow(rowIdx++).createCell(0).setCellValue("Tổng tiền: " + txtTongTien.getText());
+
+            // Ghi file
+            try (FileOutputStream out = new FileOutputStream(fileToSave)) {
+                workbook.write(out);
+            }
+
+            JOptionPane.showMessageDialog(this, "Xuất hóa đơn thành công!\n" + fileToSave.getAbsolutePath(), "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xuất hóa đơn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         String maNhapHang = txtMaHoaDon.getText().trim(); // Thêm .trim() để loại bỏ khoảng trắng
         String maNhaCungCap = txtMaNCC.getText().trim(); // Thêm .trim()
@@ -1051,7 +1148,15 @@ public class frmHoaDonNhap extends javax.swing.JFrame {
             conn.commit(); // Hoàn tất transaction
             JOptionPane.showMessageDialog(this, "Lưu hóa đơn nhập thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             this.setSavedSuccessfully(true); // Set the flag to true
-            this.dispose(); // Close the form
+            if (JOptionPane.showConfirmDialog(
+                    this,
+                    "Bạn có muốn in ra hóa đơn không?",
+                    "Xác nhận In",
+                    JOptionPane.YES_NO_OPTION
+            ) == JOptionPane.YES_OPTION) {
+                exportHoaDonToExcel();
+            }
+            this.dispose();
 
         } catch (SQLException ex) {
             try {
