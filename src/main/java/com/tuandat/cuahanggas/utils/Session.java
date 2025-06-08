@@ -36,16 +36,11 @@ public class Session {
         isLoggedIn = status;
     }
 
-    /**
-     * Phương thức để đăng nhập người dùng.
-     * Cập nhật thông tin phiên và đặt trạng thái đã đăng nhập.
-     * @param user Đối tượng TaiKhoanNguoiDung của người dùng đăng nhập.
-     */
     public static void login(TaiKhoanNguoiDung user) {
         if (user != null) {
             Session.currentUser = user;
-            Session.MaNhanVien = user.getMaNhanVien(); // Giả định TaiKhoanNguoiDung có getMaNhanVien()
-            Session.TenNhanVien = user.getTenNhanVien(); // Giả định TaiKhoanNguoiDung có getTenNhanVien()
+            Session.MaNhanVien = user.getMaNhanVien();
+            Session.TenNhanVien = user.getTenNhanVien(); 
             Session.setLoggedIn(true);
         } else {
             // Xử lý trường hợp đối tượng user là null (có thể reset phiên)
@@ -53,10 +48,6 @@ public class Session {
         }
     }
 
-    /**
-     * Phương thức để xóa thông tin người dùng khi đăng xuất.
-     * Đặt tất cả các trường liên quan đến phiên về trạng thái ban đầu.
-     */
     public static void logout() {
         currentUser = null;
         MaNhanVien = null;

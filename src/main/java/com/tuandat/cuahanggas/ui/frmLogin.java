@@ -163,41 +163,6 @@ public class frmLogin extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//    private boolean checkLogin(String username, String password) {
-//        Connection conn = null;
-//        PreparedStatement pst = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = DBConnection.openConnection();
-//
-//            String sql = "SELECT * FROM TaiKhoanNguoiDung WHERE TenDangNhap = ? AND MatKhau = ?";
-//            pst = conn.prepareStatement(sql);
-//            pst.setString(1, username);
-//            pst.setString(2, password);
-//
-//            rs = pst.executeQuery();
-//
-//            return rs.next();
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(this, "Lỗi khi kết nối: " + e.getMessage());
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (pst != null) {
-//                    pst.close();
-//                }
-//                DBConnection.closeConnection();
-//            } catch (SQLException e) {
-//                System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
-//            }
-//        }
-//        return false;
-//    }
-//
 
     private boolean checkLogin(String username, String password, List<TaiKhoanNguoiDung> allAccounts) {
         return allAccounts.stream()
@@ -206,33 +171,33 @@ public class frmLogin extends javax.swing.JDialog {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String username = txtTenDangNhap.getText().trim();
-    String password = new String(txtMatKhau.getPassword()).trim();
+        String password = new String(txtMatKhau.getPassword()).trim();
 
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
-        return;
-    }
-
-    List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
-    if (checkLogin(username, password, allAccounts)) {
-        loginSuccess = true;
-        TaiKhoanNguoiDung user = taiKhoanDAO.getUserByUsername(username);
-
-        // CORRECTED LINE: Call the Session.login method with the retrieved user object
-        if (user != null) { // Ensure user object is not null before setting session
-            Session.login(user); // Use the improved login method from Session class
-        } else {
-            // This case ideally shouldn't happen if checkLogin was true,
-            // but it's good for defensive programming.
-            JOptionPane.showMessageDialog(this, "Lỗi hệ thống: Không tìm thấy thông tin người dùng sau đăng nhập.");
-            loginSuccess = false; // Reset login success
-            return; // Exit the method
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!");
+            return;
         }
 
-        dispose(); // Close the login form
-    } else {
-        JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
-    }
+        List<TaiKhoanNguoiDung> allAccounts = taiKhoanDAO.getAll();
+        if (checkLogin(username, password, allAccounts)) {
+            loginSuccess = true;
+            TaiKhoanNguoiDung user = taiKhoanDAO.getUserByUsername(username);
+
+            // CORRECTED LINE: Call the Session.login method with the retrieved user object
+            if (user != null) { // Ensure user object is not null before setting session
+                Session.login(user); // Use the improved login method from Session class
+            } else {
+                // This case ideally shouldn't happen if checkLogin was true,
+                // but it's good for defensive programming.
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống: Không tìm thấy thông tin người dùng sau đăng nhập.");
+                loginSuccess = false; // Reset login success
+                return; // Exit the method
+            }
+
+            dispose(); // Close the login form
+        } else {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng!");
+        }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed

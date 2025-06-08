@@ -91,6 +91,25 @@ public class frmMain extends javax.swing.JFrame {
 
         setExtendedState(MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
+        applyUserPermissions();
+    }
+
+    private void applyUserPermissions() {
+        if (Session.getCurrentUser() != null && "VT000".equalsIgnoreCase(Session.getCurrentUser().getMaVaiTro())) {
+            btnBaoCao.setEnabled(true);
+            menuQuanLyTaiKhoan.setVisible(true);
+            btnNhanVien.setEnabled(true);
+
+        } else if (Session.getCurrentUser() != null && "VT001".equalsIgnoreCase(Session.getCurrentUser().getMaVaiTro())) {
+            btnBaoCao.setEnabled(false);
+            menuQuanLyTaiKhoan.setVisible(false);
+            btnNhanVien.setEnabled(true);
+        } else {
+            btnBaoCao.setEnabled(false);
+            menuQuanLyTaiKhoan.setVisible(false);
+            btnNhanVien.setEnabled(false);
+
+        }
     }
 
     public boolean isLogout() {
@@ -300,9 +319,9 @@ public class frmMain extends javax.swing.JFrame {
         btnBaoCao.setForeground(new java.awt.Color(255, 255, 255));
         btnBaoCao.setText("Báo cáo");
         btnBaoCao.setBorderPainted(false);
-        btnBaoCao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBaoCaoMouseClicked(evt);
+        btnBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaoCaoActionPerformed(evt);
             }
         });
 
@@ -445,16 +464,16 @@ public class frmMain extends javax.swing.JFrame {
         showPanel(f);
     }//GEN-LAST:event_menuNhaCungCapActionPerformed
 
-    private void btnBaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBaoCaoMouseClicked
-        ucBaoCao f = new ucBaoCao(con);
-        f.loadData();
-        showPanel(f);
-    }//GEN-LAST:event_btnBaoCaoMouseClicked
-
     private void btnTongQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTongQuanActionPerformed
         ucTongQuan f = new ucTongQuan(con);
         showPanel(f);
     }//GEN-LAST:event_btnTongQuanActionPerformed
+
+    private void btnBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaoCaoActionPerformed
+        ucBaoCao f = new ucBaoCao(con);
+        f.loadData();
+        showPanel(f);
+    }//GEN-LAST:event_btnBaoCaoActionPerformed
 
     private void showPanel(JPanel panel) {
         pnlMain.removeAll();
