@@ -11,7 +11,7 @@ public class DBConnection {
 
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=CuaHangGas;encrypt=true;trustServerCertificate=true";
     private static final String USER = "sa";
-    private static final String PASSWORD = "KIEN2005";
+    private static final String PASSWORD = "Hnacud2601";
     private static Connection connection;
 
     public static Connection openConnection() {

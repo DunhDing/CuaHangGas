@@ -5,10 +5,13 @@
 package com.tuandat.cuahanggas.ui;
 
 import com.tuandat.cuahanggas.dao.impl.BinhGasDAO;
+import com.tuandat.cuahanggas.dao.impl.KhachHangDAO;
 import com.tuandat.cuahanggas.model.ChiTietXuatHang;
 import com.tuandat.cuahanggas.model.ChiTietXuatHangTableModel;
+import com.tuandat.cuahanggas.ui.dlgChiTietKhachHang;
 import com.tuandat.cuahanggas.utils.DBConnection;
 import com.tuandat.cuahanggas.utils.Session;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -21,6 +24,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -43,6 +47,7 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     private DefaultTableModel modelKetQuaTimKiemBinhGas;
     private boolean isSavedSuccessfully = false;
     private Connection conn;
+    private KhachHangDAO khachHangDAO;
 
     public boolean isSavedSuccessfully() { // Getter
         return isSavedSuccessfully;
@@ -58,6 +63,14 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     public frmHoaDonXuat(Connection conn) {
         this.conn = conn;
         initComponents();
+         this.khachHangDAO = new KhachHangDAO(conn);
+        ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
+        Image imgThem = iconThem.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        btmThemKhachHang.setIcon(new ImageIcon(imgThem));
+
+        ImageIcon iconXoa = new ImageIcon(getClass().getResource("/xoa.png"));
+        Image imgXoa = iconXoa.getImage().getScaledInstance(20, 25, Image.SCALE_SMOOTH);
+        btnXoaChiTiet.setIcon(new ImageIcon(imgXoa));
         initChiTietXuatHangTable(); // Đổi tên phương thức
         frmHoaDonXuat_Load(); // Đổi tên phương thức
         setExtendedState(MAXIMIZED_BOTH);
@@ -796,6 +809,11 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
         btmThemKhachHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btmThemKhachHang.setForeground(new java.awt.Color(255, 255, 255));
         btmThemKhachHang.setText("Thêm");
+        btmThemKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmThemKhachHangActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -886,11 +904,11 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoaChiTiet))
-                .addContainerGap())
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         pack();
@@ -1049,6 +1067,13 @@ public class frmHoaDonXuat extends javax.swing.JFrame {
     private void txtTimKiemBinhGasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemBinhGasActionPerformed
         txtTimKiemBinhGas_TextChanged();        // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemBinhGasActionPerformed
+
+    private void btmThemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmThemKhachHangActionPerformed
+    dlgChiTietKhachHang d = new dlgChiTietKhachHang(this, null, true, khachHangDAO);
+    d.loadData();
+    d.setVisible(true);
+    loadTenKhachHangComboBox();
+    }//GEN-LAST:event_btmThemKhachHangActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

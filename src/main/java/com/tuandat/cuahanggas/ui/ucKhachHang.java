@@ -179,6 +179,11 @@ public class ucKhachHang extends javax.swing.JPanel {
                 btnThemMouseClicked(evt);
             }
         });
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnChiTiet.setBackground(new java.awt.Color(102, 102, 102));
         btnChiTiet.setText("Chi Tiết");
@@ -408,6 +413,10 @@ public class ucKhachHang extends javax.swing.JPanel {
     private void btnXuatFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileMouseClicked
         exportNhapToExcel();
     }//GEN-LAST:event_btnXuatFileMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

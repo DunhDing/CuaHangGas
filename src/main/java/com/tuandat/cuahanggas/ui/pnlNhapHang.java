@@ -22,6 +22,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import com.tuandat.cuahanggas.utils.TableHelper;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -36,6 +37,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.logging.Logger; 
+import javax.swing.ImageIcon;
 /**
  *
  * @author duck
@@ -49,6 +51,21 @@ public class pnlNhapHang extends javax.swing.JPanel {
     public pnlNhapHang(Connection c) {
         this.conn = c;
         initComponents();
+         ImageIcon iconThem = new ImageIcon(getClass().getResource("/them.png"));
+            Image imgThem = iconThem.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnThem.setIcon(new ImageIcon(imgThem));
+
+            ImageIcon iconChiTiet = new ImageIcon(getClass().getResource("/info.png"));
+            Image imgChiTiet = iconChiTiet.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnChiTiet.setIcon(new ImageIcon(imgChiTiet));
+
+            ImageIcon iconXuatFile = new ImageIcon(getClass().getResource("/excel.png"));
+            Image imgXuatFile = iconXuatFile.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnXuat.setIcon(new ImageIcon(imgXuatFile));
+
+            ImageIcon iconXoa = new ImageIcon(getClass().getResource("/trash-solid.png"));
+            Image imgXoa = iconXoa.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            btnXoa.setIcon(new ImageIcon(imgXoa));
         setupComponents();
         loadComboBoxData();
         timKiemNhapHang();
